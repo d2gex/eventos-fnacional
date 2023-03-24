@@ -12,29 +12,29 @@ db_session = sessionmaker(bind=engine, echo=True)
 ModelBase = declarative_base()
 
 
-class ModelTipoFestejos(ModelBase):
-    __tablename__ = 'tipo_festejos'
+class ModelTipoFestejo(ModelBase):
+    __tablename__ = 'tipo_festejo'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     tipo = Column(String, nullable=False, unique=True)
-    festejos = relationship('ModelFestejos', backref="festejos")
+    festejo = relationship('ModelFestejo', backref="festejo")
 
 
-class ModelTipoToreros(ModelBase):
-    __tablename__ = 'tipo_toreros'
+class ModelTipoTorero(ModelBase):
+    __tablename__ = 'tipo_torero'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     tipo_torero = Column(String, nullable=False, unique=True)
-    toreros = relationship('ModelToreros', backref="toreros")
+    torero = relationship('ModelTorero', backref="torero")
 
 
-class ModelTipoPremios(ModelBase):
-    __tablename__ = 'tipo_premios'
+class ModelTipoPremio(ModelBase):
+    __tablename__ = 'tipo_premio'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     tipo_premio = Column(String, nullable=False, unique=True)
-    torero_premios_festejos = relationship('ModelToreros',
-                                           secondary='torero_premios_festejos')
+    torero_premio_festejo = relationship('ModelTorero',
+                                           secondary='torero_premio_festejo')
 
 
 class ModelPoblacion(ModelBase):
@@ -54,11 +54,11 @@ class ModelProvincia(ModelBase):
     id = Column(Integer, primary_key=True, autoincrement=True)
     provincia = Column(String, nullable=False, unique=True)
     poblacion = relationship(ModelPoblacion, backref="poblacion")
-    ganaderias = relationship('ModelGanaderias', backref="ganaderias")
+    ganaderia = relationship('ModelGanaderia', backref="ganaderia")
 
 
-class ModelGanaderias(ModelBase):
-    __tablename__ = 'ganaderias'
+class ModelGanaderia(ModelBase):
+    __tablename__ = 'ganaderia'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     nombre_ganaderia = Column(String, nullable=False, unique=True)
@@ -66,26 +66,26 @@ class ModelGanaderias(ModelBase):
         Integer,
         ForeignKey('provincia.id'))
     provincia = relationship('ModelProvincia')
-    ganaderias_festejos = relationship('ModelFestejos',
-                                       secondary="ganaderias_festejos")
+    ganaderia_festejo = relationship('ModelFestejo',
+                                       secondary="ganaderia_festejo")
 
 
-class ModelToreros(ModelBase):
-    __tablename__ = 'toreros'
+class ModelTorero(ModelBase):
+    __tablename__ = 'torero'
     id = Column(Integer, primary_key=True, autoincrement=True)
     nombre = Column(String, nullable=True)
     apellidos = Column(String, nullable=True)
     nombre_profesional = Column(String, nullable=True, unique=True)
 
-    tipo_toreros_id = Column(Integer, ForeignKey('tipo_toreros.id'))
-    tipo_torero = relationship(ModelTipoToreros)
+    tipo_torero_id = Column(Integer, ForeignKey('tipo_torero.id'))
+    tipo_torero = relationship(ModelTipoTorero)
 
-    torero_premios_festejos = relationship(ModelTipoPremios,
-                                           secondary='torero_premios_festejos')
+    torero_premio_festejo = relationship(ModelTipoPremio,
+                                           secondary='torero_premio_festejo')
 
 
-class ModelFestejos(ModelBase):
-    __tablename__ = 'festejos'
+class ModelFestejo(ModelBase):
+    __tablename__ = 'festejo'
     id = Column(Integer, primary_key=True, autoincrement=True)
     nombre = Column(String, nullable=False)
     celebracion = Column(DateTime, nullable=False)
@@ -96,44 +96,44 @@ class ModelFestejos(ModelBase):
         Integer,
         ForeignKey('poblacion.id'))
     poblacion = relationship(ModelPoblacion)
-    tipo_festejos_id = Column(
+    tipo_festejo_id = Column(
         Integer,
-        ForeignKey('tipo_festejos.id'))
-    tipo_festejo = relationship(ModelTipoFestejos)
+        ForeignKey('tipo_festejo.id'))
+    tipo_festejo = relationship(ModelTipoFestejo)
 
     # M:M relationships
-    toreros_premios_festejos = relationship(ModelTipoPremios,
-                                            backref="torero_premios_festejos")
-    ganaderias_festejos = relationship(ModelGanaderias,
-                                       backref="ganaderias_festejos")
+    torero_premio_festejo = relationship(ModelTipoPremio,
+                                            backref="torero_premio_festejo")
+    ganaderia_festejo = relationship(ModelGanaderia,
+                                       backref="ganaderia_festejo")
 
 
-class ModelTorerosPremiosFestejos(ModelBase):
-    __tablename__ = 'toreros_premios_festejos'
+class ModelToreroPremioFestejo(ModelBase):
+    __tablename__ = 'torero_premio_festejo'
     id = Column(Integer, primary_key=True, autoincrement=True)
 
     # M:M
-    toreros_id = Column(
+    torero_id = Column(
         Integer,
-        ForeignKey('toreros.id'))
-    festejos_id = Column(
+        ForeignKey('torero.id'))
+    festejo_id = Column(
         Integer,
-        ForeignKey('festejos.id'))
+        ForeignKey('festejo.id'))
     # M: 1
-    tipo_premios_id = Column(
+    tipo_premio_id = Column(
         Integer,
-        ForeignKey('tipo_premios.id'))
-    tipo_premios = relationship(ModelTipoPremios)
+        ForeignKey('tipo_premio.id'))
+    tipo_premio = relationship(ModelTipoPremio)
 
 
-class ModelGanaderiasFestejos(ModelBase):
-    __tablename__ = 'ganaderias_festejos'
+class ModelGanaderiaFestejo(ModelBase):
+    __tablename__ = 'ganaderia_festejo'
     id = Column(Integer, primary_key=True, autoincrement=True)
 
     # M:M
-    ganaderias_id = Column(
+    ganaderia_id = Column(
         Integer,
-        ForeignKey('ganaderias.id'))
-    festejos_id = Column(
+        ForeignKey('ganaderia.id'))
+    festejo_id = Column(
         Integer,
-        ForeignKey('festejos.id'))
+        ForeignKey('festejo.id'))
