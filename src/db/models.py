@@ -1,13 +1,7 @@
-from src import config as cfg
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Text
 from sqlalchemy.orm import relationship
 
-db_path = f'sqlite:///{cfg.DB_PATH}/{cfg.DB_NAME}'
-engine = create_engine(db_path)
-db_session = sessionmaker(bind=engine, echo=True)
 
 ModelBase = declarative_base()
 
