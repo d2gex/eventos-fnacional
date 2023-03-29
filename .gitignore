@@ -128,3 +128,18 @@ dmypy.json
 # Pyre type checker
 .pyre/
 data/sensitive
+
+# vue projects
+
+node_modules
+.DS_Store
+design
+*.log
+packages/test
+dist
+temp
+.vuerc
+.version
+.versions
+.changelog
+package-lock.json
