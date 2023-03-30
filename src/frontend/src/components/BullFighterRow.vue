@@ -1,12 +1,13 @@
 <template>
   <div class="container">
-    <div class="row " v-for="row in numRows" :key="row">
-      <div class="col-lg-6 mx-auto">
+    <div class="row border border-primary" >
+      <div class="col-lg-4 float-left" v-for="row in numRows" :key="row" >
         <div class="card mt-2 mx-auto p-2 bg-light">
           <div class="card-body bg-light">
             <div class="container">
               <form id="contact-form" role="form">
                 <div class="controls">
+                  <h3 class="text-center">Torero {{ row }}</h3>
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
@@ -30,10 +31,10 @@
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
-                        <label :for="'torero_nickname_' + row">Apodo *</label>
+                        <label :for="'torero_nickname_' + row">Apodo </label>
                         <input :id="'torero_nickname_' + row" type="text" :name="'torero_nickname_' + row"
                                class="form-control"
-                               placeholder="Entra el apodo *">
+                               placeholder="Entra el apodo">
                       </div>
                     </div>
                     <div class="col-md-6">
@@ -45,17 +46,6 @@
                           <option value="Novillero">Novillero</option>
                         </select>
 
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label :for="'nombre_profesional' + row">Nombre Profesional *</label>
-                        <input :id="'nombre_profesional' + row" type="text" :name="'nombre_profesional' + row"
-                               class="form-control"
-                               placeholder="Entra el nombre profesional *" required="required"
-                               data-error="Nombre profesional es requerido.">
                       </div>
                     </div>
                   </div>
