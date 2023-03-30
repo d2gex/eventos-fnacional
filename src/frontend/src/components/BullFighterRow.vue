@@ -59,9 +59,10 @@
       <!-- /.row-->
     </div>
     <div class="row ">
-      <div class="col-lg-6 mx-auto my-3">
+      <div class="col-lg-6 mx-auto my-3 border border-danger text-center">
         <button type="button" @click="addToreroRow" class="btn btn-success">Añadir Torero</button>
-        <button type="button" @click="deleteToreroRow" class="btn btn-danger">Borrar Torero</button>
+        <button type="button" @click="deleteToreroRow" class="btn btn-danger mx-2">Borrar Torero</button>
+        <button type="button" class="btn btn-secondary">Guardar Toreros</button>
       </div>
     </div>
   </div>
