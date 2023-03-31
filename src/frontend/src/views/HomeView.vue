@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="col-md-8">
     <ToreroForm/>
   </div>
 </template>

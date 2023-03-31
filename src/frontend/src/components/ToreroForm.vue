@@ -1,5 +1,6 @@
 <template>
-  <div class="container">
+  <fieldset class="form-group border p-3">
+    <legend class="w-auto px-2">Toreros</legend>
     <Form
         @submit="onSubmit"
         :initial-values="initialData"
@@ -7,7 +8,7 @@
     >
       <FieldArray name="toreroRow" v-slot="{ fields, push, remove }">
         <div class="row border border-primary">
-          <div class="col-lg-4 float-left" v-for="(field, row) in fields" :key="field.key">
+          <div class="col-lg-6 float-left" v-for="(field, row) in fields" :key="field.key">
             <div class="card mt-2 mx-auto p-2 bg-light">
               <div class="card-body bg-light">
                 <div class="container">
@@ -30,7 +31,8 @@
                         <div class="col-md-6">
                           <div class="form-group">
                             <label :for="`toreroSurname_${row}`">Apellidos *</label>
-                            <Field :id="`toreroSurname_${row}`" type="text" :name="`toreroRow[${row}].toreroSurname`"
+                            <Field :id="`toreroSurname_${row}`" type="text"
+                                   :name="`toreroRow[${row}].toreroSurname`"
                                    class="form-control"
                                    placeholder="Entra los apellidos *"/>
                             <div class="field-error">
@@ -43,7 +45,8 @@
                         <div class="col-md-6">
                           <div class="form-group">
                             <label :for="`toreroNickname_${row}`">Apodo </label>
-                            <Field :id="`toreroNickname_${row}`" type="text" :name="`toreroRow[${row}].toreroNickname`"
+                            <Field :id="`toreroNickname_${row}`" type="text"
+                                   :name="`toreroRow[${row}].toreroNickname`"
                                    class="form-control"
                                    placeholder="Entra el apodo"/>
                             <div class="field-error">
@@ -73,7 +76,7 @@
           <!-- /.row-->
         </div>
         <div class="row ">
-          <div class="col-lg-6 mx-auto my-3 border border-danger text-center">
+          <div class="col-lg-8 mx-auto my-3 border border-danger text-center">
             <button type="button"
                     @click="addToreroRow(push, fields.length)"
                     class="btn btn-success">Añadir Torero +
@@ -86,8 +89,7 @@
         </div>
       </FieldArray>
     </Form>
-  </div>
-
+  </fieldset>
 </template>
 
 <script>
