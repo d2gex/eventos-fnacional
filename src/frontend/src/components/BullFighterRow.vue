@@ -1,81 +1,125 @@
 <template>
   <div class="container">
-    <div class="row border border-primary" >
-      <div class="col-lg-4 float-left" v-for="row in numRows" :key="row" >
-        <div class="card mt-2 mx-auto p-2 bg-light">
-          <div class="card-body bg-light">
-            <div class="container">
-              <form id="contact-form" role="form">
-                <div class="controls">
-                  <h3 class="text-center">Torero {{ row }}</h3>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label :for="'torero_name_' + row">Nombre *</label>
-                        <input :id="'torero_name_' + row" type="text" :name="'torero_name_' + row" class="form-control"
-                               placeholder="Entra el nombre *" required="required"
-                               data-error="Nombre es requerido.">
+    <Form
+        @submit="onSubmit"
+        :initial-values="initialData"
+        :validation-schema="schema"
+    >
+      <FieldArray name="toreroRow" v-slot="{ fields, push, remove }">
+        <div class="row border border-primary">
+          <div class="col-lg-4 float-left" v-for="(field, row) in fields" :key="field.key">
+            <div class="card mt-2 mx-auto p-2 bg-light">
+              <div class="card-body bg-light">
+                <div class="container">
+                  <form id="contact-form" role="form">
+                    <div class="controls">
+                      <h3 class="text-center">Torero {{ row + 1 }}</h3>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label :for="`toreroName_${row}`">Nombre *</label>
+                            <Field :id="`toreroName_${row}`" type="text" :name="`toreroRow[${row}].toreroName`"
+                                   class="form-control"
+                                   placeholder="Entra el nombre *"/>
+                            <ErrorMessage :name="`toreroRow[${row}].toreroName`"/>
 
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label :for="`toreroSurname_${row}`">Apellidos *</label>
+                            <Field :id="`toreroSurname_${row}`" type="text" :name="`toreroRow[${row}].toreroSurname`"
+                                   class="form-control"
+                                   placeholder="Entra los apellidos *"/>
+                            <ErrorMessage :name="`toreroRow[${row}].toreroSurname`"/>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label :for="'torero_surname_' + row">Apellidos *</label>
-                        <input :id="'torero_surname_' + row" type="text" :name="'torero_surname_' + row"
-                               class="form-control"
-                               placeholder="Entra los apellidos *" required="required"
-                               data-error="Nombre es requerido.">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label :for="'torero_nickname_' + row">Apodo </label>
-                        <input :id="'torero_nickname_' + row" type="text" :name="'torero_nickname_' + row"
-                               class="form-control"
-                               placeholder="Entra el apodo">
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label :for="'tipo_torero_' + row">Tipo de Torero *</label>
-                        <select :id="'tipo_torero_' + row" :name="'tipo_torero_' + row" class="form-control">
-                          <option selected value="Torero">Torero</option>
-                          <option value="Rejoneador">Rejoneador</option>
-                          <option value="Novillero">Novillero</option>
-                        </select>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label :for="`toreroNickname_${row}`">Apodo </label>
+                            <Field :id="`toreroNickname_${row}`" type="text" :name="`toreroRow[${row}].toreroNickname`"
+                                   class="form-control"
+                                   placeholder="Entra el apodo"/>
+                            <ErrorMessage :name="`toreroRow[${row}].toreroNickname`"/>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label :for="'tipo_torero_' + row">Tipo de Torero *</label>
+                            <select :id="'_tipo_torero_' + row" :name="'tipo_torero_' + row" class="form-control">
+                              <option selected value="Torero">Torero</option>
+                              <option value="Rejoneador">Rejoneador</option>
+                              <option value="Novillero">Novillero</option>
+                            </select>
 
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </form>
                 </div>
-              </form>
+              </div>
             </div>
+            <!-- /.8 -->
+          </div>
+          <!-- /.row-->
+        </div>
+        <div class="row ">
+          <div class="col-lg-6 mx-auto my-3 border border-danger text-center">
+            <button type="button" @click="push({toreroName: '', toreroSurname: '', toreroNickname: ''})" class="btn btn-success">Añadir Torero +
+            </button>
+            <button type="button" @click="remove(row)" class="btn btn-danger mx-2">Borrar Torero -</button>
+            <button type="submit" class="btn btn-secondary">Guardar Toreros</button>
           </div>
         </div>
-        <!-- /.8 -->
-      </div>
-      <!-- /.row-->
-    </div>
-    <div class="row ">
-      <div class="col-lg-6 mx-auto my-3 border border-danger text-center">
-        <button type="button" @click="addToreroRow" class="btn btn-success">Añadir Torero</button>
-        <button type="button" @click="deleteToreroRow" class="btn btn-danger mx-2">Borrar Torero</button>
-        <button type="button" class="btn btn-secondary">Guardar Toreros</button>
-      </div>
-    </div>
+      </FieldArray>
+    </Form>
   </div>
 
 </template>
 
 <script>
+import {Field, Form, FieldArray, ErrorMessage} from 'vee-validate';
+import * as yup from "yup";
+
 export default {
   name: 'BullFighterRow',
+  components: {
+    Form,
+    Field,
+    FieldArray,
+    ErrorMessage
+  },
   data() {
+    const initialData = {
+      toreroRow: [
+        {
+          toreroName: '',
+          toreroSurname: '',
+          toreroNickname: ''
+        }
+      ]
+    }
+    const schema = yup.object().shape({
+      toreroRow: yup
+          .array()
+          .of(
+              yup.object().shape({
+                toreroName: yup.string().required(),
+                toreroSurname: yup.string().required(),
+              })
+          )
+          .strict(),
+    });
+    let numRows = 1;
+    const maxRows = 6;
     return {
-      numRows: 1,
-      maxRows: 6
+      schema,
+      numRows,
+      maxRows,
+      initialData
     }
   },
   methods:
@@ -89,6 +133,9 @@ export default {
           if (this.numRows > 1) {
             this.numRows--
           }
+        },
+        onSubmit(values) {
+          console.log(JSON.stringify(values, null, 2));
         }
       }
 }
