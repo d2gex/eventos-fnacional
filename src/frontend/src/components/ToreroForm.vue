@@ -96,7 +96,7 @@ import {Field, Form, FieldArray, ErrorMessage} from 'vee-validate';
 import * as yup from "yup";
 
 export default {
-  name: 'BullFighterRow',
+  name: 'ToreroForm',
   components: {
     Form,
     Field,
