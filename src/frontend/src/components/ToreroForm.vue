@@ -153,34 +153,3 @@ export default {
       }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-body {
-  font-family: 'Lato', sans-serif;
-}
-
-h1 {
-  margin-bottom: 40px;
-}
-
-label {
-  color: #333;
-}
-
-.help-block.with-errors {
-  color: #ff5050;
-  margin-top: 5px;
-
-}
-
-.card {
-  margin-left: 10px;
-  margin-right: 10px;
-}
-
-.error {
-  color: red;
-}
-
-</style>

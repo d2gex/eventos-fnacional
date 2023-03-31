@@ -1,5 +1,6 @@
 import "bootstrap/dist/css/bootstrap.css"
 import "bootstrap/dist/js/bootstrap"
+import "./assets/main.css"
 import { configure } from 'vee-validate'
 import {createApp} from 'vue'
 import App from './App.vue'

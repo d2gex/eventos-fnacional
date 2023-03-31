@@ -1,12 +1,3 @@
 <template>
   <router-view/>
 </template>
-
-<style>
-.field-error {
-  width: 100%;
-  margin-top: 0.25rem;
-  font-size: 0.875em;
-  color: #dc3545;
-}
-</style>
