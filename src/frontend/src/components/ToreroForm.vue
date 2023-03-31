@@ -79,12 +79,12 @@
           <div class="col-lg-8 mx-auto my-3 border border-danger text-center">
             <button type="button"
                     @click="addToreroRow(push, fields.length)"
-                    class="btn btn-success">Añadir Torero +
+                    class="btn btn-success">Añadir +
             </button>
             <button type="button" @click="removeToreroRow(remove, row, fields.length) " class="btn btn-danger mx-2">
-              Borrar Torero -
+              Borrar -
             </button>
-            <button type="submit" class="btn btn-secondary">Guardar Toreros</button>
+            <button type="submit" class="btn btn-secondary">Guardar</button>
           </div>
         </div>
       </FieldArray>
@@ -95,6 +95,7 @@
 <script>
 import {Field, Form, FieldArray, ErrorMessage} from 'vee-validate';
 import * as yup from "yup";
+import customErrorMessages  from "@/assets/common";
 
 export default {
   name: 'ToreroForm',
@@ -102,12 +103,9 @@ export default {
     Form,
     Field,
     FieldArray,
-    ErrorMessage
+    ErrorMessage,
   },
   data() {
-    const customErrorMessages = {
-      min_2: "Mínima longitud: 2 caracteres"
-    }
     const toreroRowFields = {
       toreroName: '',
       toreroSurname: '',
