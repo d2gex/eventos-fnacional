@@ -75,10 +75,13 @@
         </div>
         <div class="row ">
           <div class="col-lg-6 mx-auto my-3 border border-danger text-center">
-            <button type="button" @click="push({toreroName: '', toreroSurname: '', toreroNickname: ''})"
+            <button type="button"
+                    @click="addToreroRow(push, fields.length)"
                     class="btn btn-success">Añadir Torero +
             </button>
-            <button type="button" @click="remove(row)" class="btn btn-danger mx-2">Borrar Torero -</button>
+            <button type="button" @click="removeToreroRow(remove, row, fields.length) " class="btn btn-danger mx-2">
+              Borrar Torero -
+            </button>
             <button type="submit" class="btn btn-secondary">Guardar Toreros</button>
           </div>
         </div>
@@ -101,46 +104,44 @@ export default {
     ErrorMessage
   },
   data() {
+    const toreroRowFields = {
+      toreroName: '',
+      toreroSurname: '',
+      toreroNickname: ''
+    };
     const initialData = {
-      toreroRow: [
-        {
-          toreroName: '',
-          toreroSurname: '',
-          toreroNickname: ''
-        }
-      ]
+      toreroRow: [toreroRowFields]
     }
     const schema = yup.object().shape({
       toreroRow: yup
           .array()
           .of(
               yup.object().shape({
-                toreroName: yup.string().required("El nombre es obligatorio").min(2, "El nombre debe contener al menos 2 caracteres"),
-                toreroSurname: yup.string().required("Los apellidos son obligatorios").min(2, "Los apellidos deben contener al menos 2 caracteres"),
-                toreroNickname: yup.string().min(2, "El apodo debe contener al menos 2 caracteres"),
+                toreroName: yup.string().required("El nombre es obligatorio").min(2, "Mínima longitud: 2 caracteres"),
+                toreroSurname: yup.string().required("Los apellidos son obligatorios").min(2, "Mínima longitud: 2 caracteres"),
+                toreroNickname: yup.string().min(2, "Mínima longitud: 2 caracteres"),
               })
           )
           .strict(),
     });
-    let numRows = 1;
     const maxRows = 6;
     return {
       schema,
-      numRows,
       maxRows,
+      toreroRowFields,
       initialData
     }
   },
   methods:
       {
-        addToreroRow() {
-          if (this.numRows < this.maxRows) {
-            this.numRows++
+        addToreroRow(func, numRows) {
+          if (numRows < this.maxRows) {
+            func(this.toreroRowFields)
           }
         },
-        deleteToreroRow() {
-          if (this.numRows > 1) {
-            this.numRows--
+        removeToreroRow(func, index, numRows) {
+          if (numRows > 1) {
+            func(index)
           }
         },
         onSubmit(values) {
