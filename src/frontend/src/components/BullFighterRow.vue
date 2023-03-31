@@ -4,6 +4,7 @@
         @submit="onSubmit"
         :initial-values="initialData"
         :validation-schema="schema"
+        novalidate
     >
       <FieldArray name="toreroRow" v-slot="{ fields, push, remove }">
         <div class="row border border-primary">
@@ -21,7 +22,9 @@
                             <Field :id="`toreroName_${row}`" type="text" :name="`toreroRow[${row}].toreroName`"
                                    class="form-control"
                                    placeholder="Entra el nombre *"/>
-                            <ErrorMessage :name="`toreroRow[${row}].toreroName`"/>
+                            <div class="field-error">
+                              <ErrorMessage as="div" :name="`toreroRow[${row}].toreroName`"/>
+                            </div>
 
                           </div>
                         </div>
@@ -31,7 +34,9 @@
                             <Field :id="`toreroSurname_${row}`" type="text" :name="`toreroRow[${row}].toreroSurname`"
                                    class="form-control"
                                    placeholder="Entra los apellidos *"/>
-                            <ErrorMessage :name="`toreroRow[${row}].toreroSurname`"/>
+                            <div class="field-error">
+                              <ErrorMessage :name="`toreroRow[${row}].toreroSurname`"/>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -42,7 +47,9 @@
                             <Field :id="`toreroNickname_${row}`" type="text" :name="`toreroRow[${row}].toreroNickname`"
                                    class="form-control"
                                    placeholder="Entra el apodo"/>
-                            <ErrorMessage :name="`toreroRow[${row}].toreroNickname`"/>
+                            <div class="field-error">
+                              <ErrorMessage :name="`toreroRow[${row}].toreroNickname`"/>
+                            </div>
                           </div>
                         </div>
                         <div class="col-md-6">
@@ -68,7 +75,8 @@
         </div>
         <div class="row ">
           <div class="col-lg-6 mx-auto my-3 border border-danger text-center">
-            <button type="button" @click="push({toreroName: '', toreroSurname: '', toreroNickname: ''})" class="btn btn-success">Añadir Torero +
+            <button type="button" @click="push({toreroName: '', toreroSurname: '', toreroNickname: ''})"
+                    class="btn btn-success">Añadir Torero +
             </button>
             <button type="button" @click="remove(row)" class="btn btn-danger mx-2">Borrar Torero -</button>
             <button type="submit" class="btn btn-secondary">Guardar Toreros</button>
@@ -107,8 +115,9 @@ export default {
           .array()
           .of(
               yup.object().shape({
-                toreroName: yup.string().required(),
-                toreroSurname: yup.string().required(),
+                toreroName: yup.string().required("El nombre es obligatorio").min(2, "El nombre debe contener al menos 2 caracteres"),
+                toreroSurname: yup.string().required("Los apellidos son obligatorios").min(2, "Los apellidos deben contener al menos 2 caracteres"),
+                toreroNickname: yup.string().min(2, "El apodo debe contener al menos 2 caracteres"),
               })
           )
           .strict(),
@@ -164,6 +173,10 @@ label {
 .card {
   margin-left: 10px;
   margin-right: 10px;
+}
+
+.error {
+  color: red;
 }
 
 </style>
