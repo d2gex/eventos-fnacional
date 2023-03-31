@@ -104,6 +104,9 @@ export default {
     ErrorMessage
   },
   data() {
+    const customErrorMessages = {
+      min_2: "Mínima longitud: 2 caracteres"
+    }
     const toreroRowFields = {
       toreroName: '',
       toreroSurname: '',
@@ -117,9 +120,9 @@ export default {
           .array()
           .of(
               yup.object().shape({
-                toreroName: yup.string().required("El nombre es obligatorio").min(2, "Mínima longitud: 2 caracteres"),
-                toreroSurname: yup.string().required("Los apellidos son obligatorios").min(2, "Mínima longitud: 2 caracteres"),
-                toreroNickname: yup.string().min(2, "Mínima longitud: 2 caracteres"),
+                toreroName: yup.string().required("El nombre es obligatorio").min(2, customErrorMessages.min_2),
+                toreroSurname: yup.string().required("Los apellidos son obligatorios").min(2, customErrorMessages.min_2),
+                toreroNickname: yup.string().min(2, customErrorMessages.min_2),
               })
           )
           .strict(),
