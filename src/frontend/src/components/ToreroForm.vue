@@ -4,7 +4,6 @@
         @submit="onSubmit"
         :initial-values="initialData"
         :validation-schema="schema"
-        novalidate
     >
       <FieldArray name="toreroRow" v-slot="{ fields, push, remove }">
         <div class="row border border-primary">
