@@ -16,7 +16,7 @@
                     <div class="controls">
                       <h3 class="text-center">Ganadería {{ row + 1 }}</h3>
                       <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                           <div class="form-group">
                             <label :for="`ganaderiaName_${row}`">Nombre *</label>
                             <Field :id="`ganaderiaName_${row}`" type="text" :name="`ganaderiaRow[${row}].ganaderiaName`"
@@ -30,13 +30,13 @@
                         </div>
                         <div class="col-md-6">
                           <div class="form-group">
-                            <label :for="'provincia_' + row">Tipo de Torero *</label>
-                            <select :id="'_provincia_' + row" :name="'provincia_' + row" class="form-control">
-                              <option selected value="Granada">Granada</option>
-                              <option value="Sevilla">Sevilla</option>
-                              <option value="Toledo">Toledo</option>
-                            </select>
-
+                            <label :for="'provincia_' + row">Provincia *</label>
+                            <Field :id="'provincia_' + row" :name="`ganaderiaRow[${row}].provincia`"
+                                   v-model="selected_provincia" as="select" class="form-control">
+                              <option v-for="(prov, prov_index) in provincias" :key="prov_index" :value="prov">
+                                {{ prov }}
+                              </option>
+                            </Field>
                           </div>
                         </div>
                       </div>
@@ -80,8 +80,11 @@ export default {
     ErrorMessage
   },
   data() {
+    const provincias = ['Toledo', 'Granada', 'Sevilla']
+    const selected_provincia = 'Toledo'
     const ganaderiaRowFields = {
       ganaderiaName: '',
+      provincia: ''
     };
     const initialData = {
       ganaderiaRow: [ganaderiaRowFields]
@@ -101,7 +104,9 @@ export default {
       schema,
       maxRows,
       ganaderiaRowFields,
-      initialData
+      initialData,
+      provincias,
+      selected_provincia
     }
   },
   methods:
