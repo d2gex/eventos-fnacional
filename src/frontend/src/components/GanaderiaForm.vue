@@ -94,7 +94,7 @@ export default {
           .array()
           .of(
               yup.object().shape({
-                ganaderiaName: yup.string().required("El nombre es obligatorio").min(2, customErrorMessages.min_2)
+                ganaderiaName: yup.string().required(customErrorMessages.required_with_name("El nombre")).min(2, customErrorMessages.min_2)
               })
           )
           .strict(),
