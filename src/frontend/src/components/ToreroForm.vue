@@ -95,7 +95,7 @@
 <script>
 import {Field, Form, FieldArray, ErrorMessage} from 'vee-validate';
 import * as yup from "yup";
-import customErrorMessages  from "@/assets/common";
+import customErrorMessages from "@/assets/common";
 
 export default {
   name: 'ToreroForm',
@@ -119,8 +119,8 @@ export default {
           .array()
           .of(
               yup.object().shape({
-                toreroName: yup.string().required("El nombre es obligatorio").min(2, customErrorMessages.min_2),
-                toreroSurname: yup.string().required("Los apellidos son obligatorios").min(2, customErrorMessages.min_2),
+                toreroName: yup.string().required(customErrorMessages.required_with_name("El nombre")).min(2, customErrorMessages.min_2),
+                toreroSurname: yup.string().required(customErrorMessages.required_with_name("Los apellidos")).min(2, customErrorMessages.min_2),
                 toreroNickname: yup.string().min(2, customErrorMessages.min_2),
               })
           )
