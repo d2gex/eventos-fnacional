@@ -57,12 +57,12 @@
                         <div class="col-md-6">
                           <div class="form-group">
                             <label :for="'tipo_torero_' + row">Tipo de Torero *</label>
-                            <select :id="'_tipo_torero_' + row" :name="'tipo_torero_' + row" class="form-control">
-                              <option selected value="Torero">Torero</option>
-                              <option value="Rejoneador">Rejoneador</option>
-                              <option value="Novillero">Novillero</option>
-                            </select>
-
+                            <Field :id="'tipoTorero_' + row" :name="`toreroRow[${row}].tipoTorero`"
+                                   v-model="selected" as="select" class="form-control">
+                              <option v-for="(tipo, tipo_index) in tipoToreros" :key="tipo_index" :value="tipo">
+                                {{ tipo }}
+                              </option>
+                            </Field>
                           </div>
                         </div>
                       </div>
@@ -106,10 +106,13 @@ export default {
     ErrorMessage,
   },
   data() {
+    const tipoToreros = ['Torero', 'Rejoneador', 'Banderillero']
+    const selected = 'Torero'
     const toreroRowFields = {
       toreroName: '',
       toreroSurname: '',
-      toreroNickname: ''
+      toreroNickname: '',
+      tipoTorero: ''
     };
     const initialData = {
       toreroRow: [toreroRowFields]
@@ -131,7 +134,9 @@ export default {
       schema,
       maxRows,
       toreroRowFields,
-      initialData
+      initialData,
+      tipoToreros,
+      selected
     }
   },
   methods:

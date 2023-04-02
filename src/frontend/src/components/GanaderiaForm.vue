@@ -32,7 +32,7 @@
                           <div class="form-group">
                             <label :for="'provincia_' + row">Provincia *</label>
                             <Field :id="'provincia_' + row" :name="`ganaderiaRow[${row}].provincia`"
-                                   v-model="selected_provincia" as="select" class="form-control">
+                                   v-model="selected" as="select" class="form-control">
                               <option v-for="(prov, prov_index) in provincias" :key="prov_index" :value="prov">
                                 {{ prov }}
                               </option>
@@ -81,7 +81,7 @@ export default {
   },
   data() {
     const provincias = ['Toledo', 'Granada', 'Sevilla']
-    const selected_provincia = 'Toledo'
+    const selected = 'Toledo'
     const ganaderiaRowFields = {
       ganaderiaName: '',
       provincia: ''
@@ -106,7 +106,7 @@ export default {
       ganaderiaRowFields,
       initialData,
       provincias,
-      selected_provincia
+      selected
     }
   },
   methods:
