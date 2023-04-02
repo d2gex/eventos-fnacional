@@ -101,12 +101,12 @@ export default {
     }));
     const maxRows = 6;
     return {
-      schema,
-      maxRows,
+      provincias,
+      selected,
       ganaderiaRowFields,
       initialData,
-      provincias,
-      selected
+      schema,
+      maxRows,
     }
   },
   methods:

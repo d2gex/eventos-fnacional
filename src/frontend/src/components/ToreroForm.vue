@@ -131,12 +131,12 @@ export default {
     }));
     const maxRows = 6;
     return {
-      schema,
-      maxRows,
+      tipoToreros,
+      selected,
       toreroRowFields,
       initialData,
-      tipoToreros,
-      selected
+      schema,
+      maxRows
     }
   },
   methods:
