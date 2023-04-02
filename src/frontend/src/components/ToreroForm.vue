@@ -94,7 +94,8 @@
 
 <script>
 import {Field, Form, FieldArray, ErrorMessage} from 'vee-validate';
-import * as yup from "yup";
+import {object as y_object, string as y_string, array as y_array} from "yup";
+import {markRaw} from "vue";
 import customErrorMessages from "@/assets/common";
 
 export default {
@@ -117,18 +118,17 @@ export default {
     const initialData = {
       toreroRow: [toreroRowFields]
     }
-    const schema = yup.object().shape({
-      toreroRow: yup
-          .array()
+    const schema = markRaw(y_object().shape({
+      toreroRow: y_array()
           .of(
-              yup.object().shape({
-                toreroName: yup.string().required(customErrorMessages.required_with_name("El nombre")).min(2, customErrorMessages.min_2),
-                toreroSurname: yup.string().required(customErrorMessages.required_with_name("Los apellidos")).min(2, customErrorMessages.min_2),
-                toreroNickname: yup.string().min(2, customErrorMessages.min_2),
+              y_object().shape({
+                toreroName: y_string().required(customErrorMessages.required_with_name("El nombre")).min(2, customErrorMessages.min_2),
+                toreroSurname: y_string().required(customErrorMessages.required_with_name("Los apellidos")).min(2, customErrorMessages.min_2),
+                toreroNickname: y_string().min(2, customErrorMessages.min_2),
               })
           )
           .strict(),
-    });
+    }));
     const maxRows = 6;
     return {
       schema,

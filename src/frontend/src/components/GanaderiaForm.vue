@@ -68,7 +68,8 @@
 
 <script>
 import {Field, Form, FieldArray, ErrorMessage} from 'vee-validate';
-import * as yup from "yup";
+import {object as y_object, string as y_string, array as y_array} from "yup";
+import {markRaw} from "vue";
 import customErrorMessages from "@/assets/common";
 
 export default {
@@ -89,16 +90,15 @@ export default {
     const initialData = {
       ganaderiaRow: [ganaderiaRowFields]
     }
-    const schema = yup.object().shape({
-      ganaderiaRow: yup
-          .array()
+    const schema = markRaw(y_object().shape({
+      ganaderiaRow: y_array()
           .of(
-              yup.object().shape({
-                ganaderiaName: yup.string().required(customErrorMessages.required_with_name("El nombre")).min(2, customErrorMessages.min_2)
+              y_object().shape({
+                ganaderiaName: y_string().required(customErrorMessages.required_with_name("El nombre")).min(2, customErrorMessages.min_2)
               })
           )
           .strict(),
-    });
+    }));
     const maxRows = 6;
     return {
       schema,
