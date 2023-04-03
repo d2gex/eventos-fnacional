@@ -15,7 +15,7 @@
 
     <div class="row">
     <div class="col-md-12">
-      <NestedForm/>
+      <FestejosForm/>
     </div>
   </div>
 
@@ -26,12 +26,14 @@
 // import ToreroForm from '@/components/ToreroForm.vue'
 // import GanaderiaForm from '@/components/GanaderiaForm.vue'
 // import FestejosForm from "@/components/FestejosForm.vue";
-import NestedForm from "@/components/NestedForm.vue";
+// import NestedForm from "@/components/NestedForm.vue";
+import FestejosForm from "@/components/FestejosForm.vue";
 
 export default {
   name: 'HomeView',
   components: {
-    NestedForm
+    FestejosForm
+    // NestedForm
     // ToreroForm,
     // GanaderiaForm,
     // FestejosForm
