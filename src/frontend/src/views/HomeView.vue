@@ -7,18 +7,25 @@
       <GanaderiaForm/>
     </div>
   </div>
+  <div class="row">
+    <div class="col-md-12">
+      <FestejosForm/>
+    </div>
+  </div>
 </template>
 
 <script>
-// @ is an alias to /src
+
 import ToreroForm from '@/components/ToreroForm.vue'
 import GanaderiaForm from '@/components/GanaderiaForm.vue'
+import FestejosForm from "@/components/FestejosForm.vue";
 
 export default {
   name: 'HomeView',
   components: {
     ToreroForm,
-    GanaderiaForm
+    GanaderiaForm,
+    FestejosForm
   }
 }
 </script>
