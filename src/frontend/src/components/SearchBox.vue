@@ -55,6 +55,11 @@ export default {
     setResult(item) {
       this.search = item
       this.isListOpen = false
+    },
+    handleClickOutside(event) {
+      if (!this.$el.contains(event.target)) {
+        this.isListOpen = false;
+      }
     }
   },
   data() {
@@ -63,6 +68,12 @@ export default {
       results: [],
       isListOpen: false
     }
+  },
+  mounted() {
+    document.addEventListener('click', this.handleClickOutside);
+  },
+  unmounted() {
+    document.removeEventListener('click', this.handleClickOutside);
   }
 }
 </script>
