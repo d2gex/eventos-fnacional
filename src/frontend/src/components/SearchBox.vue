@@ -17,7 +17,7 @@
     <ul class="list-group" v-show="isListOpen">
       <li :class="{ 'active': index === arrowCounter }" class="list-group-item" v-for="(item, index) in results"
           :key="index">
-        <span @click="setResult(item)">{{ item }}</span>
+        <span @click="setResult(item)">{{ capitalizeWords(item) }}</span>
       </li>
     </ul>
   </div>
@@ -25,6 +25,7 @@
 
 <script>
 import {Field, ErrorMessage} from 'vee-validate';
+import {CommonUtils} from "@/assets/common";
 
 export default {
   name: 'SearchBox',
@@ -46,7 +47,7 @@ export default {
   },
   components: {
     Field,
-    ErrorMessage,
+    ErrorMessage
   },
   methods: {
     filterResults() {
@@ -87,6 +88,9 @@ export default {
       this.search = this.results[this.arrowCounter];
       this.arrowCounter = -1;
       this.isListOpen = false;
+    },
+    capitalizeWords (item) {
+      return CommonUtils.capitalizeWords(item)
     }
   },
   data() {
