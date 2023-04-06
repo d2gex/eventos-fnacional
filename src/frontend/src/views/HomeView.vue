@@ -17,7 +17,8 @@
       <SearchBox type="text"
                  id="nombreProfesional_id"
                  name='nombreProfesional'
-                 placeholder="Entra el festejo *"/>
+                 placeholder="Entra el nombre *"
+                 :items="items"/>
     </div>
   </div>
 </template>
@@ -36,6 +37,11 @@ export default {
     // ToreroForm,
     // GanaderiaForm,
     SearchBox
+  },
+  data() {
+    return {
+      items: ["Jose Antonio", "Daniel Garcia", "David 'El Litri'", "Sonia Espartaca", "Laura Fogar 'La Cute'"].map(v => v.toLowerCase()),
+    }
   }
 }
 </script>
