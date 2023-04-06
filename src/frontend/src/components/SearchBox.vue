@@ -11,13 +11,16 @@
            @keydown.enter="onEnter"
            class="form-control"
     />
-    <ErrorMessage as="div" class="field-error" :name="name"/>
+    <ErrorMessage as="div" class="field-error border border-1" :name="name"/>
   </div>
-  <div class="mt-2">
+  <div class="mt-4">
     <ul class="list-group" v-show="isListOpen">
-      <li :class="{ 'active': index === arrowCounter }" class="list-group-item" v-for="(item, index) in results"
-          :key="index">
-        <span @click="setResult(item)">{{ capitalizeWords(item) }}</span>
+      <li :class="{ 'active': index === arrowCounter }"
+          class="list-group-item"
+          v-for="(item, index) in results" :key="index"
+          @click="setResult(item)"
+      >
+        {{ capitalizeWords(item) }}
       </li>
     </ul>
   </div>
@@ -89,7 +92,7 @@ export default {
       this.arrowCounter = -1;
       this.isListOpen = false;
     },
-    capitalizeWords (item) {
+    capitalizeWords(item) {
       return CommonUtils.capitalizeWords(item)
     }
   },

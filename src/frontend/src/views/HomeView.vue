@@ -12,15 +12,12 @@
   <!--      <FestejosForm/>-->
   <!--    </div>-->
   <!--  </div>-->
-  <div class="row">
-    <div class="col-md-12">
-      <SearchBox type="text"
-                 id="nombreProfesional_id"
-                 name='nombreProfesional'
-                 placeholder="Entra el nombre *"
-                 :items="items"/>
+    <div class="row">
+      <div class="col-md-12">
+        <FestejoToreros :items="items"/>
+      </div>
     </div>
-  </div>
+
 </template>
 
 <script>
@@ -28,15 +25,15 @@
 // import ToreroForm from '@/components/ToreroForm.vue'
 // import GanaderiaForm from '@/components/GanaderiaForm.vue'
 // import FestejosForm from "@/components/FestejosForm.vue";
-import SearchBox from "@/components/SearchBox.vue";
+import FestejoToreros from "@/components/FestejoToreros.vue";
 
 export default {
   name: 'HomeView',
   components: {
+    FestejoToreros
     // FestejosForm,
     // ToreroForm,
     // GanaderiaForm,
-    SearchBox
   },
   data() {
     return {
