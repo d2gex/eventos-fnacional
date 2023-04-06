@@ -6,16 +6,20 @@
            :placeholder="placeholder"
            v-model="search"
            @input="onChange"
+           @keydown.down="onArrowDown"
+           @keydown.up="onArrowUp"
+           @keydown.enter="onEnter"
            class="form-control"
     />
     <ErrorMessage as="div" class="field-error" :name="name"/>
   </div>
   <div class="mt-2">
-    <url v-show="isListOpen">
-      <li class="d-flex flex-column ml-3 border-bottom" v-for="(item, index) in results" :key="index">
+    <ul class="list-group" v-show="isListOpen">
+      <li :class="{ 'active': index === arrowCounter }" class="list-group-item" v-for="(item, index) in results"
+          :key="index">
         <span @click="setResult(item)">{{ item }}</span>
       </li>
-    </url>
+    </ul>
   </div>
 </template>
 
@@ -60,13 +64,37 @@ export default {
       if (!this.$el.contains(event.target)) {
         this.isListOpen = false;
       }
+    },
+    onArrowDown() {
+      const last_el_offset = this.results.length - 1
+      const first_el_offset = 0
+      if (this.arrowCounter === last_el_offset) {
+        this.arrowCounter = first_el_offset
+      } else {
+        this.arrowCounter = this.arrowCounter + 1;
+      }
+    },
+    onArrowUp() {
+      const last_el_offset = this.results.length - 1
+      const first_el_offset = 0
+      if (this.arrowCounter === first_el_offset) {
+        this.arrowCounter = last_el_offset
+      } else {
+        this.arrowCounter = this.arrowCounter - 1;
+      }
+    },
+    onEnter() {
+      this.search = this.results[this.arrowCounter];
+      this.arrowCounter = -1;
+      this.isListOpen = false;
     }
   },
   data() {
     return {
       search: '',
       results: [],
-      isListOpen: false
+      isListOpen: false,
+      arrowCounter: -1
     }
   },
   mounted() {
