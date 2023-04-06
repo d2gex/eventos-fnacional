@@ -13,7 +13,7 @@
   <div class="mt-2">
     <url v-show="isListOpen">
       <li class="d-flex flex-column ml-3 border-bottom" v-for="(item, index) in results" :key="index">
-        <span>{{ item }}</span>
+        <span @click="setResult(item)">{{ item }}</span>
       </li>
     </url>
   </div>
@@ -51,6 +51,10 @@ export default {
     onChange() {
       this.results = this.filterResults()
       this.isListOpen = true
+    },
+    setResult(item) {
+      this.search = item
+      this.isListOpen = false
     }
   },
   data() {
