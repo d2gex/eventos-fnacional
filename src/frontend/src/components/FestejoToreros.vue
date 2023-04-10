@@ -22,16 +22,8 @@
                             <SearchBox :items="items" type="text" :name="`toreroRow[${row}].toreroName`"/>
                           </div>
                         </div>
-                        <div class="col-md-4">
-                          <div class="form-group">
-                            <label :for="`toreroRow[${row}].tipoPremio`">Tipo de Festejo *</label>
-                            <Field :id="`tipoPremio_id_${row}`" :name="`toreroRow[${row}].tipoPremio`"
-                                   v-model="tipoPremioSelected[row]" as="select" class="form-control">
-                              <option v-for="(tipo, tipo_index) in tipoPremios" :key="tipo_index" :value="tipo">
-                                {{ tipo }}
-                              </option>
-                            </Field>
-                          </div>
+                        <div class="col-md-6">
+                          <PremiosTorero :torero-num-row="row"/>
                         </div>
                       </div>
                     </div>
@@ -61,8 +53,9 @@
 </template>
 
 <script>
-import {FieldArray, Form, Field} from "vee-validate";
+import {FieldArray, Form} from "vee-validate";
 import SearchBox from "@/components/SearchBox.vue";
+import PremiosTorero from "@/components/PremiosTorero.vue";
 import {customErrorMessages} from "@/assets/common";
 import {markRaw} from "vue";
 import {array as y_array, object as y_object, string as y_string} from "yup";
@@ -77,14 +70,12 @@ export default {
   },
   components: {
     SearchBox,
+    PremiosTorero,
     FieldArray,
-    Field,
     Form
   },
   data() {
     const maxRows = 6;
-    const tipoPremios = ['Oreja', 'Rabo', 'Ovación'];
-    const tipoPremioSelected = Array(maxRows).fill(tipoPremios[0])
     const toreroRowFields = {
       toreroName: '',
     };
@@ -106,8 +97,6 @@ export default {
       toreroRowFields,
       initialData,
       schema,
-      tipoPremios,
-      tipoPremioSelected
     }
   },
   methods:
