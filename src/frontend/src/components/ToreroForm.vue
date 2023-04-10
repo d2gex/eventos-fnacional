@@ -96,7 +96,7 @@
 import {Field, Form, FieldArray, ErrorMessage} from 'vee-validate';
 import {object as y_object, string as y_string, array as y_array} from "yup";
 import {markRaw} from "vue";
-import customErrorMessages from "@/assets/common";
+import {customErrorMessages} from "@/assets/common";
 
 export default {
   name: 'ToreroForm',

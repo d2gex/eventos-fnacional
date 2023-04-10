@@ -8,7 +8,7 @@
            @input="onChange"
            @keydown.down="onArrowDown"
            @keydown.up="onArrowUp"
-           @keydown.enter="onEnter"
+           @keydown.enter.prevent="onEnter"
            class="form-control"
     />
     <ErrorMessage as="div" class="field-error border border-1" :name="name"/>
@@ -18,7 +18,7 @@
       <li :class="{ 'active': index === arrowCounter }"
           class="list-group-item"
           v-for="(item, index) in results" :key="index"
-          @click="setResult(item)"
+          @click.stop="setResult(item)"
       >
         {{ capitalizeWords(item) }}
       </li>
@@ -91,6 +91,7 @@ export default {
       this.search = this.results[this.arrowCounter];
       this.arrowCounter = -1;
       this.isListOpen = false;
+
     },
     capitalizeWords(item) {
       return CommonUtils.capitalizeWords(item)
