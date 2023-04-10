@@ -22,17 +22,16 @@
                             <SearchBox :items="items" type="text" :name="`toreroRow[${row}].toreroName`"/>
                           </div>
                         </div>
-                        <div class="col-md-6">
-                          <!--                          <div class="form-group">-->
-                          <!--                            <label :for="`toreroSurname_${row}`">Apellidos *</label>-->
-                          <!--                            <Field :id="`toreroSurname_${row}`" type="text"-->
-                          <!--                                   :name="`toreroRow[${row}].toreroSurname`"-->
-                          <!--                                   class="form-control"-->
-                          <!--                                   placeholder="Entra los apellidos *"/>-->
-                          <!--                            <div class="field-error">-->
-                          <!--                              <ErrorMessage :name="`toreroRow[${row}].toreroSurname`"/>-->
-                          <!--                            </div>-->
-                          <!--                          </div>-->
+                        <div class="col-md-4">
+                          <div class="form-group">
+                            <label :for="`toreroRow[${row}].tipoPremio`">Tipo de Festejo *</label>
+                            <Field :id="`tipoPremio_id_${row}`" :name="`toreroRow[${row}].tipoPremio`"
+                                   v-model="tipoPremioSelected[row]" as="select" class="form-control">
+                              <option v-for="(tipo, tipo_index) in tipoPremios" :key="tipo_index" :value="tipo">
+                                {{ tipo }}
+                              </option>
+                            </Field>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -62,7 +61,7 @@
 </template>
 
 <script>
-import {FieldArray, Form} from "vee-validate";
+import {FieldArray, Form, Field} from "vee-validate";
 import SearchBox from "@/components/SearchBox.vue";
 import {customErrorMessages} from "@/assets/common";
 import {markRaw} from "vue";
@@ -79,9 +78,13 @@ export default {
   components: {
     SearchBox,
     FieldArray,
+    Field,
     Form
   },
   data() {
+    const maxRows = 6;
+    const tipoPremios = ['Oreja', 'Rabo', 'Ovación'];
+    const tipoPremioSelected = Array(maxRows).fill(tipoPremios[0])
     const toreroRowFields = {
       toreroName: '',
     };
@@ -98,12 +101,13 @@ export default {
           )
           .strict(),
     }));
-    const maxRows = 6;
     return {
       maxRows,
       toreroRowFields,
       initialData,
-      schema
+      schema,
+      tipoPremios,
+      tipoPremioSelected
     }
   },
   methods:
