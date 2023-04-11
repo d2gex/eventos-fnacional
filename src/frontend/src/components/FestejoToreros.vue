@@ -44,7 +44,7 @@
 
 <script>
 import SearchBox from "@/components/SearchBox.vue";
-import PremiosTorero from "@/components/PremiosTorero.vue";
+import PremiosTorero from "@/components/FestejoToreroPremios.vue";
 
 export default {
   name: "FestejoToreros",

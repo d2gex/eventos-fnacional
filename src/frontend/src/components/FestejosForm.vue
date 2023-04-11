@@ -65,7 +65,7 @@ export default {
       toreroRow: y_array()
           .of(
               y_object().shape({
-                toreroName: y_string().required(customErrorMessages.required_with_name("El nombre")).min(2, customErrorMessages.min_2),
+                toreroName: y_string().required(customErrorMessages.required_with_name("El nombre")).min(1, customErrorMessages.min_2),
               })
           )
           .strict(),
