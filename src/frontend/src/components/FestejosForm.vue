@@ -8,16 +8,21 @@
     >
       <div class="row border border-primary">
         <div class="col-md-6">
-          <FestejoDetalles nombre-festejo="festejos.nombreFestejo"
-                           poblacion="festejos.poblacion"
-                           provincia="festejos.provincia"
-                           tipo-festejo="festejos.tipoFestejo"
-                           :selected-festejo="selected"
-                           :tipos-festejos="tipoFestejos"/>
+          <div class="row">
+            <FestejoDetalles nombre-festejo="festejos.nombreFestejo"
+                             poblacion="festejos.poblacion"
+                             provincia="festejos.provincia"
+                             tipo-festejo="festejos.tipoFestejo"
+                             :selected-festejo="selected"
+                             :tipos-festejos="tipoFestejos"/>
+          </div>
+          <div class="row">
+            <FestejoGanaderias :items="ganaderiasData"/>
+          </div>
 
         </div>
         <div class="col-md-6">
-          <FestejoToreros :items="items"/>
+          <FestejoToreros :items="torerosData"/>
         </div>
       </div>
       <div class="row ">
@@ -31,18 +36,20 @@
 
 <script>
 import {Form} from 'vee-validate';
-import {array as y_array, object as y_object, string as y_string} from "yup";
-import {markRaw} from "vue";
 import {customErrorMessages} from "@/assets/common";
 import FestejoDetalles from "@/components/FestejoDetalles.vue";
 import FestejoToreros from "@/components/FestejoToreros.vue";
+import FestejoGanaderias from "@/components/FestejoGanaderias.vue";
+import {array as y_array, object as y_object, string as y_string} from "yup";
+import {markRaw} from "vue";
 
 export default {
   name: 'FestejosForm',
   components: {
     Form,
     FestejoDetalles,
-    FestejoToreros
+    FestejoToreros,
+    FestejoGanaderias
   },
   data() {
     const selected = 'Opcion 1'
@@ -55,7 +62,8 @@ export default {
         provincia: ''
       }
     }
-    const items = ["Jose Antonio", "Daniel Garcia", "David 'El Litri'", "Sonia Espartaca", "Laura Fogar 'La Cute'"].map(v => v.toLowerCase())
+    const torerosData = ["Jose Antonio", "Daniel Garcia", "David 'El Litri'", "Sonia Espartaca", "Laura Fogar 'La Cute'"].map(v => v.toLowerCase())
+    const ganaderiasData = ["Ganaderia 1", "Ganaderia 2", "Ganaderia 3", "Ganaderia 4", "Ganaderia 5"].map(v => v.toLowerCase())
     const schema = markRaw(y_object().shape({
       festejos: y_object().shape({
         nombreFestejo: y_string().required(customErrorMessages.required_with_name("El nombre")).min(2, customErrorMessages.min_2),
@@ -69,13 +77,21 @@ export default {
               })
           )
           .strict(),
+      ganaderiaRow: y_array()
+          .of(
+              y_object().shape({
+                ganaderiaName: y_string().required(customErrorMessages.required_with_name("El nombre")).min(1, customErrorMessages.min_2),
+              })
+          )
+          .strict(),
     }));
     return {
       selected,
       tipoFestejos,
       initialData,
       schema,
-      items
+      torerosData,
+      ganaderiasData
     }
   },
   methods:

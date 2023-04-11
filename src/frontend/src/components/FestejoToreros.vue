@@ -4,24 +4,22 @@
       <div class="card mt-2 mx-auto p-2 bg-light">
         <div class="card-body bg-light">
           <div class="container">
-            <form id="contact-form" role="form">
-              <div class="controls">
-                <h3 class="text-center">Torero/Premio {{ row + 1 }}</h3>
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label :for="`toreroName_${row}`">Torero *</label>
-                      <SearchBox type="text"
-                                 :name="`toreroRow[${row}].toreroName`"
-                                 :items="items"/>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <PremiosTorero :torero-num-row="row"/>
+            <div class="controls">
+              <h3 class="text-center">Torero/Premio {{ row + 1 }}</h3>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label :for="`toreroName_${row}`">Torero *</label>
+                    <SearchBox type="text"
+                               :name="`toreroRow[${row}].toreroName`"
+                               :items="items"/>
                   </div>
                 </div>
+                <div class="col-md-6">
+                  <PremiosTorero :torero-num-row="row"/>
+                </div>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>
