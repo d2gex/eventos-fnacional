@@ -31,7 +31,7 @@
 import {Field} from "vee-validate";
 
 export default {
-  name: "PremiosTorero",
+  name: "FestejoToreroPremios",
   props: {
     toreroNumRow: Number
   },
