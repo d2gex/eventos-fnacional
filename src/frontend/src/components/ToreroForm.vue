@@ -18,25 +18,25 @@
                       <div class="row">
                         <div class="col-md-6">
                           <div class="form-group">
-                            <label :for="`toreroName_${row}`">Nombre *</label>
-                            <Field :id="`toreroName_${row}`" type="text" :name="`toreroRow[${row}].toreroName`"
+                            <label :for="`toreroRow[${row}].nombre` + '_id'">Nombre *</label>
+                            <Field :id="`toreroRow[${row}].nombre` + '_id'" type="text" :name="`toreroRow[${row}].nombre`"
                                    class="form-control"
                                    placeholder="Entra el nombre *"/>
                             <div class="field-error">
-                              <ErrorMessage as="div" :name="`toreroRow[${row}].toreroName`"/>
+                              <ErrorMessage as="div" :name="`toreroRow[${row}].nombre`"/>
                             </div>
 
                           </div>
                         </div>
                         <div class="col-md-6">
                           <div class="form-group">
-                            <label :for="`toreroSurname_${row}`">Apellidos *</label>
-                            <Field :id="`toreroSurname_${row}`" type="text"
-                                   :name="`toreroRow[${row}].toreroSurname`"
+                            <label :for="`toreroRow[${row}].apellidos` + '_id'">Apellidos *</label>
+                            <Field :id="`toreroRow[${row}].apellidos` + '_id'" type="text"
+                                   :name="`toreroRow[${row}].apellidos`"
                                    class="form-control"
                                    placeholder="Entra los apellidos *"/>
                             <div class="field-error">
-                              <ErrorMessage :name="`toreroRow[${row}].toreroSurname`"/>
+                              <ErrorMessage :name="`toreroRow[${row}].apellidos`"/>
                             </div>
                           </div>
                         </div>
@@ -44,23 +44,23 @@
                       <div class="row">
                         <div class="col-md-6">
                           <div class="form-group">
-                            <label :for="`toreroNickname_${row}`">Apodo </label>
-                            <Field :id="`toreroNickname_${row}`" type="text"
-                                   :name="`toreroRow[${row}].toreroNickname`"
+                            <label :for="`toreroRow[${row}].apodo` + '_id'">Apodo </label>
+                            <Field :id="`toreroRow[${row}].apodo` + '_id'" type="text"
+                                   :name="`toreroRow[${row}].apodo`"
                                    class="form-control"
                                    placeholder="Entra el apodo"/>
                             <div class="field-error">
-                              <ErrorMessage :name="`toreroRow[${row}].toreroNickname`"/>
+                              <ErrorMessage :name="`toreroRow[${row}].apodo`"/>
                             </div>
                           </div>
                         </div>
                         <div class="col-md-6">
                           <div class="form-group">
-                            <label :for="'tipo_torero_' + row">Tipo de Torero *</label>
-                            <Field :id="'tipoTorero_' + row" :name="`toreroRow[${row}].tipoTorero`"
-                                   v-model="selected" as="select" class="form-control">
-                              <option v-for="(tipo, tipo_index) in tipoToreros" :key="tipo_index" :value="tipo">
-                                {{ tipo }}
+                            <label :for="`toreroRow[${row}].tipo_torero_id` + '_id'">Tipo de Torero *</label>
+                            <Field :id="`toreroRow[${row}].tipo_torero_id` + '_id'" :name="`toreroRow[${row}].tipo_torero_id`"
+                                   v-model="selected[row]" as="select" class="form-control">
+                              <option v-for="option in tipoToreros" :key="option.id" :value="option.id">
+                                {{ option.tipo }}
                               </option>
                             </Field>
                           </div>
@@ -108,13 +108,16 @@ export default {
     ErrorMessage,
   },
   data() {
-    const tipoToreros = ['Torero', 'Rejoneador', 'Banderillero']
-    const selected = 'Torero'
+    const tipoToreros = [
+        {id: 1, tipo: 'Torero'},
+        {id: 2, tipo: 'Rejoneador'},
+    ]
+    const selected = Array(6).fill(1)
     const toreroRowFields = {
-      toreroName: '',
-      toreroSurname: '',
-      toreroNickname: '',
-      tipoTorero: ''
+      nombre: '',
+      apellidos: '',
+      apodo: '',
+      tipo_torero_id: ''
     };
     const initialData = {
       toreroRow: [toreroRowFields]
@@ -123,9 +126,9 @@ export default {
       toreroRow: y_array()
           .of(
               y_object().shape({
-                toreroName: y_string().required(customErrorMessages.required_with_name("El nombre")).min(2, customErrorMessages.min_2),
-                toreroSurname: y_string().required(customErrorMessages.required_with_name("Los apellidos")).min(2, customErrorMessages.min_2),
-                toreroNickname: y_string().min(2, customErrorMessages.min_2),
+                nombre: y_string().required(customErrorMessages.required_with_name("El nombre")).min(2, customErrorMessages.min_2),
+                apellidos: y_string().required(customErrorMessages.required_with_name("Los apellidos")).min(2, customErrorMessages.min_2),
+                apodo: y_string().min(2, customErrorMessages.min_2),
               })
           )
           .strict(),
