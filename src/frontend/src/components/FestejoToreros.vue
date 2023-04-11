@@ -5,7 +5,7 @@
         <div class="card-body bg-light">
           <div class="container">
             <div class="controls">
-              <h3 class="text-center">Torero/Premio {{ row + 1 }}</h3>
+              <h3 class="text-center">Torero y Premios {{ row }}</h3>
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
