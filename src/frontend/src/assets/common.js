@@ -12,7 +12,8 @@ const CommonUtils = {
             .split(' ')
             .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
             .join(' ');
-    }
+    },
+    apiServerUrl : "http://127.0.0.1:5000/api"
 
 }
 

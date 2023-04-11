@@ -96,7 +96,8 @@
 import {Field, Form, FieldArray, ErrorMessage} from 'vee-validate';
 import {object as y_object, string as y_string, array as y_array} from "yup";
 import {markRaw} from "vue";
-import {customErrorMessages} from "@/assets/common";
+import axios from "axios";
+import {customErrorMessages, CommonUtils} from "@/assets/common";
 
 export default {
   name: 'ToreroForm',
@@ -141,6 +142,15 @@ export default {
   },
   methods:
       {
+        async saveToreroDetails(data) {
+          try {
+            const url = CommonUtils.apiServerUrl + '/save_torero_details'
+            const response = await axios.post(url, data);
+            console.log(response);
+          } catch (error) {
+            console.error(error);
+          }
+        },
         addToreroRow(func, numRows) {
           if (numRows < this.maxRows) {
             func(this.toreroRowFields)
@@ -153,6 +163,8 @@ export default {
         },
         onSubmit(values) {
           console.log(JSON.stringify(values, null, 2));
+          const {data} = this.saveToreroDetails(values)
+          console.log(JSON.stringify(data, null, 2));
         }
       }
 }

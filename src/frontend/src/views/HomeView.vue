@@ -22,14 +22,12 @@ import ToreroForm from '@/components/ToreroForm.vue'
 import GanaderiaForm from '@/components/GanaderiaForm.vue'
 import FestejosForm from "@/components/FestejosForm.vue";
 
-
 export default {
   name: 'HomeView',
   components: {
     ToreroForm,
     GanaderiaForm,
     FestejosForm,
-
   }
 }
 </script>

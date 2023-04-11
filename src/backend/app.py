@@ -7,5 +7,5 @@ def create_app(config_class=config.Config):
     app.config.from_object(config_class)
 
     from src.backend.api import api
-    app.register_blueprint(api, url_prefix='/api')
+    app.register_blueprint(api)
     return app

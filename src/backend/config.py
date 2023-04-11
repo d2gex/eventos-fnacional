@@ -16,4 +16,4 @@ DB_NAME = os.getenv('GFW_TOKEN')
 
 
 class Config:
-    pass
+    SECRET_KEY = os.getenv('SECRET_KEY')
