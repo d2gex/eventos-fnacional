@@ -4,6 +4,7 @@
     <div class="card-body bg-light">
       <div class="container">
         <div class="controls">
+          <h3 class="text-center">Detalles del Festejo</h3>
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
