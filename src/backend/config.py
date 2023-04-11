@@ -11,5 +11,9 @@ SRC_PATH = path.join(ROOT_PATH, 'src')
 DB_PATH = path.join(DATA_PATH, 'sensitive')
 
 original_db_path = path.join(DATA_PATH, 'sensitive', 'original_database.xls')
-load_dotenv(join(SRC_PATH, '.env'))
+load_dotenv(join(SRC_PATH, '../.env'))
 DB_NAME = os.getenv('GFW_TOKEN')
+
+
+class Config:
+    pass

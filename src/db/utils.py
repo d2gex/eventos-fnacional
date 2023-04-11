@@ -1,4 +1,4 @@
-from src import config as cfg
+from src.backend import config as cfg
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from contextlib import contextmanager
