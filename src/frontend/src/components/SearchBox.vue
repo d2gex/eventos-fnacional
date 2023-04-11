@@ -29,6 +29,7 @@
 <script>
 import {Field, ErrorMessage} from 'vee-validate';
 import {CommonUtils} from "@/assets/common";
+// import {object as yup_object} from "yup";
 
 export default {
   name: 'SearchBox',

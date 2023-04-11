@@ -6,14 +6,20 @@
         :initial-values="initialData"
         :validation-schema="schema"
     >
-      <FestejoDetalles nombre-festejo="festejos.nombreFestejo"
-                       poblacion="festejos.poblacion"
-                       provincia="festejos.provincia"
-                       tipo-festejo="festejos.tipoFestejo"
-                       :selected-festejo="selected"
-                       :tipos-festejos="tipoFestejos"/>
+      <div class="row border border-primary">
+        <div class="col-md-6">
+          <FestejoDetalles nombre-festejo="festejos.nombreFestejo"
+                           poblacion="festejos.poblacion"
+                           provincia="festejos.provincia"
+                           tipo-festejo="festejos.tipoFestejo"
+                           :selected-festejo="selected"
+                           :tipos-festejos="tipoFestejos"/>
 
-      <!-- /.row-->
+        </div>
+        <div class="col-md-6">
+          <FestejoToreros :items="items"/>
+        </div>
+      </div>
       <div class="row ">
         <div class="col-lg-8 mx-auto my-3 border border-danger text-center">
           <button type="submit" class="btn btn-secondary">Guardar</button>
@@ -25,16 +31,18 @@
 
 <script>
 import {Form} from 'vee-validate';
-import {object as y_object, string as y_string} from "yup";
+import {array as y_array, object as y_object, string as y_string} from "yup";
 import {markRaw} from "vue";
-import customErrorMessages from "@/assets/common";
+import {customErrorMessages} from "@/assets/common";
 import FestejoDetalles from "@/components/FestejoDetalles.vue";
+import FestejoToreros from "@/components/FestejoToreros.vue";
 
 export default {
   name: 'FestejosForm',
   components: {
     Form,
-    FestejoDetalles
+    FestejoDetalles,
+    FestejoToreros
   },
   data() {
     const selected = 'Opcion 1'
@@ -47,18 +55,27 @@ export default {
         provincia: ''
       }
     }
+    const items = ["Jose Antonio", "Daniel Garcia", "David 'El Litri'", "Sonia Espartaca", "Laura Fogar 'La Cute'"].map(v => v.toLowerCase())
     const schema = markRaw(y_object().shape({
       festejos: y_object().shape({
         nombreFestejo: y_string().required(customErrorMessages.required_with_name("El nombre")).min(2, customErrorMessages.min_2),
         poblacion: y_string().required(customErrorMessages.required_with_name("La poblacion")).min(2, customErrorMessages.min_2),
         provincia: y_string().required(customErrorMessages.required_with_name("Los provincia")).min(2, customErrorMessages.min_2),
-      })
+      }),
+      toreroRow: y_array()
+          .of(
+              y_object().shape({
+                toreroName: y_string().required(customErrorMessages.required_with_name("El nombre")).min(2, customErrorMessages.min_2),
+              })
+          )
+          .strict(),
     }));
     return {
       selected,
       tipoFestejos,
       initialData,
-      schema
+      schema,
+      items
     }
   },
   methods:

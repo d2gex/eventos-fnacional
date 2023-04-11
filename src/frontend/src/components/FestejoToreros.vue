@@ -1,64 +1,50 @@
 <template>
-  <fieldset class="form-group border p-3">
-    <legend class="w-auto px-2">Toreros y Premios</legend>
-    <Form
-        @submit="onSubmit"
-        :initial-values="initialData"
-        :validation-schema="schema"
-    >
-      <FieldArray name="toreroRow" v-slot="{ fields, push, remove }">
-        <div class="row border border-primary">
-          <div class="col-lg-6 float-left" v-for="(field, row) in fields" :key="field.key">
-            <div class="card mt-2 mx-auto p-2 bg-light">
-              <div class="card-body bg-light">
-                <div class="container">
-                  <form id="contact-form" role="form">
-                    <div class="controls">
-                      <h3 class="text-center">Torero/Premio {{ row + 1 }}</h3>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <label :for="`toreroName_${row}`">Torero *</label>
-                            <SearchBox :items="items" type="text" :name="`toreroRow[${row}].toreroName`"/>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <PremiosTorero :torero-num-row="row"/>
-                        </div>
-                      </div>
+  <div class="row border border-primary">
+    <div class="col-md-12" v-for="row in numRows" :key="row">
+      <div class="card mt-2 mx-auto p-2 bg-light">
+        <div class="card-body bg-light">
+          <div class="container">
+            <form id="contact-form" role="form">
+              <div class="controls">
+                <h3 class="text-center">Torero/Premio {{ row + 1 }}</h3>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label :for="`toreroName_${row}`">Torero *</label>
+                      <SearchBox type="text"
+                                 :name="`toreroRow[${row}].toreroName`"
+                                 :items="items"/>
                     </div>
-                  </form>
+                  </div>
+                  <div class="col-md-6">
+                    <PremiosTorero :torero-num-row="row"/>
+                  </div>
                 </div>
               </div>
-            </div>
-            <!-- /.8 -->
-          </div>
-          <!-- /.row-->
-        </div>
-        <div class="row ">
-          <div class="col-lg-8 mx-auto my-3 border border-danger text-center">
-            <button type="button"
-                    @click="addToreroRow(push, fields.length)"
-                    class="btn btn-success">Añadir +
-            </button>
-            <button type="button" @click="removeToreroRow(remove, row, fields.length) " class="btn btn-danger mx-2">
-              Borrar -
-            </button>
-            <button type="submit" class="btn btn-secondary">Guardar</button>
+            </form>
           </div>
         </div>
-      </FieldArray>
-    </Form>
-  </fieldset>
+      </div>
+      <!-- /.8 -->
+    </div>
+    <!-- /.row-->
+  </div>
+  <div class="row ">
+    <div class="col-lg-8 mx-auto my-3 border border-danger text-center">
+      <button type="button"
+              @click="addToreroPremioRow"
+              class="btn btn-success">Añadir Torero +
+      </button>
+      <button type="button" @click="removeToreroPremioRow" class="btn btn-danger mx-2">
+        Borrar Torero -
+      </button>
+    </div>
+  </div>
 </template>
 
 <script>
-import {FieldArray, Form} from "vee-validate";
 import SearchBox from "@/components/SearchBox.vue";
 import PremiosTorero from "@/components/PremiosTorero.vue";
-import {customErrorMessages} from "@/assets/common";
-import {markRaw} from "vue";
-import {array as y_array, object as y_object, string as y_string} from "yup";
 
 export default {
   name: "FestejoToreros",
@@ -71,49 +57,35 @@ export default {
   components: {
     SearchBox,
     PremiosTorero,
-    FieldArray,
-    Form
   },
   data() {
     const maxRows = 6;
+    const numRows = 1
     const toreroRowFields = {
       toreroName: '',
     };
     const initialData = {
       toreroRow: [toreroRowFields]
     };
-
-    const schema = markRaw(y_object().shape({
-      toreroRow: y_array()
-          .of(
-              y_object().shape({
-                toreroName: y_string().required(customErrorMessages.required_with_name("El nombre")).min(1, customErrorMessages.min_2),
-              })
-          )
-          .strict(),
-    }));
     return {
       maxRows,
+      numRows,
       toreroRowFields,
-      initialData,
-      schema,
+      initialData
     }
   },
   methods:
       {
-        addToreroRow(func, numRows) {
-          if (numRows < this.maxRows) {
-            func(this.toreroRowFields)
+        addToreroPremioRow() {
+          if (this.numRows < this.maxRows) {
+            this.numRows++
           }
         },
-        removeToreroRow(func, index, numRows) {
-          if (numRows > 1) {
-            func(index)
+        removeToreroPremioRow() {
+          if (this.numRows > 1) {
+            this.numRows--
           }
         },
-        onSubmit(values) {
-          console.log(JSON.stringify(values, null, 2));
-        }
       }
 }
 </script>
