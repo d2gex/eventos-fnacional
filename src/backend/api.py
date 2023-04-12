@@ -13,7 +13,7 @@ def save_torero_details():
     db_data = [models.ModelTorero(**torero_details) for torero_details in data['toreroRow']]
     with session_scope() as s_db:
         s_db.add_all(db_data)
-    # print(db_data)
+    print(db_data)
     return jsonify(data)
 
 
