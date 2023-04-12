@@ -1,9 +1,16 @@
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Text
+from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Text, inspect
 from sqlalchemy.orm import relationship
 
 
-ModelBase = declarative_base()
+SQLAlchemyModelBase = declarative_base()
+
+
+class ModelBase(SQLAlchemyModelBase):
+    __abstract__ = True
+
+    def to_dict(self):
+        return {c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs}
 
 
 class ModelTipoFestejo(ModelBase):

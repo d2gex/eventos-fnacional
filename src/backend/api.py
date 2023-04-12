@@ -7,6 +7,14 @@ api = Blueprint("api", __name__, url_prefix="/api")
 cors = CORS(api, resources={r"/api/*": {"origins": "http://localhost:8080"}})
 
 
+@api.route("/get_provincias", methods=["GET"])
+def get_provincias():
+    with session_scope() as dbs:
+        db_data = dbs.query(models.ModelProvincia).all()
+        data = [x.to_dict() for x in db_data]
+    return jsonify(data)
+
+
 @api.route("/save_torero_details", methods=["POST"])
 def save_torero_details():
     data = request.get_json()
@@ -22,7 +30,8 @@ def save_torero_details():
 def save_ganaderia_details():
     data = request.get_json()
     db_data = [
-        models.ModelGanaderia(**ganaderia_details) for ganaderia_details in data["ganaderiaRow"]
+        models.ModelGanaderia(**ganaderia_details)
+        for ganaderia_details in data["ganaderiaRow"]
     ]
     with session_scope() as s_db:
         s_db.add_all(db_data)
