@@ -10,14 +10,14 @@ def init_database() -> None:
 
 
 def init_tipo_torero_table() -> None:
-    db_data = [models.ModelTipoTorero(tipo_torero=x) for x in ['Torero', 'Rejoneador']]
+    db_data = [models.ModelTipoTorero(tipo_torero=x) for x in ["Torero", "Rejoneador"]]
     with utils_db.session_scope() as dbs:
         dbs.add_all(db_data)
 
 
 def init_provincia_table(csv_path: str) -> None:
     provincia_df = pd.read_csv(csv_path)
-    db_data = [models.ModelProvincia(provincia = x) for x in provincia_df.name.values]
+    db_data = [models.ModelProvincia(provincia=x) for x in provincia_df.name.values]
     with utils_db.session_scope() as dbs:
         dbs.add_all(db_data)
 
@@ -30,5 +30,5 @@ if __name__ == "__main__":
     print("-----------> Adding initial tipo toreros")
     init_tipo_torero_table()
     print("-----------> Adding provincias")
-    init_provincia_table(config.DATA_PATH / 'provincias_es.csv')
+    init_provincia_table(config.DATA_PATH / "provincias_es.csv")
     print("... Database set up")

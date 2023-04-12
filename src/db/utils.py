@@ -3,7 +3,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from contextlib import contextmanager
 
-db_path = f'sqlite:///{cfg.DB_PATH}/{cfg.Config.DB_NAME}'
+db_path = f"sqlite:///{cfg.DB_PATH}/{cfg.Config.DB_NAME}"
 engine = create_engine(db_path, echo=True)
 db_session = sessionmaker(bind=engine)
 
