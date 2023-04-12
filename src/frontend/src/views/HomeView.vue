@@ -12,7 +12,11 @@
       <FestejosForm/>
     </div>
   </div>
-
+  <div class="row">
+    <div class="col-md-12">
+      <OldDbDatatable/>
+    </div>
+  </div>
 
 </template>
 
@@ -22,6 +26,7 @@ import {CommonUtils} from "@/assets/common";
 import ToreroForm from '@/components/ToreroForm.vue'
 import GanaderiaForm from '@/components/GanaderiaForm.vue'
 import FestejosForm from "@/components/FestejosForm.vue";
+import OldDbDatatable from "@/components/OldDbDatatable.vue";
 
 export default {
   name: 'HomeView',
@@ -29,6 +34,7 @@ export default {
     ToreroForm,
     GanaderiaForm,
     FestejosForm,
+    OldDbDatatable
   },
   data() {
     const provincias = [];
@@ -42,7 +48,7 @@ export default {
 
     async getDataFromTable(end_point) {
       try {
-        const response  = await axios.get(end_point);
+        const response = await axios.get(end_point);
         return response
       } catch (error) {
         console.error(error);
