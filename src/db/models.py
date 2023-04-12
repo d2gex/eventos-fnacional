@@ -11,7 +11,7 @@ class ModelTipoFestejo(ModelBase):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     tipo = Column(String, nullable=False, unique=True)
-    festejo = relationship('ModelFestejo', backref="festejo")
+    festejo = relationship('ModelFestejo', back_populates="tipo_festejo")
 
 
 class ModelTipoTorero(ModelBase):
@@ -19,7 +19,7 @@ class ModelTipoTorero(ModelBase):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     tipo_torero = Column(String, nullable=False, unique=True)
-    torero = relationship('ModelTorero', backref="torero")
+    torero = relationship('ModelTorero', back_populates="tipo_torero")
 
 
 class ModelTipoPremio(ModelBase):
@@ -27,8 +27,7 @@ class ModelTipoPremio(ModelBase):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     tipo_premio = Column(String, nullable=False, unique=True)
-    torero_premio_festejo = relationship('ModelTorero',
-                                           secondary='torero_premio_festejo')
+    torero_premio_festejo = relationship('ModelToreroPremioFestejo', back_populates="tipo_premio")
 
 
 class ModelPoblacion(ModelBase):
@@ -39,7 +38,7 @@ class ModelPoblacion(ModelBase):
     provincia_id = Column(
         Integer,
         ForeignKey('provincia.id'))
-    provincia = relationship('ModelProvincia')
+    provincia = relationship('ModelProvincia', back_populates='poblacion')
 
 
 class ModelProvincia(ModelBase):
@@ -47,8 +46,8 @@ class ModelProvincia(ModelBase):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     provincia = Column(String, nullable=False, unique=True)
-    poblacion = relationship(ModelPoblacion, backref="poblacion")
-    ganaderia = relationship('ModelGanaderia', backref="ganaderia")
+    poblacion = relationship(ModelPoblacion, back_populates='provincia')
+    ganaderia = relationship('ModelGanaderia', back_populates='provincia')
 
 
 class ModelGanaderia(ModelBase):
@@ -59,23 +58,19 @@ class ModelGanaderia(ModelBase):
     provincia_id = Column(
         Integer,
         ForeignKey('provincia.id'))
-    provincia = relationship('ModelProvincia')
-    ganaderia_festejo = relationship('ModelFestejo',
-                                       secondary="ganaderia_festejo")
+    provincia = relationship('ModelProvincia', back_populates='ganaderia')
 
 
 class ModelTorero(ModelBase):
     __tablename__ = 'torero'
     id = Column(Integer, primary_key=True, autoincrement=True)
-    nombre = Column(String, nullable=True)
-    apellidos = Column(String, nullable=True)
+    nombre = Column(String, nullable=False)
+    apellidos = Column(String, nullable=False)
+    apodo = Column(String, nullable=True)
     nombre_profesional = Column(String, nullable=True, unique=True)
 
     tipo_torero_id = Column(Integer, ForeignKey('tipo_torero.id'))
-    tipo_torero = relationship(ModelTipoTorero)
-
-    torero_premio_festejo = relationship(ModelTipoPremio,
-                                           secondary='torero_premio_festejo')
+    tipo_torero = relationship(ModelTipoTorero, back_populates="torero")
 
 
 class ModelFestejo(ModelBase):
@@ -93,34 +88,37 @@ class ModelFestejo(ModelBase):
     tipo_festejo_id = Column(
         Integer,
         ForeignKey('tipo_festejo.id'))
-    tipo_festejo = relationship(ModelTipoFestejo)
+    tipo_festejo = relationship(ModelTipoFestejo, back_populates="festejo")
 
     # M:M relationships
-    torero_premio_festejo = relationship(ModelTipoPremio,
-                                            backref="torero_premio_festejo")
-    ganaderia_festejo = relationship(ModelGanaderia,
-                                       backref="ganaderia_festejo")
+    torero_premio_festejo = relationship('ModelToreroPremioFestejo')  # Parent to Association Object
+    ganaderia_festejo = relationship('ModelGanaderiaFestejo')  # Parent to Association Object
 
 
-class ModelToreroPremioFestejo(ModelBase):
+class ModelToreroPremioFestejo(ModelBase):  # Association object Pattern
+    ''' There is a M:M relationship between Festejo (Parent) and Torero (Child) and a 1:M relationship between
+    TipoPremio and the table resulting from the M:M relationship (which is this class itself)
+    '''
     __tablename__ = 'torero_premio_festejo'
     id = Column(Integer, primary_key=True, autoincrement=True)
 
-    # M:M
+    # M:M between festejo and torero
     torero_id = Column(
         Integer,
         ForeignKey('torero.id'))
     festejo_id = Column(
         Integer,
         ForeignKey('festejo.id'))
-    # M: 1
+    torero = relationship(ModelTorero)  # Association object to child
+
+    # M: 1 between TipoPremio and the above (M:M) relationship
     tipo_premio_id = Column(
         Integer,
         ForeignKey('tipo_premio.id'))
-    tipo_premio = relationship(ModelTipoPremio)
+    tipo_premio = relationship(ModelTipoPremio, back_populates="torero_premio_festejo")
 
 
-class ModelGanaderiaFestejo(ModelBase):
+class ModelGanaderiaFestejo(ModelBase):  # Association object Pattern
     __tablename__ = 'ganaderia_festejo'
     id = Column(Integer, primary_key=True, autoincrement=True)
 
@@ -131,3 +129,5 @@ class ModelGanaderiaFestejo(ModelBase):
     festejo_id = Column(
         Integer,
         ForeignKey('festejo.id'))
+
+    ganaderia = relationship(ModelGanaderia)
