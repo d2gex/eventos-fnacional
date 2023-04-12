@@ -7,6 +7,14 @@ api = Blueprint("api", __name__, url_prefix="/api")
 cors = CORS(api, resources={r"/api/*": {"origins": "http://localhost:8080"}})
 
 
+@api.route("/get_tipo_toreros", methods=["GET"])
+def get_tipo_toreros():
+    with session_scope() as dbs:
+        db_data = dbs.query(models.ModelTipoTorero).all()
+        data = [x.to_dict() for x in db_data]
+    return jsonify(data)
+
+
 @api.route("/get_provincias", methods=["GET"])
 def get_provincias():
     with session_scope() as dbs:

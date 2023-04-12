@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-md-8">
-      <ToreroForm/>
+      <ToreroForm :tipo-toreros="tipoToreros"/>
     </div>
     <div class="col-md-4">
       <GanaderiaForm :provincias="provincias"/>
@@ -31,16 +31,19 @@ export default {
     FestejosForm,
   },
   data() {
-    const provincias = []
+    const provincias = [];
+    const tipoToreros = [];
     return {
-      provincias
+      provincias,
+      tipoToreros
     }
   },
   methods: {
 
-    async getProvinces(end_point) {
+    async getDataFromTable(end_point) {
       try {
-        return await axios.get(end_point);
+        const response  = await axios.get(end_point);
+        return response
       } catch (error) {
         console.error(error);
       }
@@ -48,8 +51,13 @@ export default {
 
   },
   async mounted() {
-    const response = await this.getProvinces(CommonUtils.apiServerUrl + '/get_provincias')
+    // Get details for provinces
+    let response = await this.getDataFromTable(CommonUtils.apiServerUrl + '/get_provincias')
     this.provincias = response.data
+
+    // Get details for tipo toreros
+    response = await this.getDataFromTable(CommonUtils.apiServerUrl + '/get_tipo_toreros')
+    this.tipoToreros = response.data
   }
 }
 </script>

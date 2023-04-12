@@ -60,7 +60,7 @@
                             <Field :id="`toreroRow[${row}].tipo_torero_id` + '_id'" :name="`toreroRow[${row}].tipo_torero_id`"
                                    v-model="selected[row]" as="select" class="form-control">
                               <option v-for="option in tipoToreros" :key="option.id" :value="option.id">
-                                {{ option.tipo }}
+                                {{ option.tipo_torero }}
                               </option>
                             </Field>
                           </div>
@@ -100,6 +100,12 @@ import {customErrorMessages, CommonUtils} from "@/assets/common";
 
 export default {
   name: 'ToreroForm',
+  props: {
+    tipoToreros: {
+      type: Array,
+      required: true
+    }
+  },
   components: {
     Form,
     Field,
@@ -107,10 +113,6 @@ export default {
     ErrorMessage,
   },
   data() {
-    const tipoToreros = [
-        {id: 1, tipo: 'Torero'},
-        {id: 2, tipo: 'Rejoneador'},
-    ];
     const selected = Array(6).fill(1);
     const toreroRowFields = {
       nombre: '',
@@ -134,7 +136,6 @@ export default {
     }));
     const maxRows = 6;
     return {
-      tipoToreros,
       selected,
       toreroRowFields,
       initialData,
