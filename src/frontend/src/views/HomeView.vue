@@ -4,7 +4,7 @@
       <ToreroForm/>
     </div>
     <div class="col-md-4">
-      <GanaderiaForm/>
+      <GanaderiaForm :provincias="provincias"/>
     </div>
   </div>
   <div class="row">
@@ -28,6 +28,19 @@ export default {
     ToreroForm,
     GanaderiaForm,
     FestejosForm,
+  },
+  data() {
+    const provincias = []
+    return {
+      provincias
+    }
+  },
+  mounted() {
+    this.provincias = [
+      {id: 45, provincia: 'Toledo'},
+      {id: 46, provincia: 'Valencia'},
+      {id: 47, provincia: 'Valladolid'}
+    ];
   }
 }
 </script>

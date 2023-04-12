@@ -76,6 +76,12 @@ import {customErrorMessages, CommonUtils} from "@/assets/common";
 
 export default {
   name: 'GanaderiaForm',
+  props: {
+    provincias: {
+      type: Array,
+      required: true
+    }
+  },
   components: {
     Form,
     Field,
@@ -83,11 +89,6 @@ export default {
     ErrorMessage
   },
   data() {
-    const provincias = [
-      {id: 45, provincia: 'Toledo'},
-      {id: 46, provincia: 'Valencia'},
-      {id: 47, provincia: 'Valladolid'}
-    ];
     const selected = Array(6).fill(45);
     const ganaderiaRowFields = {
       nombre_ganaderia: '',
@@ -107,7 +108,6 @@ export default {
     }));
     const maxRows = 6;
     return {
-      provincias,
       selected,
       ganaderiaRowFields,
       initialData,
