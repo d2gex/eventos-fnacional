@@ -18,6 +18,17 @@ def save_torero_details():
     return jsonify(data)
 
 
+@api.route("/save_ganaderia_details", methods=["POST"])
+def save_ganaderia_details():
+    data = request.get_json()
+    db_data = [
+        models.ModelGanaderia(**ganaderia_details) for ganaderia_details in data["ganaderiaRow"]
+    ]
+    with session_scope() as s_db:
+        s_db.add_all(db_data)
+    return jsonify(data)
+
+
 @api.route("get_torero_details", methods=["GET"])
 def get_torero_details():
     return {"key": "value"}

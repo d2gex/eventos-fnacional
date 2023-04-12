@@ -18,23 +18,25 @@
                       <div class="row">
                         <div class="col-md-12">
                           <div class="form-group">
-                            <label :for="`ganaderiaName_${row}`">Nombre *</label>
-                            <Field :id="`ganaderiaName_${row}`" type="text" :name="`ganaderiaRow[${row}].ganaderiaName`"
+                            <label :for="`ganaderiaRow[${row}].nombre_ganaderia` + '_id'">Nombre *</label>
+                            <Field :id="`ganaderiaRow[${row}].nombre_ganaderia` + '_id'" type="text"
+                                   :name="`ganaderiaRow[${row}].nombre_ganaderia`"
                                    class="form-control"
                                    placeholder="Entra el nombre *"/>
                             <div class="field-error">
-                              <ErrorMessage as="div" :name="`ganaderiaRow[${row}].ganaderiaName`"/>
+                              <ErrorMessage as="div" :name="`ganaderiaRow[${row}].nombre_ganaderia`"/>
                             </div>
 
                           </div>
                         </div>
                         <div class="col-md-6">
                           <div class="form-group">
-                            <label :for="'provincia_' + row">Provincia *</label>
-                            <Field :id="'provincia_' + row" :name="`ganaderiaRow[${row}].provincia`"
-                                   v-model="selected" as="select" class="form-control">
-                              <option v-for="(prov, prov_index) in provincias" :key="prov_index" :value="prov">
-                                {{ prov }}
+                            <label :for="`ganaderiaRow[${row}].provincia_id` + '_id'">Provincia *</label>
+                            <Field :id="`ganaderiaRow[${row}].provincia_id` + '_id'"
+                                   :name="`ganaderiaRow[${row}].provincia_id`"
+                                   v-model="selected[row]" as="select" class="form-control">
+                              <option v-for="option in provincias" :key="option.id" :value="option.id">
+                                {{ option.provincia }}
                               </option>
                             </Field>
                           </div>
@@ -70,7 +72,7 @@
 import {Field, Form, FieldArray, ErrorMessage} from 'vee-validate';
 import {object as y_object, string as y_string, array as y_array} from "yup";
 import {markRaw} from "vue";
-import {customErrorMessages} from "@/assets/common";
+import {customErrorMessages, CommonUtils} from "@/assets/common";
 
 export default {
   name: 'GanaderiaForm',
@@ -81,20 +83,24 @@ export default {
     ErrorMessage
   },
   data() {
-    const provincias = ['Toledo', 'Granada', 'Sevilla']
-    const selected = 'Toledo'
+    const provincias = [
+      {id: 45, provincia: 'Toledo'},
+      {id: 46, provincia: 'Valencia'},
+      {id: 47, provincia: 'Valladolid'}
+    ];
+    const selected = Array(6).fill(45);
     const ganaderiaRowFields = {
-      ganaderiaName: '',
-      provincia: ''
+      nombre_ganaderia: '',
+      provincia_id: ''
     };
     const initialData = {
       ganaderiaRow: [ganaderiaRowFields]
-    }
+    };
     const schema = markRaw(y_object().shape({
       ganaderiaRow: y_array()
           .of(
               y_object().shape({
-                ganaderiaName: y_string().required(customErrorMessages.required_with_name("El nombre")).min(2, customErrorMessages.min_2)
+                nombre_ganaderia: y_string().required(customErrorMessages.required_with_name("El nombre")).min(2, customErrorMessages.min_2)
               })
           )
           .strict(),
@@ -123,6 +129,8 @@ export default {
         },
         onSubmit(values) {
           console.log(JSON.stringify(values, null, 2));
+          const {data} = CommonUtils.sendDataToBackend(values, '/save_ganaderia_details')
+          console.log(JSON.stringify(data, null, 2));
         }
       }
 }

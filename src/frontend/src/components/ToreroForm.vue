@@ -96,7 +96,6 @@
 import {Field, Form, FieldArray, ErrorMessage} from 'vee-validate';
 import {object as y_object, string as y_string, array as y_array} from "yup";
 import {markRaw} from "vue";
-import axios from "axios";
 import {customErrorMessages, CommonUtils} from "@/assets/common";
 
 export default {
@@ -111,8 +110,8 @@ export default {
     const tipoToreros = [
         {id: 1, tipo: 'Torero'},
         {id: 2, tipo: 'Rejoneador'},
-    ]
-    const selected = Array(6).fill(1)
+    ];
+    const selected = Array(6).fill(1);
     const toreroRowFields = {
       nombre: '',
       apellidos: '',
@@ -121,7 +120,7 @@ export default {
     };
     const initialData = {
       toreroRow: [toreroRowFields]
-    }
+    };
     const schema = markRaw(y_object().shape({
       toreroRow: y_array()
           .of(
@@ -145,15 +144,6 @@ export default {
   },
   methods:
       {
-        async saveToreroDetails(data) {
-          try {
-            const url = CommonUtils.apiServerUrl + '/save_torero_details'
-            const response = await axios.post(url, data);
-            console.log(response);
-          } catch (error) {
-            console.error(error);
-          }
-        },
         addToreroRow(func, numRows) {
           if (numRows < this.maxRows) {
             func(this.toreroRowFields)
@@ -166,7 +156,7 @@ export default {
         },
         onSubmit(values) {
           console.log(JSON.stringify(values, null, 2));
-          const {data} = this.saveToreroDetails(values)
+          const {data} = CommonUtils.sendDataToBackend(values, '/save_torero_details')
           console.log(JSON.stringify(data, null, 2));
         }
       }
