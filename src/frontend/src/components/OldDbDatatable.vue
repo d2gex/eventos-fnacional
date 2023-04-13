@@ -1,6 +1,8 @@
 <script setup>
 import DataTable from 'datatables.net-vue3';
 import DataTablesCore from 'datatables.net-bs5';
+import 'datatables.net-select';
+import 'datatables.net-responsive';
 import {defineProps} from "vue";
 
 defineProps({
@@ -25,6 +27,12 @@ const columns = [
   {data: 'Fecha Real'},
   {data: 'Fuente'},
 ];
+const options = {
+  pageLength: 50,
+  select: true,
+  responsive: true
+}
+
 </script>
 
 <template>
@@ -34,6 +42,7 @@ const columns = [
       <DataTable
           :columns="columns"
           :ajax="data_url"
+          :options="options"
           class="table table-hover table-striped"
           width="100%"
       >
@@ -41,7 +50,7 @@ const columns = [
         <tr>
           <th>Lugar</th>
           <th>Fecha</th>
-          <th>Dis s.</th>
+          <th>Dia s.</th>
           <th>Tipo</th>
           <th>Ganaderia</th>
           <th>Toreros</th>
@@ -71,3 +80,9 @@ const columns = [
     </div>
   </fieldset>
 </template>
+
+<style>
+@import 'datatables.net-dt';
+@import 'datatables.net-select-dt';
+@import 'datatables.net-responsive-dt';
+</style>
