@@ -1,7 +1,5 @@
 import pandas as pd
-import numpy as np
 from pathlib import Path
-from typing import Optional, List
 from src.db import utils as utils_db
 from src.db import models
 from src import config
@@ -39,7 +37,11 @@ class SqlLitDBSetup:
 
 
 class CsvDBSetup:
-    def __init__(self, db_path_original: Path, db_path_new: Path):
+    def __init__(
+        self,
+        db_path_original: Path,
+        db_path_new: Path,
+    ):
         self.db_path_original = db_path_original
         self.db_path_new = db_path_new
 
@@ -55,6 +57,7 @@ class CsvDBSetup:
         db_df = db_df.rename(
             columns={"Dis s.": "Dia Semana", "Ver fecha real": "Fecha Real"}
         )
+        db_df = db_df.dropna(how="all")
         db_df.to_csv(self.db_path_new, index=False)
         print("... Csv database set up")
 
@@ -66,6 +69,6 @@ if __name__ == "__main__":
         )
         old_db_setup.run()
 
-    if config.Config.CREATE_SQL_DATABASE:
-        sql_db_setup = SqlLitDBSetup()
-        sql_db_setup.run()
+    # if config.Config.CREATE_SQL_DATABASE:
+    #     sql_db_setup = SqlLitDBSetup()
+    #     sql_db_setup.run()

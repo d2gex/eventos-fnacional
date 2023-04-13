@@ -53,6 +53,4 @@ def save_ganaderia_details():
 def get_old_db_all_records():
     df = pd.read_csv(Config.NEW_CSV_DB_PATH)
     records = df.to_dict(orient="records")
-    import simplejson as json
-
     return json.dumps({"data": records}, ignore_nan=True)
