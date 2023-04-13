@@ -1,6 +1,14 @@
 <script setup>
 import DataTable from 'datatables.net-vue3';
 import DataTablesCore from 'datatables.net-bs5';
+import { defineProps} from "vue";
+
+defineProps({
+  data_url: {
+    type: String,
+    required: true
+  }
+})
 
 DataTable.use(DataTablesCore);
 
@@ -26,7 +34,7 @@ const columns = [
 
     <DataTable
       :columns="columns"
-      ajax="http://localhost:5000/api/get_old_db_all_records"
+      :ajax="data_url"
       class="table table-hover table-striped"
       width="100%"
     >

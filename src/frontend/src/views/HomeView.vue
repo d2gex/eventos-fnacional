@@ -14,7 +14,7 @@
   </div>
   <div class="row">
     <div class="col-md-12">
-      <OldDbDatatable/>
+      <OldDbDatatable :data_url="oldDbDataUrl"/>
     </div>
   </div>
 
@@ -39,9 +39,11 @@ export default {
   data() {
     const provincias = [];
     const tipoToreros = [];
+    const oldDbDataUrl = CommonUtils.apiServerUrl + '/get_old_db_all_records';
     return {
       provincias,
-      tipoToreros
+      tipoToreros,
+      oldDbDataUrl
     }
   },
   methods: {
