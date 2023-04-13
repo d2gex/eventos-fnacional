@@ -41,8 +41,8 @@ export default {
     OldDbDatatable
   },
   data() {
-    const selectedFestejo = 'Opcion 1';
-    const tipoFestejos = ['Opcion 1', 'Opcion 2', 'Opcion 3'];
+    const selectedFestejo = 1;
+    const tipoFestejos = [];
     const selectedProvincia = 45;
     const provincias = [];
     const tipoToreros = [];
@@ -76,6 +76,10 @@ export default {
     // Get details for tipo toreros
     response = await this.getDataFromTable(CommonUtils.apiServerUrl + '/get_tipo_toreros')
     this.tipoToreros = response.data
+
+     // Get details for tipo toreros
+    response = await this.getDataFromTable(CommonUtils.apiServerUrl + '/get_tipo_festejos')
+    this.tipoFestejos = response.data
   }
 }
 </script>

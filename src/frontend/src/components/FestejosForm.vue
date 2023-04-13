@@ -14,9 +14,10 @@
                              provincia="festejos.provincia"
                              tipo-festejo="festejos.tipoFestejo"
                              :selected-festejo="selectedFestejo"
-                             :tipos-festejos="tipoFestejos"
+                             :tipo-festejos="tipoFestejos"
+                             :selected-provincia="selectedProvincia"
                              :provincias="provincias"
-                             :selected-provincia="selectedProvincia"/>
+            />
           </div>
           <div class="row">
             <FestejoGanaderias :items="ganaderiasData"/>
@@ -57,7 +58,7 @@ export default {
       require: true
     },
     selectedFestejo: {
-      type: String,
+      type: Number,
       required: true
     },
     tipoFestejos: {

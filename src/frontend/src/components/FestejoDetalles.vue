@@ -39,8 +39,8 @@
                 <label :for="tipoFestejo">Tipo de Festejo *</label>
                 <Field :id="tipoFestejo + '_id'" :name="tipoFestejo"
                        v-model="selectedFestejoId" as="select" class="form-control">
-                  <option v-for="(tipo, tipo_index) in tiposFestejos" :key="tipo_index" :value="tipo">
-                    {{ tipo }}
+                  <option v-for="option in tipoFestejos" :key="option.id" :value="option.id">
+                    {{ option.tipo_festejo }}
                   </option>
                 </Field>
               </div>
@@ -64,14 +64,14 @@ export default {
     provincia: String,
     tipoFestejo: String,
     selectedFestejo: {
-      type: String,
+      type: Number,
       required: true
     },
     selectedProvincia: {
       type: Number,
       required: true
     },
-    tiposFestejos: {
+    tipoFestejos: {
       type: Array,
       required: true
     },
