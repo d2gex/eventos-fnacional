@@ -42,25 +42,6 @@ class CsvDBSetup:
         self.db_path_original = db_path_original
         self.db_path_new = db_path_new
 
-    def _extract_data_from_excel(
-        self,
-        sheet_name: str,
-        col_range: List[str],
-        skip_rows: int,
-        num_rows: int,
-        header=Optional[List[str]],
-    ):
-        col_range = ":".join(col_range)
-        data = pd.read_excel(
-            self.db_path_original,
-            sheet_name=sheet_name,
-            usecols=col_range,
-            skiprows=skip_rows,
-            nrows=num_rows,
-            names=header,
-        )
-        return data
-
     def amalgamate_all_sheets(self):
         db = pd.ExcelFile(self.db_path_original)
         sheet_names = db.sheet_names[1:]
