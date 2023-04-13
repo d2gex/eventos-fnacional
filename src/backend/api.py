@@ -18,12 +18,27 @@ def get_tipo_toreros():
     return jsonify(data)
 
 
+@api.route("/get_tipo_festejos", methods=["GET"])
+def get_tipo_festejos():
+    with session_scope() as dbs:
+        db_data = dbs.query(models.ModelTipoFestejo).all()
+        data = [x.to_dict() for x in db_data]
+    return jsonify(data)
+
+
 @api.route("/get_provincias", methods=["GET"])
 def get_provincias():
     with session_scope() as dbs:
         db_data = dbs.query(models.ModelProvincia).all()
         data = [x.to_dict() for x in db_data]
     return jsonify(data)
+
+
+@api.route("/get_old_db_all_records", methods=["GET"])
+def get_old_db_all_records():
+    df = pd.read_csv(Config.NEW_CSV_DB_PATH)
+    records = df.to_dict(orient="records")
+    return json.dumps({"data": records}, ignore_nan=True)
 
 
 @api.route("/save_torero_details", methods=["POST"])
@@ -47,10 +62,3 @@ def save_ganaderia_details():
     with session_scope() as s_db:
         s_db.add_all(db_data)
     return jsonify(data)
-
-
-@api.route("/get_old_db_all_records", methods=["GET"])
-def get_old_db_all_records():
-    df = pd.read_csv(Config.NEW_CSV_DB_PATH)
-    records = df.to_dict(orient="records")
-    return json.dumps({"data": records}, ignore_nan=True)

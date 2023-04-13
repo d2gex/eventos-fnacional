@@ -17,7 +17,7 @@ class ModelTipoFestejo(ModelBase):
     __tablename__ = "tipo_festejo"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    tipo = Column(String, nullable=False, unique=True)
+    tipo_festejo = Column(String, nullable=False, unique=True)
     festejo = relationship("ModelFestejo", back_populates="tipo_festejo")
 
 
