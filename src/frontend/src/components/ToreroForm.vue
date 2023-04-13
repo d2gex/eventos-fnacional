@@ -19,7 +19,8 @@
                         <div class="col-md-6">
                           <div class="form-group">
                             <label :for="`toreroRow[${row}].nombre` + '_id'">Nombre *</label>
-                            <Field :id="`toreroRow[${row}].nombre` + '_id'" type="text" :name="`toreroRow[${row}].nombre`"
+                            <Field :id="`toreroRow[${row}].nombre` + '_id'" type="text"
+                                   :name="`toreroRow[${row}].nombre`"
                                    class="form-control"
                                    placeholder="Entra el nombre *"/>
                             <div class="field-error">
@@ -57,7 +58,8 @@
                         <div class="col-md-6">
                           <div class="form-group">
                             <label :for="`toreroRow[${row}].tipo_torero_id` + '_id'">Tipo de Torero *</label>
-                            <Field :id="`toreroRow[${row}].tipo_torero_id` + '_id'" :name="`toreroRow[${row}].tipo_torero_id`"
+                            <Field :id="`toreroRow[${row}].tipo_torero_id` + '_id'"
+                                   :name="`toreroRow[${row}].tipo_torero_id`"
                                    v-model="selected[row]" as="select" class="form-control">
                               <option v-for="option in tipoToreros" :key="option.id" :value="option.id">
                                 {{ option.tipo_torero }}
@@ -129,7 +131,10 @@ export default {
               y_object().shape({
                 nombre: y_string().required(customErrorMessages.required_with_name("El nombre")).min(2, customErrorMessages.min_2),
                 apellidos: y_string().required(customErrorMessages.required_with_name("Los apellidos")).min(2, customErrorMessages.min_2),
-                apodo: y_string().min(2, customErrorMessages.min_2),
+                apodo: y_string().matches(/.{2,}/, {
+                  excludeEmptyString: true,
+                  message: customErrorMessages.min_2,
+                })
               })
           )
           .strict(),
@@ -155,9 +160,12 @@ export default {
             func(index)
           }
         },
-        onSubmit(values) {
+        async onSubmit(values) {
           console.log(JSON.stringify(values, null, 2));
-          const {data} = CommonUtils.sendDataToBackend(values, '/save_torero_details')
+          const {data} = await CommonUtils.sendDataToBackend(values, '/save_torero_details')
+          if (data.status === 0) {
+            await this.$vueAlert.alert(data.message)
+          }
           console.log(JSON.stringify(data, null, 2));
         }
       }

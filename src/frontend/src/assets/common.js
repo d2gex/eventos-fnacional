@@ -19,8 +19,7 @@ const CommonUtils = {
     sendDataToBackend: async function (data, end_point) {
         try {
             const url = this.apiServerUrl + end_point
-            const response = await axios.post(url, data);
-            console.log(response);
+            return await axios.post(url, data);
         } catch (error) {
             console.error(error);
         }

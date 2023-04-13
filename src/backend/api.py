@@ -5,6 +5,7 @@ from flask_cors import CORS
 from src.config import Config
 from src.db import models
 from src.db.utils import session_scope
+from sqlalchemy.exc import IntegrityError
 
 api = Blueprint("api", __name__, url_prefix="/api")
 cors = CORS(api, resources={r"/api/*": {"origins": "http://localhost:8080"}})
@@ -44,11 +45,24 @@ def get_old_db_all_records():
 @api.route("/save_torero_details", methods=["POST"])
 def save_torero_details():
     data = request.get_json()
-    db_data = [
-        models.ModelTorero(**torero_details) for torero_details in data["toreroRow"]
-    ]
-    with session_scope() as s_db:
-        s_db.add_all(db_data)
+    record = None
+    try:
+        for torero_details in data["toreroRow"]:
+            record = torero_details
+            record[
+                "nombre_profesional"
+            ] = f"{record['nombre']} {record['apellidos']} {record['apodo']}".strip()
+            with session_scope() as s_db:
+                s_db.add(models.ModelTorero(**record))
+    except IntegrityError:
+        data = {
+            "status": 0,
+            "message": f"Torero {record['nombre_profesional']} already exists",
+        }
+    else:
+        data = {"status": 1}
+
+    print(data)
     return jsonify(data)
 
 

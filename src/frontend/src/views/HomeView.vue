@@ -16,11 +16,11 @@
           :tipo-festejos="tipoFestejos"/>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-12">
-      <OldDbDatatable :data_url="oldDbDataUrl"/>
-    </div>
-  </div>
+<!--  <div class="row">-->
+<!--    <div class="col-md-12">-->
+<!--      <OldDbDatatable :data_url="oldDbDataUrl"/>-->
+<!--    </div>-->
+<!--  </div>-->
 
 </template>
 
@@ -30,7 +30,7 @@ import {CommonUtils} from "@/assets/common";
 import ToreroForm from '@/components/ToreroForm.vue'
 import GanaderiaForm from '@/components/GanaderiaForm.vue'
 import FestejosForm from "@/components/FestejosForm.vue";
-import OldDbDatatable from "@/components/OldDbDatatable.vue";
+// import OldDbDatatable from "@/components/OldDbDatatable.vue";
 
 export default {
   name: 'HomeView',
@@ -38,22 +38,22 @@ export default {
     ToreroForm,
     GanaderiaForm,
     FestejosForm,
-    OldDbDatatable
+    // OldDbDatatable
   },
   data() {
-    const selectedFestejo = 1;
+    const selectedFestejo = 1 ;
     const tipoFestejos = [];
     const selectedProvincia = 45;
     const provincias = [];
     const tipoToreros = [];
-    const oldDbDataUrl = CommonUtils.apiServerUrl + '/get_old_db_all_records';
+    // const oldDbDataUrl = CommonUtils.apiServerUrl + '/get_old_db_all_records';
     return {
       selectedFestejo,
       tipoFestejos,
       selectedProvincia,
       provincias,
       tipoToreros,
-      oldDbDataUrl
+      // oldDbDataUrl
     }
   },
   methods: {
