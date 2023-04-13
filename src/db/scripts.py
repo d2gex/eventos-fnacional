@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 from pathlib import Path
 from typing import Optional, List
 from src.db import utils as utils_db
@@ -51,7 +52,10 @@ class CsvDBSetup:
     def run(self):
         print("Start setting the csv database ....")
         db_df = old_db_setup.amalgamate_all_sheets()
-        db_df.to_csv(self.db_path_new)
+        db_df = db_df.rename(
+            columns={"Dis s.": "Dia Semana", "Ver fecha real": "Fecha Real"}
+        )
+        db_df.to_csv(self.db_path_new, index=False)
         print("... Csv database set up")
 
 

@@ -1,5 +1,8 @@
+import pandas as pd
+import simplejson as json
 from flask import Blueprint, jsonify, request
 from flask_cors import CORS
+from src.config import Config
 from src.db import models
 from src.db.utils import session_scope
 
@@ -48,36 +51,8 @@ def save_ganaderia_details():
 
 @api.route("/get_old_db_all_records", methods=["GET"])
 def get_old_db_all_records():
-    return jsonify(
-        {
-            "data": [
-                {
-                    "id": "1",
-                    "name": "Tiger Nixon",
-                    "position": "System Architect",
-                    "salary": "$320,800",
-                    "start_date": "2011/04/25",
-                    "office": "Edinburgh",
-                    "extn": "5421",
-                },
-                {
-                    "id": "2",
-                    "name": "Garrett Winters",
-                    "position": "Accountant",
-                    "salary": "$170,750",
-                    "start_date": "2011/07/25",
-                    "office": "Tokyo",
-                    "extn": "8422",
-                },
-                {
-                    "id": "3",
-                    "name": "Ashton Cox",
-                    "position": "Junior Technical Author",
-                    "salary": "$86,000",
-                    "start_date": "2009/01/12",
-                    "office": "San Francisco",
-                    "extn": "1562",
-                },
-            ]
-        }
-    )
+    df = pd.read_csv(Config.NEW_CSV_DB_PATH)
+    records = df.to_dict(orient="records")
+    import simplejson as json
+
+    return json.dumps({"data": records}, ignore_nan=True)

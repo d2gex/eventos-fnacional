@@ -13,12 +13,17 @@ defineProps({
 DataTable.use(DataTablesCore);
 
 const columns = [
-  {data: 'name'},
-  {data: 'position'},
-  {data: 'office'},
-  {data: 'extn'},
-  {data: 'start_date'},
-  {data: 'salary'},
+  {data: 'Lugar'},
+  {data: 'Fecha'},
+  {data: 'Dia Semana'},
+  {data: 'Tipo'},
+  {data: 'Ganaderia'},
+  {data: 'Toreros'},
+  {data: 'Notas'},
+  {data: 'Foto'},
+  {data: 'Cartel'},
+  {data: 'Fecha Real'},
+  {data: 'Fuente'},
 ];
 </script>
 
@@ -34,22 +39,32 @@ const columns = [
       >
         <thead>
         <tr>
-          <th>Name</th>
-          <th>Position</th>
-          <th>Office</th>
-          <th>Extn.</th>
-          <th>Start date</th>
-          <th>Salary</th>
+          <th>Lugar</th>
+          <th>Fecha</th>
+          <th>Dis s.</th>
+          <th>Tipo</th>
+          <th>Ganaderia</th>
+          <th>Toreros</th>
+          <th>Notas</th>
+          <th>Foto</th>
+          <th>Cartel</th>
+          <th>Fecha real</th>
+          <th>Fuente</th>
         </tr>
         </thead>
         <tfoot>
         <tr>
-          <th>Name</th>
-          <th>Position</th>
-          <th>Office</th>
-          <th>Extn.</th>
-          <th>Start date</th>
-          <th>Salary</th>
+          <th>Lugar</th>
+          <th>Fecha</th>
+          <th>Dis s.</th>
+          <th>Tipo</th>
+          <th>Ganaderia</th>
+          <th>Toreros</th>
+          <th>Notas</th>
+          <th>Foto</th>
+          <th>Cartel</th>
+          <th>Fecha real</th>
+          <th>Fuente</th>
         </tr>
         </tfoot>
       </DataTable>
