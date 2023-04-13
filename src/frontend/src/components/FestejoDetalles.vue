@@ -26,15 +26,19 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="provincia">Provincia *</label>
-                <InputForm type="text" :id="provincia + '_id'" :name='provincia'
-                           placeholder="Entra la provincia *"/>
+                <Field :id="provincia + '_id'" :name='provincia'
+                       v-model="selectedProvinciaId" as="select" class="form-control">
+                  <option v-for="option in provincias" :key="option.id" :value="option.id">
+                    {{ option.provincia }}
+                  </option>
+                </Field>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label :for="tipoFestejo">Tipo de Festejo *</label>
                 <Field :id="tipoFestejo + '_id'" :name="tipoFestejo"
-                       v-model="selected" as="select" class="form-control">
+                       v-model="selectedFestejoId" as="select" class="form-control">
                   <option v-for="(tipo, tipo_index) in tiposFestejos" :key="tipo_index" :value="tipo">
                     {{ tipo }}
                   </option>
@@ -59,13 +63,28 @@ export default {
     poblacion: String,
     provincia: String,
     tipoFestejo: String,
-    selectedFestejo: String,
-    tiposFestejos: Array
+    selectedFestejo: {
+      type: String,
+      required: true
+    },
+    selectedProvincia: {
+      type: Number,
+      required: true
+    },
+    tiposFestejos: {
+      type: Array,
+      required: true
+    },
+    provincias: {
+      type: Array,
+      required: true
+    }
   },
   components: {InputForm, Field},
   data() {
     return {
-      selected: this.selectedFestejo // avoid making the prop accidentally writable
+      selectedFestejoId: this.selectedFestejo, // avoid making the prop accidentally writable
+      selectedProvinciaId: this.selectedProvincia
     }
   }
 }

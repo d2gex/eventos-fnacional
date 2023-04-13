@@ -13,8 +13,10 @@
                              poblacion="festejos.poblacion"
                              provincia="festejos.provincia"
                              tipo-festejo="festejos.tipoFestejo"
-                             :selected-festejo="selected"
-                             :tipos-festejos="tipoFestejos"/>
+                             :selected-festejo="selectedFestejo"
+                             :tipos-festejos="tipoFestejos"
+                             :provincias="provincias"
+                             :selected-provincia="selectedProvincia"/>
           </div>
           <div class="row">
             <FestejoGanaderias :items="ganaderiasData"/>
@@ -45,6 +47,24 @@ import {markRaw} from "vue";
 
 export default {
   name: 'FestejosForm',
+  props: {
+    selectedProvincia: {
+      type: Number,
+      required: true
+    },
+    provincias: {
+      type: Array,
+      require: true
+    },
+    selectedFestejo: {
+      type: String,
+      required: true
+    },
+    tipoFestejos: {
+      type: Array,
+      require: true
+    }
+  },
   components: {
     Form,
     FestejoDetalles,
@@ -52,8 +72,6 @@ export default {
     FestejoGanaderias
   },
   data() {
-    const selected = 'Opcion 1'
-    const tipoFestejos = ['Opcion 1', 'Opcion 2', 'Opcion 3']
     const initialData = {
       festejos: {
         tipoFestejo: '',
@@ -61,9 +79,9 @@ export default {
         poblacion: '',
         provincia: ''
       }
-    }
-    const torerosData = ["Jose Antonio", "Daniel Garcia", "David 'El Litri'", "Sonia Espartaca", "Laura Fogar 'La Cute'"].map(v => v.toLowerCase())
-    const ganaderiasData = ["Ganaderia 1", "Ganaderia 2", "Ganaderia 3", "Ganaderia 4", "Ganaderia 5"].map(v => v.toLowerCase())
+    };
+    const torerosData = ["Jose Antonio", "Daniel Garcia", "David 'El Litri'", "Sonia Espartaca", "Laura Fogar 'La Cute'"].map(v => v.toLowerCase());
+    const ganaderiasData = ["Ganaderia 1", "Ganaderia 2", "Ganaderia 3", "Ganaderia 4", "Ganaderia 5"].map(v => v.toLowerCase());
     const schema = markRaw(y_object().shape({
       festejos: y_object().shape({
         nombreFestejo: y_string().required(customErrorMessages.required_with_name("El nombre")).min(2, customErrorMessages.min_2),
@@ -86,8 +104,6 @@ export default {
           .strict(),
     }));
     return {
-      selected,
-      tipoFestejos,
       initialData,
       schema,
       torerosData,

@@ -9,7 +9,11 @@
   </div>
   <div class="row">
     <div class="col-md-12">
-      <FestejosForm/>
+      <FestejosForm
+          :selected-provincia="selectedProvincia"
+          :provincias="provincias"
+          :selected-festejo="selectedFestejo"
+          :tipo-festejos="tipoFestejos"/>
     </div>
   </div>
   <div class="row">
@@ -37,10 +41,16 @@ export default {
     OldDbDatatable
   },
   data() {
+    const selectedFestejo = 'Opcion 1';
+    const tipoFestejos = ['Opcion 1', 'Opcion 2', 'Opcion 3'];
+    const selectedProvincia = 45;
     const provincias = [];
     const tipoToreros = [];
     const oldDbDataUrl = CommonUtils.apiServerUrl + '/get_old_db_all_records';
     return {
+      selectedFestejo,
+      tipoFestejos,
+      selectedProvincia,
       provincias,
       tipoToreros,
       oldDbDataUrl
