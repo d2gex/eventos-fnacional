@@ -1,6 +1,6 @@
 <template>
   <div class="card mt-2 mx-auto p-2 bg-light">
-    <h3 class="text-center">Ganaderís del Festejo</h3>
+    <h3 class="text-center">Ganaderías del Festejo</h3>
     <div class="card-body bg-light">
       <div class="container">
         <div class="row">
