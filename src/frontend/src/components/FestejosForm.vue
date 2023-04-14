@@ -26,7 +26,7 @@
 
         </div>
         <div class="col-md-6">
-          <FestejoToreros :items="torerosData"/>
+          <FestejoToreros :items="torerosData" :selected="selectedToreros"/>
         </div>
       </div>
       <div class="row ">
@@ -65,6 +65,14 @@ export default {
     tipoFestejos: {
       type: Array,
       require: true
+    },
+    torerosData: {
+      type: Array,
+      required: true
+    },
+    selectedToreros: {
+      type: Object,
+      required: true
     }
   },
   components: {
@@ -83,7 +91,6 @@ export default {
         celebracion: ''
       }
     };
-    const torerosData = ["Jose Antonio", "Daniel Garcia", "David 'El Litri'", "Sonia Espartaca", "Laura Fogar 'La Cute'"].map(v => v.toLowerCase());
     const ganaderiasData = ["Ganaderia 1", "Ganaderia 2", "Ganaderia 3", "Ganaderia 4", "Ganaderia 5"].map(v => v.toLowerCase());
     const schema = markRaw(y_object().shape({
       festejos: y_object().shape({
@@ -110,7 +117,6 @@ export default {
     return {
       initialData,
       schema,
-      torerosData,
       ganaderiasData
     }
   },

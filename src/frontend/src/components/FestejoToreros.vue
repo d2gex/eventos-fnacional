@@ -10,9 +10,9 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label :for="`toreroName_${row}`">Torero *</label>
-                    <SearchBox type="text"
-                               :name="`toreroRow[${row}].toreroName`"
-                               :items="items"/>
+                    <SearchDropdownBox :selected="selected"
+                                       :items="items"
+                                       :name="`toreroRow[${row}].toreroName`"/>
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import SearchBox from "@/components/SearchBox.vue";
+import SearchDropdownBox from "@/components/SearchDropdownBox.vue";
 import PremiosTorero from "@/components/FestejoToreroPremios.vue";
 
 export default {
@@ -50,10 +50,14 @@ export default {
     items: {
       type: Array,
       required: true
+    },
+    selected: {
+      type: Object,
+      required: true
     }
   },
   components: {
-    SearchBox,
+    SearchDropdownBox,
     PremiosTorero,
   },
   data() {
