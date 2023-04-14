@@ -1,4 +1,10 @@
 <template>
+
+   <div class="row">
+    <div class="col-md-12">
+      <SearchDropdownBox/>
+    </div>
+  </div>
   <div class="row">
     <div class="col-md-8">
       <ToreroForm :tipo-toreros="tipoToreros"/>
@@ -22,6 +28,7 @@
 <!--    </div>-->
 <!--  </div>-->
 
+
 </template>
 
 <script>
@@ -30,11 +37,13 @@ import {CommonUtils} from "@/assets/common";
 import ToreroForm from '@/components/ToreroForm.vue'
 import GanaderiaForm from '@/components/GanaderiaForm.vue'
 import FestejosForm from "@/components/FestejosForm.vue";
+import SearchDropdownBox from "@/components/SearchDropdownBox.vue";
 // import OldDbDatatable from "@/components/OldDbDatatable.vue";
 
 export default {
   name: 'HomeView',
   components: {
+    SearchDropdownBox,
     ToreroForm,
     GanaderiaForm,
     FestejosForm,
