@@ -57,22 +57,29 @@ def save_torero_details():
     except IntegrityError:
         data = {
             "status": 0,
-            "message": f"Torero {record['nombre_profesional']} already exists",
+            "message": f"Torero '{record['nombre_profesional']}' already exists",
         }
     else:
         data = {"status": 1}
 
-    print(data)
     return jsonify(data)
 
 
 @api.route("/save_ganaderia_details", methods=["POST"])
 def save_ganaderia_details():
     data = request.get_json()
-    db_data = [
-        models.ModelGanaderia(**ganaderia_details)
-        for ganaderia_details in data["ganaderiaRow"]
-    ]
-    with session_scope() as s_db:
-        s_db.add_all(db_data)
+    record = None
+    try:
+        for ganaderia_details in data["ganaderiaRow"]:
+            record = ganaderia_details
+            with session_scope() as s_db:
+                s_db.add(models.ModelGanaderia(**record))
+    except IntegrityError:
+        data = {
+            "status": 0,
+            "message": f"Ganaderia '{record['nombre_ganaderia']}' already exists",
+        }
+    else:
+        data = {"status": 1}
+
     return jsonify(data)

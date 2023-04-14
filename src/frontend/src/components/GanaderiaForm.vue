@@ -127,9 +127,12 @@ export default {
             func(index)
           }
         },
-        onSubmit(values) {
+        async onSubmit(values) {
           console.log(JSON.stringify(values, null, 2));
-          const {data} = CommonUtils.sendDataToBackend(values, '/save_ganaderia_details')
+          const {data} = await CommonUtils.sendDataToBackend(values, '/save_ganaderia_details')
+          if (data.status === 0) {
+            await this.$vueAlert.alert(data.message)
+          }
           console.log(JSON.stringify(data, null, 2));
         }
       }
