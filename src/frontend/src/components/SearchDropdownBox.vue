@@ -3,8 +3,9 @@
       v-model="selectedItem"
       option-label="nombre_profesional"
       :options="dataItems"
-      :virtualScrollerOptions="{ itemSize: optionItemSize }"
+      :virtual-scroller-options="{ itemSize: optionItemSize }"
       filter
+      show-clear
       class="form-control">
     <template #value="slotProps">
       <div v-if="slotProps.value" class="flex align-items-center">
