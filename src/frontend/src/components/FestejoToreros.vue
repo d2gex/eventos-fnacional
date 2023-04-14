@@ -12,7 +12,8 @@
                     <label :for="`toreroName_${row}`">Torero *</label>
                     <SearchDropdownBox :selected="selected"
                                        :items="items"
-                                       :name="`toreroRow[${row}].toreroName`"/>
+                                       :name="`toreroRow[${row}].toreroName`"
+                                       :option-item-size="optionItemSize"/>
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -53,6 +54,10 @@ export default {
     },
     selected: {
       type: Object,
+      required: true
+    },
+    optionItemSize: {
+      type: Number,
       required: true
     }
   },

@@ -1,8 +1,11 @@
 <template>
-  <Dropdown v-model="selectedItem"
-            :options="dataItems"
-            filter
-            optionLabel="name" class="form-control">
+  <Dropdown
+      v-model="selectedItem"
+      option-label="nombre_profesional"
+      :options="dataItems"
+      :virtualScrollerOptions="{ itemSize: optionItemSize }"
+      filter
+      class="form-control">
     <template #value="slotProps">
       <div v-if="slotProps.value" class="flex align-items-center">
         <div>{{ slotProps.value.nombre_profesional }}</div>
@@ -30,10 +33,14 @@ export default {
     selected: {
       type: Object,
       required: true
+    },
+    optionItemSize: {
+      type: Number,
+      required: true
     }
   },
   components: {
-    Dropdown
+    Dropdown,
   },
   data() {
     const dataItems = []
