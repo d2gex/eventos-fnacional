@@ -46,6 +46,23 @@
               </div>
             </div>
           </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label :for="celebracion + '_id'">Fecha del Festejo *</label>
+                <VueDatePicker
+                    :id="celebracion + '_id'"
+                    model-type="dd/MM/yyyy"
+                    v-model="dateFestejoValue"
+                    format="dd/MM/yyyy"
+                    :year-range="[1600, 2100]"
+                    :enable-time-picker="false"></VueDatePicker>
+                <ErrorMessage as="div" class="field-error" :name="celebracion"/>
+                <Field :name="celebracion" type="hidden" v-model="dateFestejoValue">
+                </Field>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -54,15 +71,20 @@
 
 <script>
 import InputForm from "@/components/InputForm.vue";
-import {Field} from "vee-validate";
+import {Field, ErrorMessage} from "vee-validate";
+import VueDatePicker from '@vuepic/vue-datepicker';
+import {date} from "yup";
 
 export default {
   name: "FestejoDetalles",
+  methods: {date},
+  components: {InputForm, Field, ErrorMessage, VueDatePicker},
   props: {
     nombreFestejo: String,
     poblacion: String,
     provincia: String,
     tipoFestejo: String,
+    celebracion: String,
     selectedFestejo: {
       type: Number,
       required: true
@@ -80,11 +102,12 @@ export default {
       required: true
     }
   },
-  components: {InputForm, Field},
   data() {
+    const dateFestejoValue = new Date().toString();
     return {
       selectedFestejoId: this.selectedFestejo, // avoid making the prop accidentally writable
-      selectedProvinciaId: this.selectedProvincia
+      selectedProvinciaId: this.selectedProvincia,
+      dateFestejoValue: dateFestejoValue
     }
   }
 }

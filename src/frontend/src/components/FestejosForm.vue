@@ -13,6 +13,7 @@
                              poblacion="festejos.poblacion"
                              provincia="festejos.provincia"
                              tipo-festejo="festejos.tipoFestejo"
+                             celebracion="festejos.celebracion"
                              :selected-festejo="selectedFestejo"
                              :tipo-festejos="tipoFestejos"
                              :selected-provincia="selectedProvincia"
@@ -78,7 +79,8 @@ export default {
         tipoFestejo: '',
         nombreFestejo: '',
         poblacion: '',
-        provincia: ''
+        provincia: '',
+        celebracion: ''
       }
     };
     const torerosData = ["Jose Antonio", "Daniel Garcia", "David 'El Litri'", "Sonia Espartaca", "Laura Fogar 'La Cute'"].map(v => v.toLowerCase());
@@ -88,6 +90,7 @@ export default {
         nombreFestejo: y_string().required(customErrorMessages.required_with_name("El nombre")).min(2, customErrorMessages.min_2),
         poblacion: y_string().required(customErrorMessages.required_with_name("La poblacion")).min(2, customErrorMessages.min_2),
         provincia: y_string().required(customErrorMessages.required_with_name("Los provincia")).min(2, customErrorMessages.min_2),
+        celebracion: y_string().required(customErrorMessages.required_with_name("La fecha del festejo")).min(2, customErrorMessages.min_2),
       }),
       toreroRow: y_array()
           .of(

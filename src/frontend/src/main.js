@@ -1,8 +1,11 @@
 import "bootstrap/dist/css/bootstrap.css"
 import "./assets/main.css"
 import 'sweetalert2/dist/sweetalert2.min.css';
+import '@vuepic/vue-datepicker/dist/main.css'
+
 import "bootstrap/dist/js/bootstrap"
 import "./assets/common.js"
+
 import VueSimpleAlert from "vue3-simple-alert";
 import {createApp} from 'vue'
 import App from './App.vue'
