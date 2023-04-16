@@ -74,7 +74,7 @@ class ModelTorero(ModelBase):
     apodo = Column(String, nullable=True)
     nombre_profesional = Column(String, nullable=True, unique=True)
 
-    tipo_torero_id = Column(Integer, ForeignKey("tipo_torero.id"))
+    tipo_torero_id = Column(Integer, ForeignKey("tipo_torero.id"), nullable=False)
     tipo_torero = relationship(ModelTipoTorero, back_populates="torero")
 
 

@@ -34,7 +34,7 @@ class SqlLitDBSetup:
         # Only word characters and white spaces are allowed
         tipo_festejos = set(
             re.sub(r"([^\w\s-]+)", "", y)
-            for y in [x.lower().title().strip() for x in old_db_df["Tipo"].dropna()]
+            for y in [x.lower().title().strip() for x in self.old_db["Tipo"].dropna()]
         )
         # Get rid of whitespaces
         tipo_festejos = list(filter(None, tipo_festejos))
@@ -75,7 +75,7 @@ class CsvDBSetup:
 
     def run(self) -> pd.DataFrame:
         print("Start setting the csv database ....")
-        db_df = old_db_setup.amalgamate_all_sheets()
+        db_df = self.amalgamate_all_sheets()
         db_df = db_df.rename(
             columns={"Dis s.": "Dia Semana", "Ver fecha real": "Fecha Real"}
         )
@@ -85,7 +85,7 @@ class CsvDBSetup:
         return db_df
 
 
-if __name__ == "__main__":
+def create_init_db():
     if config.Config.CREATE_CSV_DATABASE:
         old_db_setup = CsvDBSetup(
             config.Config.ORIGINAL_CSV_DB_PATH, config.Config.NEW_CSV_DB_PATH
@@ -99,3 +99,7 @@ if __name__ == "__main__":
             old_db=old_db_df,
         )
         sql_db_setup.run()
+
+
+if __name__ == "__main__":
+    create_init_db()
