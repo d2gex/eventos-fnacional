@@ -23,7 +23,8 @@ const CommonUtils = {
         } catch (error) {
             console.error(error);
         }
-    }
+    },
+
 
 }
 

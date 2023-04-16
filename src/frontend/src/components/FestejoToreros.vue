@@ -1,6 +1,6 @@
 <template>
   <div class="row border border-primary">
-    <div class="col-md-12" v-for="row in numRows" :key="row">
+    <div class="col-md-12" v-for="(_, row) in numRows" :key="row">
       <div class="card mt-2 mx-auto p-2 bg-light">
         <div class="card-body bg-light">
           <div class="container">

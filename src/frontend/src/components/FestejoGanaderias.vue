@@ -4,7 +4,7 @@
     <div class="card-body bg-light">
       <div class="container">
         <div class="row">
-          <div class="col-md-12" v-for="row in numRows" :key="row">
+          <div class="col-md-12" v-for="(_, row) in numRows" :key="row">
             <div class="form-group">
               <label :for="`ganaderiaName_${row}`">Ganaderia *</label>
               <SearchBox type="text"
