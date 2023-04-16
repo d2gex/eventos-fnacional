@@ -1,9 +1,9 @@
 <template>
   <div class="row">
-    <div class="col-md-4" v-for="row in numRows" :key="buildUniqueKey(row)">
+    <div class="col-md-4" v-for="row in numRows" :key="toreroNumRow.toString() + '_' + row">
       <div class="form-group">
-        <label :for="`premioRow[${buildUniqueKey(row)}]`">Premio</label>
-        <Field :id="`premio_id_${buildUniqueKey(row)}`" :name="`premioRow[${buildUniqueKey(row)}]`"
+        <label :for="`${fieldName}[${row}]_id`">Premio</label>
+        <Field :id="`${fieldName}[${row}]_id`" :name="`${fieldName}[${row}]`"
                v-model="tipoPremioSelected[row]" as="select" class="form-control">
           <option v-for="(tipo, tipo_index) in tipoPremios" :key="tipo_index" :value="tipo">
             {{ tipo }}
@@ -33,14 +33,21 @@ import {Field} from "vee-validate";
 export default {
   name: "FestejoToreroPremios",
   props: {
-    toreroNumRow: Number
+    toreroNumRow: {
+      type: Number,
+      required: true
+    },
+    fieldName: {
+      type: String,
+      required: true
+    }
   },
   components: {
     Field
   },
   data() {
     const maxRows = 6;
-    const numRows = 1
+    const numRows = 1;
     const tipoPremios = ['N', 'O', 'OO', 'OOR'];
     const tipoPremioSelected = Array(maxRows).fill(tipoPremios[0])
     return {
@@ -61,9 +68,6 @@ export default {
           if (this.numRows > 1) {
             this.numRows--
           }
-        },
-        buildUniqueKey(key) {
-          return this.toreroNumRow + '_' + key
         }
       }
 }

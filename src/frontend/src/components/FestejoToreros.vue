@@ -17,7 +17,7 @@
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <PremiosTorero :torero-num-row="row"/>
+                  <PremiosTorero :torero-num-row="row" :field-name="`toreroRow[${row}].toreroPremios`"/>
                 </div>
               </div>
             </div>
@@ -66,6 +66,7 @@ export default {
     const numRows = 1;
     const toreroRowFields = {
       toreroName: '',
+      toreroPremios: Array
     };
     const initialData = {
       toreroRow: [toreroRowFields]
