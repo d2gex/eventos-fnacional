@@ -103,11 +103,11 @@ export default {
     }
   },
   data() {
-    const dateFestejoValue = new Date().toString();
+    const dateFestejoValue = new Date().toLocaleDateString();
     return {
       selectedFestejoId: this.selectedFestejo, // avoid making the prop accidentally writable
       selectedProvinciaId: this.selectedProvincia,
-      dateFestejoValue: dateFestejoValue
+      dateFestejoValue
     }
   }
 }
