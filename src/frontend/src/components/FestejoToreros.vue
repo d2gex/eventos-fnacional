@@ -10,9 +10,10 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label :for="`toreroName_${row}`">Torero *</label>
-                    <SearchDropdownBox :selected="selected"
+                    <SearchDropdownBox
+                                       :selected="selected"
                                        :items="items"
-                                       :name="`toreroRow[${row}].toreroName`"
+                                       :field-name="`toreroRow[${row}].toreroName`"
                                        :option-item-size="optionItemSize"/>
                   </div>
                 </div>
@@ -67,7 +68,7 @@ export default {
   },
   data() {
     const maxRows = 6;
-    const numRows = 1
+    const numRows = 1;
     const toreroRowFields = {
       toreroName: '',
     };

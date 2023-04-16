@@ -1,17 +1,20 @@
 <template>
   <Dropdown
-      v-model="selectedItem"
-      option-label="nombre_profesional"
+      v-model="value"
       :options="dataItems"
       :virtual-scroller-options="{ itemSize: optionItemSize }"
+      option-label="nombre_profesional"
       filter
       show-clear
+      placeholder="Selecciona un torero"
       class="form-control">
     <template #value="slotProps">
       <div v-if="slotProps.value" class="flex align-items-center">
         <div>{{ slotProps.value.nombre_profesional }}</div>
       </div>
-      <span v-else>{{ slotProps.placeholder }}</span>
+      <span v-else>
+        {{ slotProps.placeholder }}
+      </span>
     </template>
     <template #option="slotProps">
       <div class="flex align-items-center">
@@ -19,14 +22,20 @@
       </div>
     </template>
   </Dropdown>
+  <small class="p-error" id="dd-error">{{ errorMessage || '&nbsp;' }}</small>
 </template>
 
 <script>
 import Dropdown from 'primevue/dropdown';
+import {useField} from 'vee-validate';
 
 export default {
   name: "SearchDropdownBox",
   props: {
+    fieldName: {
+      type: String,
+      required: true
+    },
     items: {
       type: Array,
       required: true
@@ -41,20 +50,20 @@ export default {
     }
   },
   components: {
-    Dropdown,
+    Dropdown
   },
   data() {
     const dataItems = []
-    const selectedItem = '';
+    const {value, errorMessage} = useField(this.fieldName);
     return {
       dataItems,
-      selectedItem
+      value,
+      errorMessage
     }
   },
   mounted() {
     this.dataItems = this.items
-    this.selectedItem = this.selected
-
+    this.value = this.selected
   }
 }
 </script>

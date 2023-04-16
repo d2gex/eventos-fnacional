@@ -92,7 +92,7 @@ export default {
         nombreFestejo: '',
         poblacion: '',
         provincia: '',
-        celebracion: ''
+        celebracion: '',
       }
     };
     const ganaderiasData = ["Ganaderia 1", "Ganaderia 2", "Ganaderia 3", "Ganaderia 4", "Ganaderia 5"].map(v => v.toLowerCase());
@@ -106,7 +106,7 @@ export default {
       toreroRow: y_array()
           .of(
               y_object().shape({
-                toreroName: y_string().required(customErrorMessages.required_with_name("El nombre")).min(1, customErrorMessages.min_2),
+                toreroName: y_object().required(customErrorMessages.required_with_name("El nombre")),
               })
           )
           .strict(),
