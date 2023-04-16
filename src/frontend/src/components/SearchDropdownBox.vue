@@ -2,7 +2,6 @@
   <Dropdown
       v-model="value"
       :options="dataItems"
-      :virtual-scroller-options="{ itemSize: optionItemSize }"
       option-label="nombre_profesional"
       filter
       show-clear
@@ -42,10 +41,6 @@ export default {
     },
     selected: {
       type: Object,
-      required: true
-    },
-    optionItemSize: {
-      type: Number,
       required: true
     }
   },

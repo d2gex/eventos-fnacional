@@ -15,8 +15,7 @@
           :selected-festejo="selectedFestejo"
           :tipo-festejos="tipoFestejos"
           :selected-toreros="selectedTorero"
-          :toreros-data="toreroItems"
-          :option-item-size="optionItemSize"/>
+          :toreros-data="toreroItems"/>
     </div>
   </div>
   <!--  <div class="row">-->
@@ -56,7 +55,6 @@ export default {
       {nombre_profesional: 'Manue', id: 3},
       {nombre_profesional: 'Luis', id: 4}
     ]
-    const optionItemSize = 35;
     const selectedTorero = {nombre_profesional: 'Luis', id: 4}
     // const oldDbDataUrl = CommonUtils.apiServerUrl + '/get_old_db_all_records';
     return {
@@ -67,7 +65,6 @@ export default {
       tipoToreros,
       toreroItems,
       selectedTorero,
-      optionItemSize
       // oldDbDataUrl
     }
   },

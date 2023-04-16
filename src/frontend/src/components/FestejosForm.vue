@@ -26,7 +26,7 @@
 
         </div>
         <div class="col-md-6">
-          <FestejoToreros :items="torerosData" :selected="selectedToreros" :option-item-size="optionItemSize"/>
+          <FestejoToreros :items="torerosData" :selected="selectedToreros"/>
         </div>
       </div>
       <div class="row ">
@@ -72,10 +72,6 @@ export default {
     },
     selectedToreros: {
       type: Object,
-      required: true
-    },
-    optionItemSize: {
-      type: Number,
       required: true
     }
   },

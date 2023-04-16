@@ -13,8 +13,7 @@
                     <SearchDropdownBox
                                        :selected="selected"
                                        :items="items"
-                                       :field-name="`toreroRow[${row}].toreroName`"
-                                       :option-item-size="optionItemSize"/>
+                                       :field-name="`toreroRow[${row}].toreroName`"/>
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -55,10 +54,6 @@ export default {
     },
     selected: {
       type: Object,
-      required: true
-    },
-    optionItemSize: {
-      type: Number,
       required: true
     }
   },
