@@ -56,11 +56,21 @@ export default {
       errorMessage
     }
   },
-  watch: {
-    items(newItems) {
+  methods: {
+    updateItems(newItems) {
       this.dataItems = newItems
       this.value = this.dataItems[this.selectedItem]
+    }
+  },
+  watch: {
+    items(newItems) {
+      // Update an instance of this component that fetches the api data for the first time
+      this.updateItems(newItems)
     },
+  },
+  mounted() {
+    // Update cloned copies of this component once the api data has been fetched.
+    this.updateItems(this.items)
   }
 }
 </script>
