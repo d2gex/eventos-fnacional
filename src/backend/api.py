@@ -35,6 +35,16 @@ def get_provincias():
     return jsonify(data)
 
 
+@api.route("/get_toreros", methods=["GET"])
+def get_toreros():
+    with session_scope() as dbs:
+        db_data = dbs.query(
+            models.ModelTorero.nombre_profesional, models.ModelTorero.id
+        ).all()
+        data = [{"nombre_profesional": row[0], "id": row[1]} for row in db_data]
+    return jsonify(data)
+
+
 @api.route("/get_old_db_all_records", methods=["GET"])
 def get_old_db_all_records():
     df = pd.read_csv(Config.NEW_CSV_DB_PATH)

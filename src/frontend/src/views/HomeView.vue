@@ -49,13 +49,8 @@ export default {
     const selectedProvincia = 45;
     const provincias = [];
     const tipoToreros = [];
-    const toreroItems = [
-      {nombre_profesional: 'Jose', id: 1},
-      {nombre_profesional: 'Anotnio', id: 2},
-      {nombre_profesional: 'Manue', id: 3},
-      {nombre_profesional: 'Luis', id: 4}
-    ]
-    const selectedTorero = {nombre_profesional: 'Luis', id: 4}
+    const toreroItems = []
+    const selectedTorero = {};
     // const oldDbDataUrl = CommonUtils.apiServerUrl + '/get_old_db_all_records';
     return {
       selectedFestejo,
@@ -80,7 +75,7 @@ export default {
     }
 
   },
-  async mounted() {
+  async created() {
     // Get details for provinces
     let response = await this.getDataFromTable(CommonUtils.apiServerUrl + '/get_provincias')
     this.provincias = response.data
@@ -92,6 +87,10 @@ export default {
     // Get details for tipo toreros
     response = await this.getDataFromTable(CommonUtils.apiServerUrl + '/get_tipo_festejos')
     this.tipoFestejos = response.data
+
+    response = await this.getDataFromTable(CommonUtils.apiServerUrl + '/get_toreros')
+    this.toreroItems = response.data
+    this.selectedTorero = this.toreroItems[0]
   }
 }
 </script>

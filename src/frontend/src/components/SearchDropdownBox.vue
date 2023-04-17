@@ -39,7 +39,7 @@ export default {
       type: Array,
       required: true
     },
-    selected: {
+    selectedItem: {
       type: Object,
       required: true
     }
@@ -56,9 +56,13 @@ export default {
       errorMessage
     }
   },
-  mounted() {
-    this.dataItems = this.items
-    this.value = this.selected
+  watch: {
+    items(newItems) {
+      this.dataItems = newItems
+    },
+    selectedItem(newSelected) {
+      this.value = newSelected
+    }
   }
 }
 </script>

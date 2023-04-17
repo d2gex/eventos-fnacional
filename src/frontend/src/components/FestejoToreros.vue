@@ -11,7 +11,7 @@
                   <div class="form-group">
                     <label :for="`toreroName_${row}`">Torero *</label>
                     <SearchDropdownBox
-                                       :selected="selected"
+                                       :selectedItem="selected"
                                        :items="items"
                                        :field-name="`toreroRow[${row}].toreroName`"/>
                   </div>
