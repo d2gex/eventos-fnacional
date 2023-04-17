@@ -35,7 +35,7 @@
                             <Field :id="`ganaderiaRow[${row}].provincia_id` + '_id'"
                                    :name="`ganaderiaRow[${row}].provincia_id`"
                                    v-model="selected[row]" as="select" class="form-control">
-                              <option v-for="option in provincias" :key="option.id" :value="option.id">
+                              <option v-for="option in provinciasData" :key="option.id" :value="option.id">
                                 {{ option.provincia }}
                               </option>
                             </Field>
@@ -89,6 +89,7 @@ export default {
     ErrorMessage
   },
   data() {
+    const provinciasData = []
     const selected = Array(6).fill(45);
     const ganaderiaRowFields = {
       nombre_ganaderia: '',
@@ -108,6 +109,7 @@ export default {
     }));
     const maxRows = 6;
     return {
+      provinciasData,
       selected,
       ganaderiaRowFields,
       initialData,
@@ -135,6 +137,11 @@ export default {
           }
           console.log(JSON.stringify(data, null, 2));
         }
-      }
+      },
+  watch: {
+    provincias(newProvincias) {
+      this.provinciasData = newProvincias
+    }
+  }
 }
 </script>
