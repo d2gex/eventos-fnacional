@@ -8,9 +8,9 @@ TEST_PATH = config.ROOT_PATH / "test"
 TEST_DB_PATH = TEST_PATH / "stubs" / "nombre_apellidos_toreros.csv"
 
 
-def add_toreros_testing_data(db_df: pd.DataFrame):
+def add_toreros_testing_data(db_df: pd.DataFrame, max_rows: int):
     db_data = []
-    for record in db_df.to_dict(orient="records"):
+    for record in db_df.head(max_rows).to_dict(orient="records"):
         record[
             "nombre_profesional"
         ] = f"{record['nombre']} {record['apellidos']} {record ['apodo']}"
@@ -24,4 +24,4 @@ def add_toreros_testing_data(db_df: pd.DataFrame):
 if __name__ == "__main__":
     db_scripts.create_init_db()
     toreros_df = pd.read_csv(TEST_DB_PATH)
-    add_toreros_testing_data(toreros_df)
+    add_toreros_testing_data(toreros_df, 500)

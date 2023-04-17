@@ -53,7 +53,7 @@ export default {
       required: true
     },
     selected: {
-      type: Object,
+      type: Number,
       required: true
     }
   },

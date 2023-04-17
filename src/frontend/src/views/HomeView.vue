@@ -50,7 +50,8 @@ export default {
     const provincias = [];
     const tipoToreros = [];
     const toreroItems = []
-    const selectedTorero = {};
+    const selectedTorero = 0;
+
     // const oldDbDataUrl = CommonUtils.apiServerUrl + '/get_old_db_all_records';
     return {
       selectedFestejo,
@@ -90,7 +91,6 @@ export default {
 
     response = await this.getDataFromTable(CommonUtils.apiServerUrl + '/get_toreros')
     this.toreroItems = response.data
-    this.selectedTorero = this.toreroItems[0]
   }
 }
 </script>

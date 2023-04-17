@@ -40,7 +40,7 @@ export default {
       required: true
     },
     selectedItem: {
-      type: Object,
+      type: Number,
       required: true
     }
   },
@@ -59,10 +59,8 @@ export default {
   watch: {
     items(newItems) {
       this.dataItems = newItems
+      this.value = this.dataItems[this.selectedItem]
     },
-    selectedItem(newSelected) {
-      this.value = newSelected
-    }
   }
 }
 </script>

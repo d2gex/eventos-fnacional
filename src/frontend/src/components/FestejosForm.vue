@@ -71,7 +71,7 @@ export default {
       required: true
     },
     selectedToreros: {
-      type: Object,
+      type: Number,
       required: true
     }
   },
