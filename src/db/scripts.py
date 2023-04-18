@@ -13,12 +13,14 @@ class SqlLitDBSetup:
         tipo_toreros: List[str],
         tipo_premios: List[str],
         provincias_path: Path,
+        poblaciones_path: Path,
         old_db: pd.DataFrame,
     ):
         self.tipo_toreros = tipo_toreros
         self.tipo_premios = tipo_premios
-        self.old_db = old_db
         self.provincias_path = provincias_path
+        self.poblaciones_path = poblaciones_path
+        self.old_db = old_db
 
     def init_database(self) -> None:
         models.ModelBase.metadata.drop_all(utils_db.engine)
@@ -37,6 +39,15 @@ class SqlLitDBSetup:
     def init_provincia_table(self) -> None:
         provincia_df = pd.read_csv(self.provincias_path)
         db_data = [models.ModelProvincia(provincia=x) for x in provincia_df.name.values]
+        with utils_db.session_scope() as dbs:
+            dbs.add_all(db_data)
+
+    def init_problacion_table(self, provincia_id=45) -> None:
+        poblacion_df = pd.read_csv(self.poblaciones_path)
+        db_data = [
+            models.ModelPoblacion(ciudad=x, provincia_id=provincia_id)
+            for x in poblacion_df.name.values
+        ]
         with utils_db.session_scope() as dbs:
             dbs.add_all(db_data)
 
@@ -65,6 +76,8 @@ class SqlLitDBSetup:
         self.init_tipo_premios_table()
         print("-----------> Adding provincias")
         self.init_provincia_table()
+        print("-----------> Adding poblaciones")
+        self.init_problacion_table()
         print("-----------> Adding initial tipo festejos")
         self.init_tipo_festejos()
         print("... Sql database set up")
@@ -107,8 +120,9 @@ def create_init_db():
     if config.Config.CREATE_SQL_DATABASE:
         sql_db_setup = SqlLitDBSetup(
             tipo_toreros=["Torero", "Rejoneador"],
-            tipo_premios=['N', 'O', 'OO', 'OOR'],
+            tipo_premios=["N", "O", "OO", "OOR"],
             provincias_path=config.DATA_PATH / "provincias_es.csv",
+            poblaciones_path=config.DATA_PATH / "poblaciones_toledo.csv",
             old_db=old_db_df,
         )
         sql_db_setup.run()
