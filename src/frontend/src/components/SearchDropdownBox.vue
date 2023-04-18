@@ -72,13 +72,15 @@ export default {
   },
   watch: {
     items(newItems) {
-      // Update an instance of this component that fetches the api data for the first time
+      // Update an instance of this component when fetching the  api data for the first time
       this.updateItems(newItems)
     },
   },
   mounted() {
     // Update cloned copies of this component once the api data has been fetched.
-    this.updateItems(this.items)
+    if (this.items.length) {
+      this.updateItems(this.items)
+    }
   }
 }
 </script>
