@@ -17,8 +17,12 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="poblacion">Población *</label>
-                <InputForm type="text" :id="poblacion + '_id'" :name='poblacion'
-                           placeholder="Entra la población *"/>
+                <Field :id="poblacion + '_id'" :name='poblacion'
+                       v-model="selectBox.selectedPoblacion" as="select" class="form-control">
+                  <option v-for="option in selectBox.poblaciones" :key="option.id" :value="option.id">
+                    {{ option.ciudad }}
+                  </option>
+                </Field>
               </div>
             </div>
           </div>
@@ -27,8 +31,8 @@
               <div class="form-group">
                 <label for="provincia">Provincia *</label>
                 <Field :id="provincia + '_id'" :name='provincia'
-                       v-model="selectedProvinciaId" as="select" class="form-control">
-                  <option v-for="option in provincias" :key="option.id" :value="option.id">
+                       v-model="selectBox.selectedProvincia" as="select" class="form-control">
+                  <option v-for="option in selectBox.provincias" :key="option.id" :value="option.id">
                     {{ option.provincia }}
                   </option>
                 </Field>
@@ -38,8 +42,8 @@
               <div class="form-group">
                 <label :for="tipoFestejo">Tipo de Festejo *</label>
                 <Field :id="tipoFestejo + '_id'" :name="tipoFestejo"
-                       v-model="selectedFestejoId" as="select" class="form-control">
-                  <option v-for="option in tipoFestejos" :key="option.id" :value="option.id">
+                       v-model="selectBox.selectedFestejo" as="select" class="form-control">
+                  <option v-for="option in selectBox.tipoFestejos" :key="option.id" :value="option.id">
                     {{ option.tipo_festejo }}
                   </option>
                 </Field>
@@ -73,11 +77,9 @@
 import InputForm from "@/components/InputForm.vue";
 import {Field, ErrorMessage} from "vee-validate";
 import VueDatePicker from '@vuepic/vue-datepicker';
-import {date} from "yup";
 
 export default {
   name: "FestejoDetalles",
-  methods: {date},
   components: {InputForm, Field, ErrorMessage, VueDatePicker},
   props: {
     nombreFestejo: String,
@@ -85,11 +87,8 @@ export default {
     provincia: String,
     tipoFestejo: String,
     celebracion: String,
+
     selectedFestejo: {
-      type: Number,
-      required: true
-    },
-    selectedProvincia: {
       type: Number,
       required: true
     },
@@ -97,17 +96,64 @@ export default {
       type: Array,
       required: true
     },
+    selectedProvincia: {
+      type: Number,
+      required: true
+    },
     provincias: {
+      type: Array,
+      required: true
+    },
+    selectedPoblacion: {
+      type: Number,
+      required: true
+    },
+    poblaciones: {
       type: Array,
       required: true
     }
   },
   data() {
     const dateFestejoValue = new Date().toLocaleDateString();
+    const selectBox = {
+      selectedFestejo: '',
+      selectedProvincia: '',
+      selectedPoblacion: '',
+      provincias: [],
+      poblaciones: [],
+      tipoFestejos: []
+    };
     return {
-      selectedFestejoId: this.selectedFestejo, // avoid making the prop accidentally writable
-      selectedProvinciaId: this.selectedProvincia,
-      dateFestejoValue
+      dateFestejoValue,
+      selectBox
+    }
+  },
+  methods: {
+    updateSelectBox(newItems, dataProp, selectedProp) {
+      this.selectBox[dataProp] = this[dataProp]
+      this.selectBox[selectedProp] = this.selectBox[dataProp][this[selectedProp]].id
+    }
+  },
+  watch: {
+    tipoFestejos(newItem) {
+      this.updateSelectBox(newItem, 'tipoFestejos', 'selectedFestejo')
+    },
+    provincias(newItem) {
+      this.updateSelectBox(newItem, 'provincias', 'selectedProvincia')
+    },
+    poblaciones(newItem) {
+      this.updateSelectBox(newItem, 'poblaciones', 'selectedPoblacion')
+    },
+  },
+  mounted() {
+    if (this.tipoFestejos.length) {
+      this.updateSelectBox(this.tipoFestejos, 'tipoFestejos', 'selectedFestejo')
+    }
+    if (this.provincias.length) {
+      this.updateSelectBox(this.tipoFestejos, 'provincias', 'selectedProvincia')
+    }
+    if (this.tipoFestejos.length) {
+      this.updateSelectBox(this.tipoFestejos, 'poblaciones', 'selectedPoblacion')
     }
   }
 }

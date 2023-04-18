@@ -18,6 +18,8 @@
                              :tipo-festejos="tipoFestejos"
                              :selected-provincia="selectedProvincia"
                              :provincias="provincias"
+                             :selected-poblacion="selectedPoblacion"
+                             :poblaciones="poblaciones"
             />
           </div>
           <div class="row">
@@ -92,6 +94,14 @@ export default {
     toreroPremiosData: {
       type: Array,
       required: true
+    },
+    selectedPoblacion: {
+      type: Number,
+      required: true
+    },
+    poblaciones: {
+      type: Array,
+      required: true
     }
   },
   components: {
@@ -114,8 +124,6 @@ export default {
     const schema = markRaw(y_object().shape({
       festejos: y_object().shape({
         nombreFestejo: y_string().required(customErrorMessages.required_with_name("El nombre")).min(2, customErrorMessages.min_2),
-        poblacion: y_string().required(customErrorMessages.required_with_name("La poblacion")).min(2, customErrorMessages.min_2),
-        provincia: y_string().required(customErrorMessages.required_with_name("Los provincia")).min(2, customErrorMessages.min_2),
         celebracion: y_string().required(customErrorMessages.required_with_name("La fecha del festejo")).min(2, customErrorMessages.min_2),
       }),
       toreroRow: y_array()

@@ -19,7 +19,10 @@
           :selected-ganaderias="selectedGanaderia"
           :ganaderias-data="ganaderiaItems"
           :selected-torero-premio="selectedToreroPremio"
-          :torero-premios-data="premioToreroItems"/>
+          :torero-premios-data="premioToreroItems"
+          :selected-poblacion="selectedPoblacion"
+          :poblaciones="poblaciones"
+      />
     </div>
   </div>
   <!--  <div class="row">-->
@@ -48,7 +51,7 @@ export default {
     // OldDbDatatable
   },
   data() {
-    const toledo_province_id = 45;
+    const toledo_province_id = 45 - 1;
     const selectedFestejo = 1;
     const tipoFestejos = [];
     const selectedProvincia = toledo_province_id;
@@ -59,6 +62,8 @@ export default {
     const ganaderiaItems = [];
     const selectedToreroPremio = 0;
     const premioToreroItems = [];
+    const selectedPoblacion = 0;
+    const poblaciones = [];
     const tipoToreros = [];
 
     // const oldDbDataUrl = CommonUtils.apiServerUrl + '/get_old_db_all_records';
@@ -73,6 +78,8 @@ export default {
       ganaderiaItems,
       selectedToreroPremio,
       premioToreroItems,
+      selectedPoblacion,
+      poblaciones,
       tipoToreros,
       // oldDbDataUrl
     }
@@ -113,6 +120,10 @@ export default {
     // Get details for premios
     response = await this.getDataFromTable(CommonUtils.apiServerUrl + '/get_tipo_premios')
     this.premioToreroItems = response.data
+
+    // Get details for poblaciones
+    response = await this.getDataFromTable(CommonUtils.apiServerUrl + '/get_poblaciones')
+    this.poblaciones = response.data
   }
 }
 </script>
