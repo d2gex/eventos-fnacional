@@ -11,15 +11,18 @@
                   <div class="form-group">
                     <label :for="`toreroName_${row}`">Torero *</label>
                     <SearchDropdownBox
-                                       :selectedItem="selected"
-                                       :items="items"
-                                       :field-name="`toreroRow[${row}].toreroName`"
-                                       place-holder="Selecciona un torero"
-                                       option-label="nombre_profesional"/>
+                        :selectedItem="selectedTorero"
+                        :items="torerosData"
+                        :field-name="`toreroRow[${row}].toreroName`"
+                        place-holder="Selecciona un torero"
+                        option-label="nombre_profesional"/>
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <PremiosTorero :torero-num-row="row" :field-name="`toreroRow[${row}].toreroPremios`"/>
+                  <PremiosTorero :torero-num-row="row"
+                                 :field-name="`toreroRow[${row}].toreroPremios`"
+                                 :selected-torero-premio="selectedToreroPremio"
+                                 :torero-premios-data="toreroPremiosData"/>
                 </div>
               </div>
             </div>
@@ -50,12 +53,20 @@ import PremiosTorero from "@/components/FestejoToreroPremios.vue";
 export default {
   name: "FestejoToreros",
   props: {
-    items: {
+    selectedTorero: {
+      type: Number,
+      required: true
+    },
+    torerosData: {
       type: Array,
       required: true
     },
-    selected: {
+    selectedToreroPremio: {
       type: Number,
+      required: true
+    },
+    toreroPremiosData: {
+      type: Array,
       required: true
     }
   },

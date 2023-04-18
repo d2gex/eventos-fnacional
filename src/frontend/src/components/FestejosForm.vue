@@ -26,7 +26,10 @@
 
         </div>
         <div class="col-md-6">
-          <FestejoToreros :items="torerosData" :selected="selectedToreros"/>
+          <FestejoToreros :torerosData="torerosData"
+                          :selected-torero="selectedToreros"
+                          :torero-premios-data="toreroPremiosData"
+                          :selected-torero-premio="selectedToreroPremio"/>
         </div>
       </div>
       <div class="row ">
@@ -79,6 +82,14 @@ export default {
       required: true
     },
     ganaderiasData: {
+      type: Array,
+      required: true
+    },
+    selectedToreroPremio: {
+      type: Number,
+      required: true
+    },
+    toreroPremiosData: {
       type: Array,
       required: true
     }

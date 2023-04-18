@@ -5,8 +5,8 @@
         <label :for="`${fieldName}[${row}]_id`">Premio</label>
         <Field :id="`${fieldName}[${row}]_id`" :name="`${fieldName}[${row}]`"
                v-model="tipoPremioSelected[row]" as="select" class="form-control">
-          <option v-for="(tipo, tipo_index) in tipoPremios" :key="tipo_index" :value="tipo">
-            {{ tipo }}
+          <option v-for="option in tipoPremios" :key="option.id" :value="option.id">
+            {{ option.tipo_premio }}
           </option>
         </Field>
       </div>
@@ -40,6 +40,14 @@ export default {
     fieldName: {
       type: String,
       required: true
+    },
+    selectedToreroPremio: {
+      type: Number,
+      required: true
+    },
+    toreroPremiosData: {
+      type: Array,
+      required: true
     }
   },
   components: {
@@ -48,8 +56,8 @@ export default {
   data() {
     const maxRows = 6;
     const numRows = 1;
-    const tipoPremios = ['N', 'O', 'OO', 'OOR'];
-    const tipoPremioSelected = Array(maxRows).fill(tipoPremios[0])
+    const tipoPremios = []
+    const tipoPremioSelected = []
     return {
       maxRows,
       numRows,
@@ -68,7 +76,24 @@ export default {
           if (this.numRows > 1) {
             this.numRows--
           }
+        },
+        updatetoreroPremiosData(newTipoPremio) {
+          this.tipoPremios = newTipoPremio
+          this.tipoPremioSelected = Array(this.maxRows).fill(this.tipoPremios[this.selectedToreroPremio].id)
         }
-      }
+      },
+  watch: {
+    toreroPremiosData(newTipoPremio) {
+      // Update an instance of this component when fetching the  api data for the first time
+      this.updatetoreroPremiosData(newTipoPremio)
+    }
+  },
+  mounted() {
+    // Update cloned copies of this component once the api data has been fetched.
+    if (this.toreroPremiosData.length) {
+      this.updatetoreroPremiosData(this.toreroPremiosData)
+    }
+
+  }
 }
 </script>

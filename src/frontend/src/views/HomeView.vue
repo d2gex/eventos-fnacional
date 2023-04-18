@@ -17,7 +17,9 @@
           :selected-toreros="selectedTorero"
           :toreros-data="toreroItems"
           :selected-ganaderias="selectedGanaderia"
-          :ganaderias-data="ganaderiaItems"/>
+          :ganaderias-data="ganaderiaItems"
+          :selected-torero-premio="selectedToreroPremio"
+          :torero-premios-data="premioToreroItems"/>
     </div>
   </div>
   <!--  <div class="row">-->
@@ -55,6 +57,8 @@ export default {
     const toreroItems = [];
     const selectedGanaderia = 0;
     const ganaderiaItems = [];
+    const selectedToreroPremio = 0;
+    const premioToreroItems = [];
     const tipoToreros = [];
 
     // const oldDbDataUrl = CommonUtils.apiServerUrl + '/get_old_db_all_records';
@@ -67,6 +71,8 @@ export default {
       toreroItems,
       selectedGanaderia,
       ganaderiaItems,
+      selectedToreroPremio,
+      premioToreroItems,
       tipoToreros,
       // oldDbDataUrl
     }
@@ -103,6 +109,10 @@ export default {
     // Get details for ganaderias
     response = await this.getDataFromTable(CommonUtils.apiServerUrl + '/get_ganaderias')
     this.ganaderiaItems = response.data
+
+    // Get details for premios
+    response = await this.getDataFromTable(CommonUtils.apiServerUrl + '/get_tipo_premios')
+    this.premioToreroItems = response.data
   }
 }
 </script>
