@@ -13,7 +13,9 @@
                     <SearchDropdownBox
                                        :selectedItem="selected"
                                        :items="items"
-                                       :field-name="`toreroRow[${row}].toreroName`"/>
+                                       :field-name="`toreroRow[${row}].toreroName`"
+                                       place-holder="Selecciona un torero"
+                                       option-label="nombre_profesional"/>
                   </div>
                 </div>
                 <div class="col-md-6">

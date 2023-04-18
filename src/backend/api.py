@@ -45,6 +45,14 @@ def get_toreros():
     return jsonify(data)
 
 
+@api.route("/get_ganaderias", methods=["GET"])
+def get_ganaderias():
+    with session_scope() as dbs:
+        db_data = dbs.query(models.ModelGanaderia).all()
+        data = [x.to_dict() for x in db_data]
+    return jsonify(data)
+
+
 @api.route("/get_old_db_all_records", methods=["GET"])
 def get_old_db_all_records():
     df = pd.read_csv(Config.NEW_CSV_DB_PATH)

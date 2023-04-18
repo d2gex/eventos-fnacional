@@ -21,7 +21,7 @@
             />
           </div>
           <div class="row">
-            <FestejoGanaderias :items="ganaderiasData"/>
+            <FestejoGanaderias :items="ganaderiasData" :selected="selectedGanaderias"/>
           </div>
 
         </div>
@@ -66,12 +66,20 @@ export default {
       type: Array,
       require: true
     },
+    selectedToreros: {
+      type: Number,
+      required: true
+    },
     torerosData: {
       type: Array,
       required: true
     },
-    selectedToreros: {
+    selectedGanaderias: {
       type: Number,
+      required: true
+    },
+    ganaderiasData: {
+      type: Array,
       required: true
     }
   },
@@ -91,7 +99,7 @@ export default {
         celebracion: '',
       }
     };
-    const ganaderiasData = ["Ganaderia 1", "Ganaderia 2", "Ganaderia 3", "Ganaderia 4", "Ganaderia 5"].map(v => v.toLowerCase());
+
     const schema = markRaw(y_object().shape({
       festejos: y_object().shape({
         nombreFestejo: y_string().required(customErrorMessages.required_with_name("El nombre")).min(2, customErrorMessages.min_2),
@@ -109,15 +117,14 @@ export default {
       ganaderiaRow: y_array()
           .of(
               y_object().shape({
-                ganaderiaName: y_string().required(customErrorMessages.required_with_name("El nombre")).min(1, customErrorMessages.min_2),
+                ganaderiaName: y_object().required(customErrorMessages.required_with_name("El nombre"))
               })
           )
           .strict(),
     }));
     return {
       initialData,
-      schema,
-      ganaderiasData
+      schema
     }
   },
   methods:

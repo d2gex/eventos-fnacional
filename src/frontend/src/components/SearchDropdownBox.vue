@@ -2,14 +2,14 @@
   <Dropdown
       v-model="value"
       :options="dataItems"
-      option-label="nombre_profesional"
+      :placeholder="placeHolder"
+      :option-label="optionLabel"
       filter
       show-clear
-      placeholder="Selecciona un torero"
       class="form-control">
     <template #value="slotProps">
       <div v-if="slotProps.value" class="flex align-items-center">
-        <div>{{ slotProps.value.nombre_profesional }}</div>
+        <div>{{ slotProps.value[optionLabel] }}</div>
       </div>
       <span v-else>
         {{ slotProps.placeholder }}
@@ -17,7 +17,7 @@
     </template>
     <template #option="slotProps">
       <div class="flex align-items-center">
-        <div>{{ slotProps.option.nombre_profesional }}</div>
+        <div>{{ slotProps.option[optionLabel] }}</div>
       </div>
     </template>
   </Dropdown>
@@ -41,6 +41,14 @@ export default {
     },
     selectedItem: {
       type: Number,
+      required: true
+    },
+    placeHolder: {
+      type: String,
+      required: true
+    },
+    optionLabel: {
+      type: String,
       required: true
     }
   },

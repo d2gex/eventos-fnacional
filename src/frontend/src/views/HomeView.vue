@@ -15,7 +15,9 @@
           :selected-festejo="selectedFestejo"
           :tipo-festejos="tipoFestejos"
           :selected-toreros="selectedTorero"
-          :toreros-data="toreroItems"/>
+          :toreros-data="toreroItems"
+          :selected-ganaderias="selectedGanaderia"
+          :ganaderias-data="ganaderiaItems"/>
     </div>
   </div>
   <!--  <div class="row">-->
@@ -44,13 +46,16 @@ export default {
     // OldDbDatatable
   },
   data() {
+    const toledo_province_id = 45;
     const selectedFestejo = 1;
     const tipoFestejos = [];
-    const selectedProvincia = 45;
+    const selectedProvincia = toledo_province_id;
     const provincias = [];
-    const tipoToreros = [];
-    const toreroItems = []
     const selectedTorero = 0;
+    const toreroItems = [];
+    const selectedGanaderia = 0;
+    const ganaderiaItems = [];
+    const tipoToreros = [];
 
     // const oldDbDataUrl = CommonUtils.apiServerUrl + '/get_old_db_all_records';
     return {
@@ -58,9 +63,11 @@ export default {
       tipoFestejos,
       selectedProvincia,
       provincias,
-      tipoToreros,
-      toreroItems,
       selectedTorero,
+      toreroItems,
+      selectedGanaderia,
+      ganaderiaItems,
+      tipoToreros,
       // oldDbDataUrl
     }
   },
@@ -89,8 +96,13 @@ export default {
     response = await this.getDataFromTable(CommonUtils.apiServerUrl + '/get_tipo_festejos')
     this.tipoFestejos = response.data
 
+    // Get details for toreros
     response = await this.getDataFromTable(CommonUtils.apiServerUrl + '/get_toreros')
     this.toreroItems = response.data
+
+    // Get details for ganaderias
+    response = await this.getDataFromTable(CommonUtils.apiServerUrl + '/get_ganaderias')
+    this.ganaderiaItems = response.data
   }
 }
 </script>

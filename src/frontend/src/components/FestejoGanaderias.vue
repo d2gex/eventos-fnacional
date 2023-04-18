@@ -7,9 +7,12 @@
           <div class="col-md-12" v-for="(_, row) in numRows" :key="row">
             <div class="form-group">
               <label :for="`ganaderiaName_${row}`">Ganaderia *</label>
-              <SearchBox type="text"
-                         :name="`ganaderiaRow[${row}].ganaderiaName`"
-                         :items="items"/>
+              <SearchDropdownBox
+                  :selectedItem="selected"
+                  :items="items"
+                  :field-name="`ganaderiaRow[${row}].ganaderiaName`"
+                  place-holder="Selecciona una ganaderia"
+                  option-label="nombre_ganaderia"/>
 
             </div>
           </div>
@@ -33,16 +36,20 @@
 </template>
 
 <script>
-import SearchBox from "@/components/SearchBox.vue";
+import SearchDropdownBox from "@/components/SearchDropdownBox.vue";
 
 export default {
   name: "FestejoGanaderias",
   components: {
-    SearchBox
+    SearchDropdownBox
   },
   props: {
     items: {
       type: Array,
+      required: true
+    },
+    selected: {
+      type: Number,
       required: true
     }
   },
