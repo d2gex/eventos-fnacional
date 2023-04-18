@@ -21,7 +21,18 @@ def add_toreros_testing_data(db_df: pd.DataFrame, max_rows: int):
         dbs.add_all(db_data)
 
 
+def add_ganaderias(max_rows: int):
+    db_data = [
+        models.ModelGanaderia(nombre_ganaderia=f"Ganaderia_{x}", provincia_id=45)
+        for x in range(max_rows)
+    ]
+    with utils_db.session_scope() as dbs:
+        dbs.query(models.ModelGanaderia).delete()
+        dbs.add_all(db_data)
+
+
 if __name__ == "__main__":
     db_scripts.create_init_db()
     toreros_df = pd.read_csv(TEST_DB_PATH)
     add_toreros_testing_data(toreros_df, 500)
+    add_ganaderias(100)
