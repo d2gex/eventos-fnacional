@@ -81,8 +81,8 @@ class ModelTorero(ModelBase):
 class ModelFestejo(ModelBase):
     __tablename__ = "festejo"
     id = Column(Integer, primary_key=True, autoincrement=True)
-    nombre = Column(String, nullable=False)
-    celebracion = Column(DateTime, nullable=False)
+    nombre_festejo = Column(String, nullable=False)
+    fecha = Column(DateTime, nullable=False)
     notas = Column(Text)
 
     # M: 1 relationships

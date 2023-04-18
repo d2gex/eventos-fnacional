@@ -9,11 +9,11 @@
       <div class="row border border-primary">
         <div class="col-md-6">
           <div class="row">
-            <FestejoDetalles nombre-festejo="festejos.nombreFestejo"
-                             poblacion="festejos.poblacion"
-                             provincia="festejos.provincia"
-                             tipo-festejo="festejos.tipoFestejo"
-                             celebracion="festejos.celebracion"
+            <FestejoDetalles nombre-festejo="festejos.nombre_festejo"
+                             celebracion="festejos.fecha"
+                             poblacion="festejos.poblacion_id"
+                             provincia="festejos.provincia_id"
+                             tipo-festejo="festejos.tipo_festejo_id"
                              :selected-festejo="selectedFestejo"
                              :tipo-festejos="tipoFestejos"
                              :selected-provincia="selectedProvincia"
@@ -45,7 +45,7 @@
 
 <script>
 import {Form} from 'vee-validate';
-import {customErrorMessages} from "@/assets/common";
+import {CommonUtils, customErrorMessages} from "@/assets/common";
 import FestejoDetalles from "@/components/FestejoDetalles.vue";
 import FestejoToreros from "@/components/FestejoToreros.vue";
 import FestejoGanaderias from "@/components/FestejoGanaderias.vue";
@@ -113,18 +113,18 @@ export default {
   data() {
     const initialData = {
       festejos: {
-        tipoFestejo: '',
-        nombreFestejo: '',
-        poblacion: '',
-        provincia: '',
-        celebracion: '',
+        nombre_festejo: '',
+        fecha: '',
+        poblacion_id: '',
+        provincia_id: '',
+        tipo_festejo_id: '',
       }
     };
 
     const schema = markRaw(y_object().shape({
       festejos: y_object().shape({
-        nombreFestejo: y_string().required(customErrorMessages.required_with_name("El nombre")).min(2, customErrorMessages.min_2),
-        celebracion: y_string().required(customErrorMessages.required_with_name("La fecha del festejo")).min(2, customErrorMessages.min_2),
+        nombre_festejo: y_string().required(customErrorMessages.required_with_name("El nombre")).min(2, customErrorMessages.min_2),
+        fecha: y_string().required(customErrorMessages.required_with_name("La fecha del festejo")).min(2, customErrorMessages.min_2),
       }),
       toreroRow: y_array()
           .of(
@@ -148,8 +148,10 @@ export default {
   },
   methods:
       {
-        onSubmit(values) {
+        async onSubmit(values) {
           console.log(JSON.stringify(values, null, 2));
+          const {data} = await CommonUtils.sendDataToBackend(values, '/save_festejos')
+          console.log(JSON.stringify(data, null, 2));
         }
       }
 }

@@ -2,6 +2,7 @@ from typing import List, Dict, Any, Optional
 from src.db import models
 from src.db import utils as utils_db
 from sqlalchemy.exc import IntegrityError
+from datetime import datetime
 
 
 class ApiDB:
@@ -47,6 +48,53 @@ class ApiDB:
         else:
             result = None
         return result
+
+    @classmethod
+    def save_festejo(cls, data: Dict, db_session: Any):
+        data["fecha"] = datetime.strptime(data["fecha"], "%d/%m/%Y").date()
+        db_session.add(models.ModelFestejo(**data))
+
+    @classmethod
+    def save_ganaderia_festejo(cls, data: List[Dict], festejo_id: str, db_session: Any):
+        db_data = [
+            models.ModelGanaderiaFestejo(
+                ganaderia_id=ganaderia_details["ganaderiaName"]["id"],
+                festejo_id=festejo_id,
+            )
+            for ganaderia_details in data
+        ]
+        db_session.add_all(db_data)
+
+    @classmethod
+    def save_torero_premios_by_festejos(
+        cls, data: List[Dict], festejo_id: str, db_session: Any
+    ):
+        toreros_premios_data = []
+        for row in data:
+            torero_details = row["toreroName"]
+            torero_premios = row["toreroPremios"]
+            for premio_instance in torero_premios:
+                toreros_premios_data.append(
+                    {
+                        "festejo_id": festejo_id,
+                        "torero_id": torero_details["id"],
+                        "tipo_premio_id": premio_instance,
+                    }
+                )
+        db_data = [
+            models.ModelToreroPremioFestejo(**premio_row)
+            for premio_row in toreros_premios_data
+        ]
+        db_session.add_all(db_data)
+
+    @classmethod
+    def save_festejos(cls, data: Dict):
+        data["festejos"].pop("provincia_id")
+        festejo_id = data["festejos"]["tipo_festejo_id"]
+        with utils_db.session_scope() as s_db:
+            cls.save_festejo(data["festejos"], s_db)
+            cls.save_ganaderia_festejo(data["ganaderiaRow"], festejo_id, s_db)
+            cls.save_torero_premios_by_festejos(data["toreroRow"], festejo_id, s_db)
 
 
 """

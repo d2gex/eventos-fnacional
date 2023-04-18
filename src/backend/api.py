@@ -80,3 +80,10 @@ def save_ganaderia_details():
             "message": f"Torero '{db_result['nombre_ganaderia']}' already exists",
         }
     return jsonify(data)
+
+
+@api.route("/save_festejos", methods=["POST"])
+def save_festejos():
+    client_data = request.get_json()
+    api_db.ApiDB.save_festejos(client_data)
+    return {"status": 1}
