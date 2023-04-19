@@ -105,6 +105,7 @@ class CsvDBSetup:
             columns={"Dis s.": "Dia Semana", "Ver fecha real": "Fecha Real"}
         )
         db_df = db_df.dropna(how="all")
+        db_df["id"] = list(range(1, len(db_df) + 1))
         db_df.to_csv(self.db_path_new, index=False)
         print("... Csv database set up")
         return db_df
