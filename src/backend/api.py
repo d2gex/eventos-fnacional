@@ -49,7 +49,6 @@ def get_toreros():
 @api.route("/get_old_db_all_records", methods=["GET"])
 def get_old_db_all_records():
     df = pd.read_csv(Config.NEW_CSV_DB_PATH)
-    df.index.name = "id"
     records = df.to_dict(orient="records")
     return json.dumps(records, ignore_nan=True)
 

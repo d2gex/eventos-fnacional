@@ -19,6 +19,8 @@
                :rowsPerPageOptions="[50, 100, 500]"
                v-model:filters="filters"
                v-model:expandedRows="expandedRows"
+               v-model:selection="selectedRow"
+               selectionMode="single"
                sortMode="multiple"
                dataKey="id"
                @rowExpand="onRowExpand"
@@ -85,6 +87,7 @@ export default {
     const products = {};
     const expandedRows = [];
     const toast = markRaw(useToast());
+    const selectedRow = {};
     const filters = {
       global: {value: null, matchMode: FilterMatchMode.CONTAINS}
     };
@@ -92,6 +95,7 @@ export default {
       products,
       expandedRows,
       toast,
+      selectedRow,
       filters
     }
   },
