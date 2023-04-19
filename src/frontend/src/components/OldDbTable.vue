@@ -17,16 +17,23 @@ v-model:expandedRows="expandedRows"
                paginator
                :rows="50"
                :rowsPerPageOptions="[50, 100, 500]"
+               v-model:filters="filters"
                sortMode="multiple"
                dataKey="id"
                @rowExpand="onRowExpand"
                @rowCollapse="onRowCollapse"
                tableStyle="min-width: 60rem">
       <template #header>
-        <div class="flex flex-wrap justify-content-end gap-2">
-          <Button text icon="pi pi-plus" label="Expand All" @click="expandAll"/>
-          <Button text icon="pi pi-minus" label="Collapse All" @click="collapseAll"/>
-        </div>
+          <div class="flex justify-content-start">
+            <Button text icon="pi pi-plus" label="Expand All" @click="expandAll"/>
+            <Button text icon="pi pi-minus" label="Collapse All" @click="collapseAll"/>
+          </div>
+          <div class="flex justify-content-end">
+            <span class="p-input-icon-right">
+                <i class="pi pi-search"/>
+                <InputText v-model="filters['global'].value" placeholder="Busca la clave"/>
+            </span>
+          </div>
       </template>
       <Column expander style="width: 5rem"/>
       <Column field="id" header="ID"></Column>
@@ -36,19 +43,19 @@ v-model:expandedRows="expandedRows"
       <Column field="Ganaderia" header="Ganaderia"></Column>
       <Column field="Toreros" header="Toreros"></Column>
 
-<!--      <template #expansion="slotProps">-->
-<!--        <div class="p-3">-->
-<!--          <h5>Mas información {{ slotProps.data.Tipo }}</h5>-->
-<!--          <DataTable :value="[slotProps.data]">-->
-<!--            <Column field="Dia Semana" header="Dia Semana"></Column>-->
-<!--            <Column field="Notas" header="Notas"></Column>-->
-<!--            <Column field="Fotos" header="Fotos"></Column>-->
-<!--            <Column field="Cartel" header="Cartel"></Column>-->
-<!--            <Column field="Fecha Real" header="Fecha Real"></Column>-->
-<!--            <Column field="Fuente" header="Fuente"></Column>-->
-<!--          </DataTable>-->
-<!--        </div>-->
-<!--      </template>-->
+      <!--      <template #expansion="slotProps">-->
+      <!--        <div class="p-3">-->
+      <!--          <h5>Mas información {{ slotProps.data.Tipo }}</h5>-->
+      <!--          <DataTable :value="[slotProps.data]">-->
+      <!--            <Column field="Dia Semana" header="Dia Semana"></Column>-->
+      <!--            <Column field="Notas" header="Notas"></Column>-->
+      <!--            <Column field="Fotos" header="Fotos"></Column>-->
+      <!--            <Column field="Cartel" header="Cartel"></Column>-->
+      <!--            <Column field="Fecha Real" header="Fecha Real"></Column>-->
+      <!--            <Column field="Fuente" header="Fuente"></Column>-->
+      <!--          </DataTable>-->
+      <!--        </div>-->
+      <!--      </template>-->
     </DataTable>
     <Toast/>
   </div>
@@ -59,8 +66,10 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Toast from "primevue/toast";
 import Button from "primevue/button";
+import {FilterMatchMode} from "primevue/api";
 import {useToast} from 'primevue/usetoast';
 import {CommonUtils} from "@/assets/common";
+import InputText from "primevue/inputtext";
 import {markRaw} from "vue";
 
 export default {
@@ -69,16 +78,21 @@ export default {
     DataTable,
     Column,
     Toast,
-    Button
+    Button,
+    InputText
   },
   data() {
     const products = {};
     const expandedRows = {};
     const toast = markRaw(useToast());
+    const filters = {
+      global: {value: null, matchMode: FilterMatchMode.CONTAINS}
+    };
     return {
       products,
       expandedRows,
-      toast
+      toast,
+      filters
     }
   },
   methods: {
