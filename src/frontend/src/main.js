@@ -11,6 +11,7 @@ import "./assets/common.js"
 
 import VueSimpleAlert from "vue3-simple-alert";
 import PrimeVue from 'primevue/config'
+import ToastService from 'primevue/toastservice';
 import {createApp} from 'vue'
 import App from './App.vue'
 import router from './router'
@@ -19,6 +20,7 @@ let app = createApp(App)
 app.use(router)
 app.use(VueSimpleAlert)
 app.use(PrimeVue)
+app.use(ToastService)
 app.mount('#app')
 app.config.globalProperties.$vueAlert = VueSimpleAlert;
 

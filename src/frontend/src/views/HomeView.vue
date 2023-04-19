@@ -38,7 +38,7 @@
       <TabPanel header="Datos Originales">
         <div class="row">
           <div class="col-md-12">
-            <OldDbDatatable :data_url="oldDbDataUrl"/>
+            <OldDbTable/>
           </div>
         </div>
       </TabPanel>
@@ -50,14 +50,14 @@
 </template>
 
 <script>
-import axios from "axios";
 import {CommonUtils} from "@/assets/common";
 import ToreroForm from '@/components/ToreroForm.vue'
 import GanaderiaForm from '@/components/GanaderiaForm.vue'
 import FestejosForm from "@/components/FestejosForm.vue";
 import TabView from 'primevue/tabview';
 import TabPanel from 'primevue/tabpanel';
-import OldDbDatatable from "@/components/OldDbDatatable.vue";
+import OldDbTable from "@/components/OldDbTable.vue";
+// import OldDbDatatable from "@/components/OldDbDatatable.vue";
 
 export default {
   name: 'HomeView',
@@ -67,7 +67,8 @@ export default {
     FestejosForm,
     TabView,
     TabPanel,
-    OldDbDatatable
+    OldDbTable
+    // OldDbDatatable
   },
   data() {
     const toledo_province_id = 45 - 1;
@@ -84,7 +85,7 @@ export default {
     const selectedPoblacion = 0;
     const poblaciones = [];
     const tipoToreros = [];
-    const oldDbDataUrl = CommonUtils.apiServerUrl + '/get_old_db_all_records';
+    // const oldDbDataUrl = CommonUtils.apiServerUrl + '/get_old_db_all_records';
     return {
       selectedFestejo,
       tipoFestejos,
@@ -99,48 +100,36 @@ export default {
       selectedPoblacion,
       poblaciones,
       tipoToreros,
-      oldDbDataUrl
+      // oldDbDataUrl
     }
-  },
-  methods: {
-
-    async getDataFromTable(end_point) {
-      try {
-        const response = await axios.get(end_point);
-        return response
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
   },
   async created() {
     // Get details for provinces
-    let response = await this.getDataFromTable(CommonUtils.apiServerUrl + '/get_provincias')
+    let response = await CommonUtils.getDataFromTable(CommonUtils.apiServerUrl + '/get_provincias')
     this.provincias = response.data
 
     // Get details for tipo toreros
-    response = await this.getDataFromTable(CommonUtils.apiServerUrl + '/get_tipo_toreros')
+    response = await CommonUtils.getDataFromTable(CommonUtils.apiServerUrl + '/get_tipo_toreros')
     this.tipoToreros = response.data
 
     // Get details for tipo toreros
-    response = await this.getDataFromTable(CommonUtils.apiServerUrl + '/get_tipo_festejos')
+    response = await CommonUtils.getDataFromTable(CommonUtils.apiServerUrl + '/get_tipo_festejos')
     this.tipoFestejos = response.data
 
     // Get details for toreros
-    response = await this.getDataFromTable(CommonUtils.apiServerUrl + '/get_toreros')
+    response = await CommonUtils.getDataFromTable(CommonUtils.apiServerUrl + '/get_toreros')
     this.toreroItems = response.data
 
     // Get details for ganaderias
-    response = await this.getDataFromTable(CommonUtils.apiServerUrl + '/get_ganaderias')
+    response = await CommonUtils.getDataFromTable(CommonUtils.apiServerUrl + '/get_ganaderias')
     this.ganaderiaItems = response.data
 
     // Get details for premios
-    response = await this.getDataFromTable(CommonUtils.apiServerUrl + '/get_tipo_premios')
+    response = await CommonUtils.getDataFromTable(CommonUtils.apiServerUrl + '/get_tipo_premios')
     this.premioToreroItems = response.data
 
     // Get details for poblaciones
-    response = await this.getDataFromTable(CommonUtils.apiServerUrl + '/get_poblaciones')
+    response = await CommonUtils.getDataFromTable(CommonUtils.apiServerUrl + '/get_poblaciones')
     this.poblaciones = response.data
   }
 }

@@ -24,7 +24,14 @@ const CommonUtils = {
             console.error(error);
         }
     },
-
+    getDataFromTable: async function (end_point) {
+        try {
+            const response = await axios.get(end_point);
+            return response
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
 }
 
