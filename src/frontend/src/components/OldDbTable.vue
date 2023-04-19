@@ -9,7 +9,7 @@
 <!--  {data: 'Cartel'},-->
 <!--  {data: 'Fecha Real'},-->
 <!--  {data: 'Fuente'}
-v-model:expandedRows="expandedRows"
+
 ,-->
 <template>
   <div class="card">
@@ -18,6 +18,7 @@ v-model:expandedRows="expandedRows"
                :rows="50"
                :rowsPerPageOptions="[50, 100, 500]"
                v-model:filters="filters"
+               v-model:expandedRows="expandedRows"
                sortMode="multiple"
                dataKey="id"
                @rowExpand="onRowExpand"
@@ -42,20 +43,19 @@ v-model:expandedRows="expandedRows"
       <Column field="Tipo" sortable header="Tipo"></Column>
       <Column field="Ganaderia" header="Ganaderia"></Column>
       <Column field="Toreros" header="Toreros"></Column>
-
-      <!--      <template #expansion="slotProps">-->
-      <!--        <div class="p-3">-->
-      <!--          <h5>Mas información {{ slotProps.data.Tipo }}</h5>-->
-      <!--          <DataTable :value="[slotProps.data]">-->
-      <!--            <Column field="Dia Semana" header="Dia Semana"></Column>-->
-      <!--            <Column field="Notas" header="Notas"></Column>-->
-      <!--            <Column field="Fotos" header="Fotos"></Column>-->
-      <!--            <Column field="Cartel" header="Cartel"></Column>-->
-      <!--            <Column field="Fecha Real" header="Fecha Real"></Column>-->
-      <!--            <Column field="Fuente" header="Fuente"></Column>-->
-      <!--          </DataTable>-->
-      <!--        </div>-->
-      <!--      </template>-->
+            <template #expansion="slotProps">
+              <div class="p-3">
+                <h5>Mas información {{ slotProps.data.Tipo }}</h5>
+                <DataTable :value="[slotProps.data]">
+                  <Column field="Dia Semana" header="Dia Semana"></Column>
+                  <Column field="Notas" header="Notas"></Column>
+                  <Column field="Fotos" header="Fotos"></Column>
+                  <Column field="Cartel" header="Cartel"></Column>
+                  <Column field="Fecha Real" header="Fecha Real"></Column>
+                  <Column field="Fuente" header="Fuente"></Column>
+                </DataTable>
+              </div>
+            </template>
     </DataTable>
     <Toast/>
   </div>
@@ -83,7 +83,7 @@ export default {
   },
   data() {
     const products = {};
-    const expandedRows = {};
+    const expandedRows = [];
     const toast = markRaw(useToast());
     const filters = {
       global: {value: null, matchMode: FilterMatchMode.CONTAINS}
@@ -97,10 +97,10 @@ export default {
   },
   methods: {
     onRowExpand(event) {
-      this.toast.add({severity: 'info', summary: 'Product Expanded', detail: event.data.name, life: 3000});
+      this.toast.add({severity: 'info', summary: 'Producto Expandido', detail: event.data.name, life: 3000});
     },
     onRowCollapse(event) {
-      this.toast.add({severity: 'success', summary: 'Product Collapsed', detail: event.data.name, life: 3000});
+      this.toast.add({severity: 'success', summary: 'Product Colapsado', detail: event.data.name, life: 3000});
     },
     expandAll() {
       this.expandedRows.value = this.products.value.filter((p) => p.id);
