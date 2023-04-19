@@ -1,16 +1,3 @@
-<!--  {data: 'Lugar'},-->
-<!--  {data: 'Fecha'},-->
-<!--  {data: 'Dia Semana'},-->
-<!--  {data: 'Tipo'},-->
-<!--  {data: 'Ganaderia'},-->
-<!--  {data: 'Toreros'},-->
-<!--  {data: 'Notas'},-->
-<!--  {data: 'Foto'},-->
-<!--  {data: 'Cartel'},-->
-<!--  {data: 'Fecha Real'},-->
-<!--  {data: 'Fuente'}
-
-,-->
 <template>
   <div class="card">
     <DataTable :value="products.value"
