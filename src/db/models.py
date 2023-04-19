@@ -92,22 +92,21 @@ class ModelFestejo(ModelBase):
     tipo_festejo = relationship(ModelTipoFestejo, back_populates="festejo")
 
     # M:M relationships
-    torero_premio_festejo = relationship(
-        "ModelToreroPremioFestejo"
-    )  # Parent to Association Object
+    # torero_premio_festejo = relationship(
+    #     "ModelToreroPremioFestejo"
+    # )  # Parent to Association Object
+    torero_festejo = relationship(
+        "ModelToreroFestejo"
+    )  # From parent to Association Object
     ganaderia_festejo = relationship(
         "ModelGanaderiaFestejo"
-    )  # Parent to Association Object
+    )  # From parent to Association Object
 
 
-class ModelToreroPremioFestejo(ModelBase):  # Association object Pattern
-    """There is a M:M relationship between Festejo (Parent) and Torero (Child) and a 1:M relationship between
-    TipoPremio and the table resulting from the M:M relationship (which is this class itself)
-    """
+class ModelToreroFestejo(ModelBase):  # M:M, Association object Pattern
+    __tablename__ = "torero_festejo"
 
-    __tablename__ = "torero_premio_festejo"
-
-    # M:M between festejo and torero
+    # M:M
     torero_id = Column(
         Integer,
         ForeignKey("torero.id"),
@@ -118,14 +117,9 @@ class ModelToreroPremioFestejo(ModelBase):  # Association object Pattern
         ForeignKey("festejo.id"),
         primary_key=True,
     )
-    torero = relationship(ModelTorero)  # Association object to child
-
-    # M: 1 between TipoPremio and the above (M:M) relationship
-    tipo_premio_id = Column(Integer, ForeignKey("tipo_premio.id"), primary_key=True)
-    tipo_premio = relationship(ModelTipoPremio, back_populates="torero_premio_festejo")
 
 
-class ModelGanaderiaFestejo(ModelBase):  # Association object Pattern
+class ModelGanaderiaFestejo(ModelBase):  # M;M, Association object Pattern
     __tablename__ = "ganaderia_festejo"
 
     # M:M
@@ -141,3 +135,19 @@ class ModelGanaderiaFestejo(ModelBase):  # Association object Pattern
     )
 
     ganaderia = relationship(ModelGanaderia)
+
+
+class ModelToreroPremioFestejo(ModelBase):  # M:M, Association object Pattern
+    __tablename__ = "torero_premio_festejo"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    # primary keys from parent
+    torero_id = Column(Integer, ForeignKey("torero_festejo.torero_id"), nullable=False)
+    festejo_id = Column(
+        Integer, ForeignKey("torero_festejo.festejo_id"), nullable=False
+    )
+    # primary keys from child
+    tipo_premio_id = Column(Integer, ForeignKey("tipo_premio.id"), nullable=False)
+
+    # relationship with child
+    tipo_premio = relationship(ModelTipoPremio)

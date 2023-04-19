@@ -23,7 +23,7 @@ def add_toreros_testing_data(db_df: pd.DataFrame, max_rows: int):
 
 def add_ganaderias(max_rows: int):
     db_data = [
-        models.ModelGanaderia(nombre_ganaderia=f"Ganaderia_{x}", provincia_id=45)
+        models.ModelGanaderia(nombre_ganaderia=f"Ganaderia_{x}", provincia_id=44)
         for x in range(max_rows)
     ]
     with utils_db.session_scope() as dbs:
