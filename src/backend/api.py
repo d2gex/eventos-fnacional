@@ -6,7 +6,6 @@ from src.config import Config
 from src.db import models
 from src.db import api_db
 
-
 api = Blueprint("api", __name__, url_prefix="/api")
 cors = CORS(api, resources={r"/api/*": {"origins": "http://localhost:8080"}})
 
@@ -63,7 +62,8 @@ def save_torero_details():
     else:
         data = {
             "status": 0,
-            "message": f"Torero '{db_result['nombre_profesional']}' already exists",
+            "message": f"Torero '{db_result['nombre_profesional']}' ya existe en la base de datos "
+            f"o ha sido provisto por duplicado",
         }
     return jsonify(data)
 
@@ -77,7 +77,8 @@ def save_ganaderia_details():
     else:
         data = {
             "status": 0,
-            "message": f"Torero '{db_result['nombre_ganaderia']}' already exists",
+            "message": f"Torero '{db_result['nombre_ganaderia']}' ya existe en la base de datos "
+            f"o ha sido provisto por duplicado",
         }
     return jsonify(data)
 
@@ -85,5 +86,18 @@ def save_ganaderia_details():
 @api.route("/save_festejos", methods=["POST"])
 def save_festejos():
     client_data = request.get_json()
-    api_db.ApiDB.save_festejos(client_data)
-    return {"status": 1}
+    error_details = api_db.ApiDB.save_festejos(client_data)
+    if not error_details:
+        return jsonify(data={"status": 1})
+
+    if error_details == "toreros":
+        message = f"Has introducido toreros duplicados. Múltiples premios se pueden añadir para un único torero"
+    else:
+        message = f"Hay introducido ganaderías duplicadas."
+
+    return jsonify(
+        {
+            "status": 0,
+            "message": message,
+        }
+    )

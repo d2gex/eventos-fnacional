@@ -106,24 +106,38 @@ class ModelToreroPremioFestejo(ModelBase):  # Association object Pattern
     """
 
     __tablename__ = "torero_premio_festejo"
-    id = Column(Integer, primary_key=True, autoincrement=True)
 
     # M:M between festejo and torero
-    torero_id = Column(Integer, ForeignKey("torero.id"))
-    festejo_id = Column(Integer, ForeignKey("festejo.id"))
+    torero_id = Column(
+        Integer,
+        ForeignKey("torero.id"),
+        primary_key=True,
+    )
+    festejo_id = Column(
+        Integer,
+        ForeignKey("festejo.id"),
+        primary_key=True,
+    )
     torero = relationship(ModelTorero)  # Association object to child
 
     # M: 1 between TipoPremio and the above (M:M) relationship
-    tipo_premio_id = Column(Integer, ForeignKey("tipo_premio.id"))
+    tipo_premio_id = Column(Integer, ForeignKey("tipo_premio.id"), primary_key=True)
     tipo_premio = relationship(ModelTipoPremio, back_populates="torero_premio_festejo")
 
 
 class ModelGanaderiaFestejo(ModelBase):  # Association object Pattern
     __tablename__ = "ganaderia_festejo"
-    id = Column(Integer, primary_key=True, autoincrement=True)
 
     # M:M
-    ganaderia_id = Column(Integer, ForeignKey("ganaderia.id"))
-    festejo_id = Column(Integer, ForeignKey("festejo.id"))
+    ganaderia_id = Column(
+        Integer,
+        ForeignKey("ganaderia.id"),
+        primary_key=True,
+    )
+    festejo_id = Column(
+        Integer,
+        ForeignKey("festejo.id"),
+        primary_key=True,
+    )
 
     ganaderia = relationship(ModelGanaderia)

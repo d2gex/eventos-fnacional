@@ -50,12 +50,15 @@ class ApiDB:
         return result
 
     @classmethod
-    def save_festejo(cls, data: Dict, db_session: Any):
+    def save_festejo(cls, data: Dict, db_session: Any) -> int:
         data["fecha"] = datetime.strptime(data["fecha"], "%d/%m/%Y").date()
-        db_session.add(models.ModelFestejo(**data))
+        festejo = models.ModelFestejo(**data)
+        db_session.add(festejo)
+        db_session.flush()
+        return festejo.id
 
     @classmethod
-    def save_ganaderia_festejo(cls, data: List[Dict], festejo_id: str, db_session: Any):
+    def save_ganaderia_festejo(cls, data: List[Dict], festejo_id: int, db_session: Any):
         db_data = [
             models.ModelGanaderiaFestejo(
                 ganaderia_id=ganaderia_details["ganaderiaName"]["id"],
@@ -67,7 +70,7 @@ class ApiDB:
 
     @classmethod
     def save_torero_premios_by_festejos(
-        cls, data: List[Dict], festejo_id: str, db_session: Any
+        cls, data: List[Dict], festejo_id: int, db_session: Any
     ):
         toreros_premios_data = []
         for row in data:
@@ -88,61 +91,18 @@ class ApiDB:
         db_session.add_all(db_data)
 
     @classmethod
-    def save_festejos(cls, data: Dict):
+    def save_festejos(cls, data: Dict) -> Optional[str]:
         data["festejos"].pop("provincia_id")
-        festejo_id = data["festejos"]["tipo_festejo_id"]
-        with utils_db.session_scope() as s_db:
-            cls.save_festejo(data["festejos"], s_db)
-            cls.save_ganaderia_festejo(data["ganaderiaRow"], festejo_id, s_db)
-            cls.save_torero_premios_by_festejos(data["toreroRow"], festejo_id, s_db)
-
-
-"""
-{
-  "festejos": {
-    "tipoFestejo": 2,
-    "nombreFestejo": "Nombre festejo",
-    "poblacion": 1,
-    "provincia": 45,
-    "celebracion": "18/04/2023"
-  },
-  "ganaderiaRow": [
-    {
-      "ganaderiaName": {
-        "id": 1,
-        "nombre_ganaderia": "Ganaderia_0",
-        "provincia_id": 45
-      }
-    },
-    {
-      "ganaderiaName": {
-        "id": 3,
-        "nombre_ganaderia": "Ganaderia_2",
-        "provincia_id": 45
-      }
-    }
-  ],
-  "toreroRow": [
-    {
-      "toreroName": {
-        "id": 1,
-        "nombre_profesional": "aaron abad aaad"
-      },
-      "toreroPremios": [
-        1,
-        3
-      ]
-    },
-    {
-      "toreroName": {
-        "id": 4,
-        "nombre_profesional": "abby abbott abtt"
-      },
-      "toreroPremios": [
-        4,
-        3
-      ]
-    }
-  ]
-}
-"""
+        try:
+            with utils_db.session_scope() as s_db:
+                festejo_id = cls.save_festejo(data["festejos"], s_db)
+                cls.save_ganaderia_festejo(data["ganaderiaRow"], festejo_id, s_db)
+                cls.save_torero_premios_by_festejos(data["toreroRow"], festejo_id, s_db)
+        except IntegrityError as ex:
+            if "torero_premio_festejo" in str(ex):
+                error = "toreros"
+            else:
+                error = "ganaderias"
+        else:
+            error = None
+        return error

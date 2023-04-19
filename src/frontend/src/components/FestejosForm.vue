@@ -151,6 +151,9 @@ export default {
         async onSubmit(values) {
           console.log(JSON.stringify(values, null, 2));
           const {data} = await CommonUtils.sendDataToBackend(values, '/save_festejos')
+          if (data.status === 0) {
+            await this.$vueAlert.alert(data.message)
+          }
           console.log(JSON.stringify(data, null, 2));
         }
       }
