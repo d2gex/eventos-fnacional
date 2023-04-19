@@ -1,35 +1,50 @@
 <template>
   <div class="row">
-    <div class="col-md-8">
-      <ToreroForm :tipo-toreros="tipoToreros"/>
-    </div>
-    <div class="col-md-4">
-      <GanaderiaForm :provincias="provincias"/>
-    </div>
+    <TabView>
+      <TabPanel header="Toreros Y Ganaderías">
+        <div class="row">
+          <div class="col-md-8">
+            <ToreroForm :tipo-toreros="tipoToreros"/>
+          </div>
+          <div class="col-md-4">
+            <GanaderiaForm :provincias="provincias"/>
+          </div>
+        </div>
+      </TabPanel>
+      <TabPanel header="Festejos">
+        <div class="row">
+          <div class="col-md-12">
+            <FestejosForm
+                :selected-provincia="selectedProvincia"
+                :provincias="provincias"
+                :selected-festejo="selectedFestejo"
+                :tipo-festejos="tipoFestejos"
+                :selected-toreros="selectedTorero"
+                :toreros-data="toreroItems"
+                :selected-ganaderias="selectedGanaderia"
+                :ganaderias-data="ganaderiaItems"
+                :selected-torero-premio="selectedToreroPremio"
+                :torero-premios-data="premioToreroItems"
+                :selected-poblacion="selectedPoblacion"
+                :poblaciones="poblaciones"
+            />
+          </div>
+        </div>
+      </TabPanel>
+    </TabView>
   </div>
   <div class="row">
-    <div class="col-md-12">
-      <FestejosForm
-          :selected-provincia="selectedProvincia"
-          :provincias="provincias"
-          :selected-festejo="selectedFestejo"
-          :tipo-festejos="tipoFestejos"
-          :selected-toreros="selectedTorero"
-          :toreros-data="toreroItems"
-          :selected-ganaderias="selectedGanaderia"
-          :ganaderias-data="ganaderiaItems"
-          :selected-torero-premio="selectedToreroPremio"
-          :torero-premios-data="premioToreroItems"
-          :selected-poblacion="selectedPoblacion"
-          :poblaciones="poblaciones"
-      />
-    </div>
+    <TabView>
+      <TabPanel header="Datos Originales">
+        <div class="row">
+          <div class="col-md-12">
+            <OldDbDatatable :data_url="oldDbDataUrl"/>
+          </div>
+        </div>
+      </TabPanel>
+      <TabPanel header="Nueva Base de Datos"></TabPanel>
+    </TabView>
   </div>
-  <!--  <div class="row">-->
-  <!--    <div class="col-md-12">-->
-  <!--      <OldDbDatatable :data_url="oldDbDataUrl"/>-->
-  <!--    </div>-->
-  <!--  </div>-->
 
 
 </template>
@@ -40,7 +55,9 @@ import {CommonUtils} from "@/assets/common";
 import ToreroForm from '@/components/ToreroForm.vue'
 import GanaderiaForm from '@/components/GanaderiaForm.vue'
 import FestejosForm from "@/components/FestejosForm.vue";
-// import OldDbDatatable from "@/components/OldDbDatatable.vue";
+import TabView from 'primevue/tabview';
+import TabPanel from 'primevue/tabpanel';
+import OldDbDatatable from "@/components/OldDbDatatable.vue";
 
 export default {
   name: 'HomeView',
@@ -48,7 +65,9 @@ export default {
     ToreroForm,
     GanaderiaForm,
     FestejosForm,
-    // OldDbDatatable
+    TabView,
+    TabPanel,
+    OldDbDatatable
   },
   data() {
     const toledo_province_id = 45 - 1;
@@ -65,8 +84,7 @@ export default {
     const selectedPoblacion = 0;
     const poblaciones = [];
     const tipoToreros = [];
-
-    // const oldDbDataUrl = CommonUtils.apiServerUrl + '/get_old_db_all_records';
+    const oldDbDataUrl = CommonUtils.apiServerUrl + '/get_old_db_all_records';
     return {
       selectedFestejo,
       tipoFestejos,
@@ -81,7 +99,7 @@ export default {
       selectedPoblacion,
       poblaciones,
       tipoToreros,
-      // oldDbDataUrl
+      oldDbDataUrl
     }
   },
   methods: {
