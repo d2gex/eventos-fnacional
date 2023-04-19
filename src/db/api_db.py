@@ -23,6 +23,10 @@ class ApiDB:
         return data
 
     @classmethod
+    def get_all_festejos(cls):
+        pass
+
+    @classmethod
     def save_torero_details(cls, data: Dict) -> Optional[Dict]:
         try:
             for torero_details in data["toreroRow"]:
@@ -58,13 +62,26 @@ class ApiDB:
         return festejo.id
 
     @classmethod
-    def save_ganaderia_festejo(cls, data: List[Dict], festejo_id: int, db_session: Any):
+    def save_ganaderia_festejos(
+        cls, data: List[Dict], festejo_id: int, db_session: Any
+    ):
         db_data = [
             models.ModelGanaderiaFestejo(
                 ganaderia_id=ganaderia_details["ganaderiaName"]["id"],
                 festejo_id=festejo_id,
             )
             for ganaderia_details in data
+        ]
+        db_session.add_all(db_data)
+
+    @classmethod
+    def save_torero_festejos(cls, data: List[Dict], festejo_id: int, db_session: Any):
+        db_data = [
+            models.ModelToreroFestejo(
+                torero_id=torero_details["toreroName"]["id"],
+                festejo_id=festejo_id,
+            )
+            for torero_details in data
         ]
         db_session.add_all(db_data)
 
@@ -96,10 +113,11 @@ class ApiDB:
         try:
             with utils_db.session_scope() as s_db:
                 festejo_id = cls.save_festejo(data["festejos"], s_db)
-                cls.save_ganaderia_festejo(data["ganaderiaRow"], festejo_id, s_db)
+                cls.save_ganaderia_festejos(data["ganaderiaRow"], festejo_id, s_db)
+                cls.save_torero_festejos(data["toreroRow"], festejo_id, s_db)
                 cls.save_torero_premios_by_festejos(data["toreroRow"], festejo_id, s_db)
         except IntegrityError as ex:
-            if "torero_premio_festejo" in str(ex):
+            if "torero_festejo" in str(ex):
                 error = "toreros"
             else:
                 error = "ganaderias"
