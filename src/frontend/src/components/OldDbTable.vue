@@ -17,6 +17,7 @@ v-model:expandedRows="expandedRows"
                paginator
                :rows="50"
                :rowsPerPageOptions="[50, 100, 500]"
+               sortMode="multiple"
                dataKey="id"
                @rowExpand="onRowExpand"
                @rowCollapse="onRowCollapse"
@@ -29,9 +30,9 @@ v-model:expandedRows="expandedRows"
       </template>
       <Column expander style="width: 5rem"/>
       <Column field="id" header="ID"></Column>
-      <Column field="Lugar" header="Lugar"></Column>
-      <Column field="Fecha" header="Fecha"></Column>
-      <Column field="Tipo" header="Tipo"></Column>
+      <Column field="Lugar" sortable header="Lugar"></Column>
+      <Column field="Fecha" sortable header="Fecha"></Column>
+      <Column field="Tipo" sortable header="Tipo"></Column>
       <Column field="Ganaderia" header="Ganaderia"></Column>
       <Column field="Toreros" header="Toreros"></Column>
 
