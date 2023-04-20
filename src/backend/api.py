@@ -3,8 +3,8 @@ import simplejson as json
 from flask import Blueprint, jsonify, request
 from flask_cors import CORS
 from src.config import Config
-from src.db import models
-from src.db import api_db
+from src.db import models, api_db
+from src.backend import db_to_datatable
 
 api = Blueprint("api", __name__, url_prefix="/api")
 cors = CORS(api, resources={r"/api/*": {"origins": "http://localhost:8080"}})
@@ -51,6 +51,14 @@ def get_old_db_all_records():
     df = pd.read_csv(Config.NEW_CSV_DB_PATH)
     records = df.to_dict(orient="records")
     return json.dumps(records, ignore_nan=True)
+
+
+@api.route("/get_db_all_records", methods=["GET"])
+def get_db_all_records():
+    db_result = api_db.ApiDB.get_all_festejos()
+    to_datatable = db_to_datatable.DbToDataTable()
+    table = to_datatable.run(db_result)
+    return jsonify(table)
 
 
 @api.route("/save_torero_details", methods=["POST"])
