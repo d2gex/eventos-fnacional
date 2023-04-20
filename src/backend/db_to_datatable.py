@@ -68,11 +68,13 @@ class DbToDataTable:
             table.append(
                 {
                     "id": festejo_id,
-                    "nombre": festejo_rows["nombre_festejo"],
-                    "poblacion": festejo_rows["poblacion"],
-                    "fecha": festejo_rows["fecha_festejo"],
-                    "toreros": ", ".join(festejo_rows["toreros"]),
-                    "ganaderias": ", ".join(festejo_rows["ganaderias"]),
+                    "nombre": festejo_rows["nombre_festejo"].title(),
+                    "poblacion": festejo_rows["poblacion"].title(),
+                    "fecha": festejo_rows["fecha_festejo"].strftime("%d-%m-%Y"),
+                    "toreros": ", ".join([x.title() for x in festejo_rows["toreros"]]),
+                    "ganaderias": ", ".join(
+                        [x.title() for x in festejo_rows["ganaderias"]]
+                    ),
                     "premios": ", ".join(
                         str(item) for _, item in festejo_rows["toreros_premios"].items()
                     ),
