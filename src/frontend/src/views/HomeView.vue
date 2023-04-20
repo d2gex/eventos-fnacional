@@ -42,7 +42,13 @@
           </div>
         </div>
       </TabPanel>
-      <TabPanel header="Nueva Base de Datos"></TabPanel>
+      <TabPanel header="Nueva Base de Datos">
+        <div class="row">
+          <div class="col-md-12">
+            <NewDbTable/>
+          </div>
+        </div>
+      </TabPanel>
     </TabView>
   </div>
 
@@ -57,7 +63,7 @@ import FestejosForm from "@/components/FestejosForm.vue";
 import TabView from 'primevue/tabview';
 import TabPanel from 'primevue/tabpanel';
 import OldDbTable from "@/components/OldDbTable.vue";
-// import OldDbDatatable from "@/components/OldDbDatatable.vue";
+import NewDbTable from "@/components/NewDbTable.vue";
 
 export default {
   name: 'HomeView',
@@ -67,8 +73,8 @@ export default {
     FestejosForm,
     TabView,
     TabPanel,
-    OldDbTable
-    // OldDbDatatable
+    OldDbTable,
+    NewDbTable
   },
   data() {
     const toledo_province_id = 45 - 1;
