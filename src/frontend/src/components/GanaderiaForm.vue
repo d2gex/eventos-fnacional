@@ -3,7 +3,7 @@
     <legend class="w-auto px-2">Ganaderias</legend>
     <Form
         @submit="onSubmit"
-        :initial-values="initialData"
+        :initial-values="this.ganaderiaStore.initialData"
         :validation-schema="schema"
     >
       <FieldArray name="ganaderiaRow" v-slot="{ fields, push, remove }">
@@ -12,38 +12,36 @@
             <div class="card mt-2 mx-auto p-2 bg-light">
               <div class="card-body bg-light">
                 <div class="container">
-                  <form id="contact-form" role="form">
-                    <div class="controls">
-                      <h3 class="text-center">Ganadería {{ row + 1 }}</h3>
-                      <div class="row">
-                        <div class="col-md-12">
-                          <div class="form-group">
-                            <label :for="`ganaderiaRow[${row}].nombre_ganaderia` + '_id'">Nombre *</label>
-                            <Field :id="`ganaderiaRow[${row}].nombre_ganaderia` + '_id'" type="text"
-                                   :name="`ganaderiaRow[${row}].nombre_ganaderia`"
-                                   class="form-control"
-                                   placeholder="Entra el nombre *"/>
-                            <div class="field-error">
-                              <ErrorMessage as="div" :name="`ganaderiaRow[${row}].nombre_ganaderia`"/>
-                            </div>
+                  <div class="controls">
+                    <h3 class="text-center">Ganadería {{ row + 1 }}</h3>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label :for="`ganaderiaRow[${row}].nombre_ganaderia` + '_id'">Nombre *</label>
+                          <Field :id="`ganaderiaRow[${row}].nombre_ganaderia` + '_id'" type="text"
+                                 :name="`ganaderiaRow[${row}].nombre_ganaderia`"
+                                 class="form-control"
+                                 placeholder="Entra el nombre *"/>
+                          <div class="field-error">
+                            <ErrorMessage as="div" :name="`ganaderiaRow[${row}].nombre_ganaderia`"/>
+                          </div>
 
-                          </div>
                         </div>
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <label :for="`ganaderiaRow[${row}].provincia_id` + '_id'">Provincia *</label>
-                            <Field :id="`ganaderiaRow[${row}].provincia_id` + '_id'"
-                                   :name="`ganaderiaRow[${row}].provincia_id`"
-                                   v-model="selected[row]" as="select" class="form-control">
-                              <option v-for="option in provinciasData" :key="option.id" :value="option.id">
-                                {{ option.provincia }}
-                              </option>
-                            </Field>
-                          </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label :for="`ganaderiaRow[${row}].provincia_id` + '_id'">Provincia *</label>
+                          <Field :id="`ganaderiaRow[${row}].provincia_id` + '_id'"
+                                 :name="`ganaderiaRow[${row}].provincia_id`"
+                                 v-model="ganaderiaStore.selected[row]" as="select" class="form-control">
+                            <option v-for="option in provinciasData" :key="option.id" :value="option.id">
+                              {{ option.provincia }}
+                            </option>
+                          </Field>
                         </div>
                       </div>
                     </div>
-                  </form>
+                  </div>
                 </div>
               </div>
             </div>
@@ -73,6 +71,7 @@ import {Field, Form, FieldArray, ErrorMessage} from 'vee-validate';
 import {object as y_object, string as y_string, array as y_array} from "yup";
 import {markRaw} from "vue";
 import {customErrorMessages, CommonUtils} from "@/assets/common";
+import {useGanaderiaStore} from "@/stores/ganaderiaFormStore";
 
 export default {
   name: 'GanaderiaForm',
@@ -89,15 +88,8 @@ export default {
     ErrorMessage
   },
   data() {
+    const ganaderiaStore = useGanaderiaStore()
     const provinciasData = []
-    const selected = Array(6).fill(45);
-    const ganaderiaRowFields = {
-      nombre_ganaderia: '',
-      provincia_id: ''
-    };
-    const initialData = {
-      ganaderiaRow: [ganaderiaRowFields]
-    };
     const schema = markRaw(y_object().shape({
       ganaderiaRow: y_array()
           .of(
@@ -109,10 +101,8 @@ export default {
     }));
     const maxRows = 6;
     return {
+      ganaderiaStore,
       provinciasData,
-      selected,
-      ganaderiaRowFields,
-      initialData,
       schema,
       maxRows,
     }
@@ -121,7 +111,7 @@ export default {
       {
         addGanaderiaRow(func, numRows) {
           if (numRows < this.maxRows) {
-            func(this.ganaderiaRowFields)
+            func(this.ganaderiaStore.ganaderiaRowFields)
           }
         },
         removeGanaderiaRow(func, index, numRows) {
