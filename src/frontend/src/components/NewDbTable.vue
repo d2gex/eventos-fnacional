@@ -92,12 +92,6 @@ export default {
     onRowCollapse(event) {
       this.toast.add({severity: 'success', summary: 'Product Colapsado', detail: event.data.name, life: 3000});
     },
-    expandAll() {
-      this.expandedRows.value = this.products.value.filter((p) => p.id);
-    },
-    collapseAll() {
-      this.expandedRows.value = null;
-    },
     copyRow() {
       this.ganaderiaStore.ganaderiaRowFields['nombre_ganaderia'] = this.selectedRow.ganaderias
       this.ganaderiaStore.ganaderiaRowFields['provincia_id'] = 46
