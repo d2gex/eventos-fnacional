@@ -16,8 +16,6 @@
                              tipo-festejo="festejos.tipo_festejo_id"
                              :selected-festejo="selectedFestejo"
                              :tipo-festejos="tipoFestejos"
-                             :selected-provincia="selectedProvincia"
-                             :provincias="provincias"
                              :selected-poblacion="selectedPoblacion"
                              :poblaciones="poblaciones"
             />
@@ -55,14 +53,6 @@ import {markRaw} from "vue";
 export default {
   name: 'FestejosForm',
   props: {
-    selectedProvincia: {
-      type: Number,
-      required: true
-    },
-    provincias: {
-      type: Array,
-      require: true
-    },
     selectedFestejo: {
       type: Number,
       required: true

@@ -31,8 +31,8 @@
               <div class="form-group">
                 <label for="provincia">Provincia *</label>
                 <Field :id="provincia + '_id'" :name='provincia'
-                       v-model="selectBox.selectedProvincia" as="select" class="form-control">
-                  <option v-for="option in selectBox.provincias" :key="option.id" :value="option.id">
+                       v-model="selectedProvincia" as="select" class="form-control">
+                  <option v-for="option in dataDeposit.provincias" :key="option.id" :value="option.id">
                     {{ option.provincia }}
                   </option>
                 </Field>
@@ -77,6 +77,8 @@
 import InputForm from "@/components/InputForm.vue";
 import {Field, ErrorMessage} from "vee-validate";
 import VueDatePicker from '@vuepic/vue-datepicker';
+import {usedataDepositStore} from "@/stores/dataDepositStore";
+import {CommonUtils} from "@/assets/common";
 
 export default {
   name: "FestejoDetalles",
@@ -96,14 +98,6 @@ export default {
       type: Array,
       required: true
     },
-    selectedProvincia: {
-      type: Number,
-      required: true
-    },
-    provincias: {
-      type: Array,
-      required: true
-    },
     selectedPoblacion: {
       type: Number,
       required: true
@@ -114,18 +108,20 @@ export default {
     }
   },
   data() {
+    const dataDeposit = usedataDepositStore()
     const dateFestejoValue = new Date().toLocaleDateString();
     const selectBox = {
       selectedFestejo: '',
-      selectedProvincia: '',
       selectedPoblacion: '',
-      provincias: [],
       poblaciones: [],
       tipoFestejos: []
     };
+    const selectedProvincia = CommonUtils.selectedProvincia;
     return {
+      dataDeposit,
       dateFestejoValue,
-      selectBox
+      selectBox,
+      selectedProvincia
     }
   },
   methods: {
@@ -138,9 +134,6 @@ export default {
     tipoFestejos(newItem) {
       this.updateSelectBox(newItem, 'tipoFestejos', 'selectedFestejo')
     },
-    provincias(newItem) {
-      this.updateSelectBox(newItem, 'provincias', 'selectedProvincia')
-    },
     poblaciones(newItem) {
       this.updateSelectBox(newItem, 'poblaciones', 'selectedPoblacion')
     },
@@ -148,9 +141,6 @@ export default {
   mounted() {
     if (this.tipoFestejos.length) {
       this.updateSelectBox(this.tipoFestejos, 'tipoFestejos', 'selectedFestejo')
-    }
-    if (this.provincias.length) {
-      this.updateSelectBox(this.tipoFestejos, 'provincias', 'selectedProvincia')
     }
     if (this.tipoFestejos.length) {
       this.updateSelectBox(this.tipoFestejos, 'poblaciones', 'selectedPoblacion')

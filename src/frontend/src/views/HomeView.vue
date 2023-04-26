@@ -14,18 +14,18 @@
       <TabPanel header="Festejos">
         <div class="row">
           <div class="col-md-12">
-<!--            <FestejosForm-->
-<!--                :selected-festejo="selectedFestejo"-->
-<!--                :tipo-festejos="tipoFestejos"-->
-<!--                :selected-toreros="selectedTorero"-->
-<!--                :toreros-data="toreroItems"-->
-<!--                :selected-ganaderias="selectedGanaderia"-->
-<!--                :ganaderias-data="ganaderiaItems"-->
-<!--                :selected-torero-premio="selectedToreroPremio"-->
-<!--                :torero-premios-data="premioToreroItems"-->
-<!--                :selected-poblacion="selectedPoblacion"-->
-<!--                :poblaciones="poblaciones"-->
-<!--            />-->
+            <FestejosForm
+                :selected-festejo="selectedFestejo"
+                :tipo-festejos="tipoFestejos"
+                :selected-toreros="selectedTorero"
+                :toreros-data="toreroItems"
+                :selected-ganaderias="selectedGanaderia"
+                :ganaderias-data="ganaderiaItems"
+                :selected-torero-premio="selectedToreroPremio"
+                :torero-premios-data="premioToreroItems"
+                :selected-poblacion="selectedPoblacion"
+                :poblaciones="poblaciones"
+            />
           </div>
         </div>
       </TabPanel>
@@ -57,7 +57,7 @@
 import {CommonUtils} from "@/assets/common";
 import ToreroForm from '@/components/ToreroForm.vue'
 import GanaderiaForm from '@/components/GanaderiaForm.vue'
-// import FestejosForm from "@/components/FestejosForm.vue";
+import FestejosForm from "@/components/FestejosForm.vue";
 import TabView from 'primevue/tabview';
 import TabPanel from 'primevue/tabpanel';
 import OldDbTable from "@/components/OldDbTable.vue";
@@ -69,7 +69,7 @@ export default {
   components: {
     ToreroForm,
     GanaderiaForm,
-    // FestejosForm,
+    FestejosForm,
     TabView,
     TabPanel,
     OldDbTable,
