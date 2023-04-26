@@ -118,6 +118,10 @@ export default {
           if (data.status === 0) {
             await this.$vueAlert.alert(data.message)
           }
+          else {
+            await this.dataDeposit.fetchAndStoreGanaderias()
+            await this.$vueAlert.alert("Las nuevas ganaderias han sido guardadas")
+          }
           console.log(JSON.stringify(data, null, 2));
         }
       }
