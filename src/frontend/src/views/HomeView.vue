@@ -106,7 +106,6 @@ export default {
       selectedPoblacion,
       poblaciones,
       tipoToreros,
-      // oldDbDataUrl
     }
   },
   async created() {
