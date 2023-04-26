@@ -116,11 +116,10 @@ export default {
           console.log(JSON.stringify(values, null, 2));
           const {data} = await CommonUtils.sendDataToBackend(values, '/save_ganaderia_details')
           if (data.status === 0) {
-            await this.$vueAlert.alert(data.message)
-          }
-          else {
+            await this.$vueAlert.alert(data.message, "Error en la operación", 'error')
+          } else {
             await this.dataDeposit.fetchAndStoreGanaderias()
-            await this.$vueAlert.alert("Las nuevas ganaderias han sido guardadas")
+            await this.$vueAlert.alert("Las nuevas ganaderias han sido guardadas", "Operación satisfactoria", 'success')
           }
           console.log(JSON.stringify(data, null, 2));
         }
