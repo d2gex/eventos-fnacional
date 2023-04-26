@@ -7,27 +7,25 @@
             <ToreroForm :tipo-toreros="tipoToreros"/>
           </div>
           <div class="col-md-4">
-            <GanaderiaForm :provincias="provincias"/>
+            <GanaderiaForm/>
           </div>
         </div>
       </TabPanel>
       <TabPanel header="Festejos">
         <div class="row">
           <div class="col-md-12">
-            <FestejosForm
-                :selected-provincia="selectedProvincia"
-                :provincias="provincias"
-                :selected-festejo="selectedFestejo"
-                :tipo-festejos="tipoFestejos"
-                :selected-toreros="selectedTorero"
-                :toreros-data="toreroItems"
-                :selected-ganaderias="selectedGanaderia"
-                :ganaderias-data="ganaderiaItems"
-                :selected-torero-premio="selectedToreroPremio"
-                :torero-premios-data="premioToreroItems"
-                :selected-poblacion="selectedPoblacion"
-                :poblaciones="poblaciones"
-            />
+<!--            <FestejosForm-->
+<!--                :selected-festejo="selectedFestejo"-->
+<!--                :tipo-festejos="tipoFestejos"-->
+<!--                :selected-toreros="selectedTorero"-->
+<!--                :toreros-data="toreroItems"-->
+<!--                :selected-ganaderias="selectedGanaderia"-->
+<!--                :ganaderias-data="ganaderiaItems"-->
+<!--                :selected-torero-premio="selectedToreroPremio"-->
+<!--                :torero-premios-data="premioToreroItems"-->
+<!--                :selected-poblacion="selectedPoblacion"-->
+<!--                :poblaciones="poblaciones"-->
+<!--            />-->
           </div>
         </div>
       </TabPanel>
@@ -59,29 +57,28 @@
 import {CommonUtils} from "@/assets/common";
 import ToreroForm from '@/components/ToreroForm.vue'
 import GanaderiaForm from '@/components/GanaderiaForm.vue'
-import FestejosForm from "@/components/FestejosForm.vue";
+// import FestejosForm from "@/components/FestejosForm.vue";
 import TabView from 'primevue/tabview';
 import TabPanel from 'primevue/tabpanel';
 import OldDbTable from "@/components/OldDbTable.vue";
 import NewDbTable from "@/components/NewDbTable.vue";
+import {usedataDepositStore} from "@/stores/dataDepositStore";
 
 export default {
   name: 'HomeView',
   components: {
     ToreroForm,
     GanaderiaForm,
-    FestejosForm,
+    // FestejosForm,
     TabView,
     TabPanel,
     OldDbTable,
     NewDbTable
   },
   data() {
-    const toledo_province_id = 45 - 1;
+    const dataDeposit = usedataDepositStore()
     const selectedFestejo = 1;
     const tipoFestejos = [];
-    const selectedProvincia = toledo_province_id;
-    const provincias = [];
     const selectedTorero = 0;
     const toreroItems = [];
     const selectedGanaderia = 0;
@@ -91,12 +88,11 @@ export default {
     const selectedPoblacion = 0;
     const poblaciones = [];
     const tipoToreros = [];
-    // const oldDbDataUrl = CommonUtils.apiServerUrl + '/get_old_db_all_records';
+
     return {
+      dataDeposit,
       selectedFestejo,
       tipoFestejos,
-      selectedProvincia,
-      provincias,
       selectedTorero,
       toreroItems,
       selectedGanaderia,
@@ -109,12 +105,11 @@ export default {
     }
   },
   async created() {
-    // Get details for provinces
-    let response = await CommonUtils.getDataFromTable(CommonUtils.apiServerUrl + '/get_provincias')
-    this.provincias = response.data
+
+    await this.dataDeposit.fetchAndStoreProvincias()
 
     // Get details for tipo toreros
-    response = await CommonUtils.getDataFromTable(CommonUtils.apiServerUrl + '/get_tipo_toreros')
+    let response = await CommonUtils.getDataFromTable(CommonUtils.apiServerUrl + '/get_tipo_toreros')
     this.tipoToreros = response.data
 
     // Get details for tipo toreros

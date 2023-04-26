@@ -34,7 +34,7 @@
                           <Field :id="`ganaderiaRow[${row}].provincia_id` + '_id'"
                                  :name="`ganaderiaRow[${row}].provincia_id`"
                                  v-model="ganaderiaStore.selected[row]" as="select" class="form-control">
-                            <option v-for="option in provinciasData" :key="option.id" :value="option.id">
+                            <option v-for="option in dataDeposit.provincias" :key="option.id" :value="option.id">
                               {{ option.provincia }}
                             </option>
                           </Field>
@@ -72,15 +72,10 @@ import {object as y_object, string as y_string, array as y_array} from "yup";
 import {markRaw} from "vue";
 import {customErrorMessages, CommonUtils} from "@/assets/common";
 import {useGanaderiaStore} from "@/stores/ganaderiaFormStore";
+import {usedataDepositStore} from "@/stores/dataDepositStore";
 
 export default {
   name: 'GanaderiaForm',
-  props: {
-    provincias: {
-      type: Array,
-      required: true
-    }
-  },
   components: {
     Form,
     Field,
@@ -88,8 +83,8 @@ export default {
     ErrorMessage
   },
   data() {
-    const ganaderiaStore = useGanaderiaStore()
-    const provinciasData = []
+    const ganaderiaStore = useGanaderiaStore();
+    const dataDeposit = usedataDepositStore();
     const schema = markRaw(y_object().shape({
       ganaderiaRow: y_array()
           .of(
@@ -102,7 +97,7 @@ export default {
     const maxRows = 6;
     return {
       ganaderiaStore,
-      provinciasData,
+      dataDeposit,
       schema,
       maxRows,
     }
@@ -127,11 +122,6 @@ export default {
           }
           console.log(JSON.stringify(data, null, 2));
         }
-      },
-  watch: {
-    provincias(newProvincias) {
-      this.provinciasData = newProvincias
-    }
-  }
+      }
 }
 </script>
