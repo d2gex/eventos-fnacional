@@ -94,18 +94,16 @@ export default {
           )
           .strict(),
     }));
-    const maxRows = 6;
     return {
       ganaderiaStore,
       dataDeposit,
       schema,
-      maxRows,
     }
   },
   methods:
       {
         addGanaderiaRow(func, numRows) {
-          if (numRows < this.maxRows) {
+          if (numRows < CommonUtils.maxNumInstances) {
             func(this.ganaderiaStore.ganaderiaRowFields)
           }
         },
