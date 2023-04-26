@@ -4,7 +4,7 @@
       <TabPanel header="Toreros Y Ganaderías">
         <div class="row">
           <div class="col-md-8">
-            <ToreroForm :tipo-toreros="tipoToreros"/>
+            <ToreroForm/>
           </div>
           <div class="col-md-4">
             <GanaderiaForm/>
@@ -87,7 +87,6 @@ export default {
     const premioToreroItems = [];
     const selectedPoblacion = 0;
     const poblaciones = [];
-    const tipoToreros = [];
 
     return {
       dataDeposit,
@@ -100,8 +99,7 @@ export default {
       selectedToreroPremio,
       premioToreroItems,
       selectedPoblacion,
-      poblaciones,
-      tipoToreros,
+      poblaciones
     }
   },
   async created() {
@@ -109,11 +107,10 @@ export default {
     await this.dataDeposit.fetchAndStoreProvincias()
 
     // Get details for tipo toreros
-    let response = await CommonUtils.getDataFromTable(CommonUtils.apiServerUrl + '/get_tipo_toreros')
-    this.tipoToreros = response.data
+    await this.dataDeposit.fetchAndTipoToreros()
 
     // Get details for tipo toreros
-    response = await CommonUtils.getDataFromTable(CommonUtils.apiServerUrl + '/get_tipo_festejos')
+    let response = await CommonUtils.getDataFromTable(CommonUtils.apiServerUrl + '/get_tipo_festejos')
     this.tipoFestejos = response.data
 
     // Get details for toreros

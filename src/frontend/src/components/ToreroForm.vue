@@ -61,7 +61,7 @@
                             <Field :id="`toreroRow[${row}].tipo_torero_id` + '_id'"
                                    :name="`toreroRow[${row}].tipo_torero_id`"
                                    v-model="selected[row]" as="select" class="form-control">
-                              <option v-for="option in tipoToreros" :key="option.id" :value="option.id">
+                              <option v-for="option in dataDeposit.tipoToreros" :key="option.id" :value="option.id">
                                 {{ option.tipo_torero }}
                               </option>
                             </Field>
@@ -99,15 +99,10 @@ import {Field, Form, FieldArray, ErrorMessage} from 'vee-validate';
 import {object as y_object, string as y_string, array as y_array} from "yup";
 import {markRaw} from "vue";
 import {customErrorMessages, CommonUtils} from "@/assets/common";
+import {usedataDepositStore} from "@/stores/dataDepositStore";
 
 export default {
   name: 'ToreroForm',
-  props: {
-    tipoToreros: {
-      type: Array,
-      required: true
-    }
-  },
   components: {
     Form,
     Field,
@@ -115,6 +110,7 @@ export default {
     ErrorMessage,
   },
   data() {
+    const dataDeposit = usedataDepositStore()
     const selected = Array(6).fill(1);
     const toreroRowFields = {
       nombre: '',
@@ -139,19 +135,18 @@ export default {
           )
           .strict(),
     }));
-    const maxRows = 6;
     return {
+      dataDeposit,
       selected,
       toreroRowFields,
       initialData,
       schema,
-      maxRows
     }
   },
   methods:
       {
         addToreroRow(func, numRows) {
-          if (numRows < this.maxRows) {
+          if (numRows < CommonUtils.maxNumInstances) {
             func(this.toreroRowFields)
           }
         },
