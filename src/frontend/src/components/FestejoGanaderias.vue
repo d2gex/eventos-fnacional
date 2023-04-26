@@ -9,7 +9,7 @@
               <label :for="`ganaderiaName_${row}`">Ganaderia *</label>
               <SearchDropdownBox
                   :selectedItem="selected"
-                  :items="items"
+                  :items="ganaderiasData"
                   :field-name="`ganaderiaRow[${row}].ganaderiaName`"
                   place-holder="Selecciona una ganaderia"
                   option-label="nombre_ganaderia"/>
@@ -37,6 +37,7 @@
 
 <script>
 import SearchDropdownBox from "@/components/SearchDropdownBox.vue";
+import {CommonUtils} from "@/assets/common";
 
 export default {
   name: "FestejoGanaderias",
@@ -54,17 +55,17 @@ export default {
     }
   },
   data() {
-    const maxRows = 6;
-    const numRows = 1
+    const numRows = 1;
+    const ganaderiasData = [];
     return {
-      maxRows,
+      ganaderiasData,
       numRows
     }
   },
   methods:
       {
         addGanaderiaRow() {
-          if (this.numRows < this.maxRows) {
+          if (this.numRows < CommonUtils.maxNumInstances) {
             this.numRows++
           }
         },
@@ -72,7 +73,22 @@ export default {
           if (this.numRows > 1) {
             this.numRows--
           }
+        },
+        updateItems(newGanaderiaItems) {
+          this.ganaderiasData = newGanaderiaItems
         }
-      }
+      },
+  watch: {
+    // Update an instance of this component when fetching the  api data for the first time
+    items(newItems) {
+      this.updateItems(newItems)
+    }
+  },
+  mounted() {
+    // Update cloned copies of this component once the api data has been fetched.
+    if (this.items.length) {
+      this.updateItems(this.items)
+    }
+  }
 }
 </script>

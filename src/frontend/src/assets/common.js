@@ -10,6 +10,7 @@ const customErrorMessages = {
 const CommonUtils = {
     apiServerUrl: "http://127.0.0.1:5000/api",
     selectedProvincia: 45,
+    selectedGanaderia: 0,
     maxNumInstances: 6,
     capitalizeWords: function (str) {
         return str

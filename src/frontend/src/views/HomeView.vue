@@ -19,8 +19,6 @@
                 :tipo-festejos="tipoFestejos"
                 :selected-toreros="selectedTorero"
                 :toreros-data="toreroItems"
-                :selected-ganaderias="selectedGanaderia"
-                :ganaderias-data="ganaderiaItems"
                 :selected-torero-premio="selectedToreroPremio"
                 :torero-premios-data="premioToreroItems"
                 :selected-poblacion="selectedPoblacion"
@@ -81,8 +79,6 @@ export default {
     const tipoFestejos = [];
     const selectedTorero = 0;
     const toreroItems = [];
-    const selectedGanaderia = 0;
-    const ganaderiaItems = [];
     const selectedToreroPremio = 0;
     const premioToreroItems = [];
     const selectedPoblacion = 0;
@@ -94,8 +90,6 @@ export default {
       tipoFestejos,
       selectedTorero,
       toreroItems,
-      selectedGanaderia,
-      ganaderiaItems,
       selectedToreroPremio,
       premioToreroItems,
       selectedPoblacion,
@@ -118,8 +112,7 @@ export default {
     this.toreroItems = response.data
 
     // Get details for ganaderias
-    response = await CommonUtils.getDataFromTable(CommonUtils.apiServerUrl + '/get_ganaderias')
-    this.ganaderiaItems = response.data
+    await this.dataDeposit.fetchAndStoreGanaderias()
 
     // Get details for premios
     response = await CommonUtils.getDataFromTable(CommonUtils.apiServerUrl + '/get_tipo_premios')

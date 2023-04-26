@@ -21,7 +21,7 @@
             />
           </div>
           <div class="row">
-            <FestejoGanaderias :items="ganaderiasData" :selected="selectedGanaderias"/>
+            <FestejoGanaderias :items="dataDeposit.ganaderiaItems" :selected="selectedGanaderia"/>
           </div>
 
         </div>
@@ -49,6 +49,7 @@ import FestejoToreros from "@/components/FestejoToreros.vue";
 import FestejoGanaderias from "@/components/FestejoGanaderias.vue";
 import {array as y_array, object as y_object, string as y_string} from "yup";
 import {markRaw} from "vue";
+import {usedataDepositStore} from "@/stores/dataDepositStore";
 
 export default {
   name: 'FestejosForm',
@@ -66,14 +67,6 @@ export default {
       required: true
     },
     torerosData: {
-      type: Array,
-      required: true
-    },
-    selectedGanaderias: {
-      type: Number,
-      required: true
-    },
-    ganaderiasData: {
       type: Array,
       required: true
     },
@@ -101,6 +94,8 @@ export default {
     FestejoGanaderias
   },
   data() {
+    const dataDeposit = usedataDepositStore()
+    const selectedGanaderia = CommonUtils.selectedGanaderia
     const initialData = {
       festejos: {
         nombre_festejo: '',
@@ -132,6 +127,8 @@ export default {
           .strict(),
     }));
     return {
+      dataDeposit,
+      selectedGanaderia,
       initialData,
       schema
     }
