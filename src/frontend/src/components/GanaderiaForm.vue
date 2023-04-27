@@ -52,10 +52,11 @@
         <div class="row ">
           <div class="col-lg-12 mx-auto my-3 border border-danger text-center">
             <button type="button"
-                    @click="addGanaderiaRow(push, fields.length)"
+                    @click="fieldArray = addGanaderiaRow(push, remove, fields)"
                     class="btn btn-success">Añadir +
             </button>
-            <button type="button" @click="removeGanaderiaRow(remove, row, fields.length) " class="btn btn-danger mx-2">
+            <button type="button" @click="fieldArray = removeGanaderiaRow(push, remove, fields) "
+                    class="btn btn-danger mx-2">
               Borrar -
             </button>
             <button type="submit" class="btn btn-secondary">Guardar</button>
@@ -85,6 +86,7 @@ export default {
   data() {
     const ganaderiaStore = useGanaderiaStore();
     const dataDeposit = usedataDepositStore();
+    const fieldArray = null;
     const schema = markRaw(y_object().shape({
       ganaderiaRow: y_array()
           .of(
@@ -97,20 +99,39 @@ export default {
     return {
       ganaderiaStore,
       dataDeposit,
+      fieldArray,
       schema,
     }
   },
   methods:
       {
-        addGanaderiaRow(func, numRows) {
-          if (numRows < CommonUtils.maxNumInstances) {
-            func(this.ganaderiaStore.ganaderiaRowFields)
+        addGanaderiaRow(funcPush, funcRemove, addedFields) {
+          if (addedFields.length < CommonUtils.maxNumInstances) {
+            funcPush(this.ganaderiaStore.ganaderiaRowFields)
+          }
+          return {
+            push: funcPush,
+            remove: funcRemove,
+            fields: addedFields
           }
         },
-        removeGanaderiaRow(func, index, numRows) {
-          if (numRows > 1) {
-            func(index)
+        removeGanaderiaRow(funcPush, funcRemove, addedFields) {
+          if (addedFields.length > 1) {
+            const fieldKey = addedFields[0]
+            funcRemove(fieldKey)
           }
+          return {
+            push: funcPush,
+            remove: funcRemove,
+            fields: addedFields
+          }
+
+        },
+        resetForm() {
+          for (let i = this.fieldArray.fields.length - 1; i >= 0; i--) {
+            this.fieldArray.remove(this.fieldArray.fields[i])
+          }
+          this.fieldArray.push(this.ganaderiaStore.ganaderiaRowFields)
         },
         async onSubmit(values) {
           console.log(JSON.stringify(values, null, 2));
@@ -120,6 +141,7 @@ export default {
           } else {
             await this.dataDeposit.fetchAndStoreGanaderias()
             await this.$vueAlert.alert("Las nuevas ganaderias han sido guardadas", "Operación satisfactoria", 'success')
+            this.resetForm()
           }
           console.log(JSON.stringify(data, null, 2));
         }
