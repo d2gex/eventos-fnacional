@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <DataTable :value="this.dataDeposit.ganaderiaItems"
+    <DataTable :value="dataDeposit.ganaderiaItems"
                paginator
                :rows="50"
                :rowsPerPageOptions="[50, 100, 500]"

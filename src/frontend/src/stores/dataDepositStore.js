@@ -10,7 +10,8 @@ export const usedataDepositStore = defineStore('dataDepositStore', {
         toreroItems: [],
         ganaderiaItems: [],
         premioToreroItems: [],
-        poblaciones: []
+        poblaciones: [],
+        newDbData: [],
     }),
     actions: {
         async fetchAndStoreProvincias() {
@@ -40,6 +41,10 @@ export const usedataDepositStore = defineStore('dataDepositStore', {
         async getPoblaciones() {
             const response = await CommonUtils.getDataFromTable(CommonUtils.apiServerUrl + '/get_poblaciones')
             this.poblaciones = response.data
+        },
+        async fetchAndStoreNewDbData() {
+            const response = await CommonUtils.getDataFromTable(CommonUtils.apiServerUrl + '/get_db_all_records')
+            this.newDbData = response.data
         }
     }
 })

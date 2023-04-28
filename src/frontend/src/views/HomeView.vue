@@ -130,6 +130,9 @@ export default {
     // Get details for poblaciones
     response = await CommonUtils.getDataFromTable(CommonUtils.apiServerUrl + '/get_poblaciones')
     this.poblaciones = response.data
+
+    // get data from new db
+    await this.dataDeposit.fetchAndStoreNewDbData()
   }
 }
 </script>

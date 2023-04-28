@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <DataTable :value="products.value"
+    <DataTable :value="dataDeposit.newDbData"
                paginator
                :rows="50"
                :rowsPerPageOptions="[50, 100, 500]"
@@ -53,10 +53,9 @@ import Toast from "primevue/toast";
 import Button from "primevue/button";
 import {FilterMatchMode} from "primevue/api";
 import {useToast} from 'primevue/usetoast';
-import {CommonUtils} from "@/assets/common";
 import InputText from "primevue/inputtext";
 import {markRaw} from "vue";
-import {useGanaderiaStore} from "@/stores/ganaderiaFormStore";
+import {usedataDepositStore} from "@/stores/dataDepositStore";
 
 export default {
   name: "NewDbTable",
@@ -68,8 +67,7 @@ export default {
     InputText
   },
   data() {
-    const ganaderiaStore = useGanaderiaStore()
-    const products = {};
+    const dataDeposit = usedataDepositStore();
     const expandedRows = [];
     const toast = markRaw(useToast());
     const selectedRow = {};
@@ -77,8 +75,7 @@ export default {
       global: {value: null, matchMode: FilterMatchMode.CONTAINS}
     };
     return {
-      ganaderiaStore,
-      products,
+      dataDeposit,
       expandedRows,
       toast,
       selectedRow,
@@ -91,15 +88,7 @@ export default {
     },
     onRowCollapse(event) {
       this.toast.add({severity: 'success', summary: 'Product Colapsado', detail: event.data.name, life: 3000});
-    },
-    copyRow() {
-      this.ganaderiaStore.ganaderiaRowFields['nombre_ganaderia'] = this.selectedRow.ganaderias
-      this.ganaderiaStore.ganaderiaRowFields['provincia_id'] = 46
     }
-  },
-  async mounted() {
-    const response = await CommonUtils.getDataFromTable(CommonUtils.apiServerUrl + '/get_db_all_records')
-    this.products.value = response.data
-  },
+  }
 }
 </script>
