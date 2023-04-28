@@ -27,7 +27,7 @@ export const usedataDepositStore = defineStore('dataDepositStore', {
             const response = await CommonUtils.getDataFromTable(CommonUtils.apiServerUrl + '/get_tipo_festejos')
             this.tipoFestejos = response.data
         },
-        async getToreros() {
+        async fetchAndStoreToreros() {
             const response = await CommonUtils.getDataFromTable(CommonUtils.apiServerUrl + '/get_toreros')
             this.toreroItems = response.data
         },

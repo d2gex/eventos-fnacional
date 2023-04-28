@@ -26,8 +26,8 @@
 
         </div>
         <div class="col-md-6">
-          <FestejoToreros :torerosData="torerosData"
-                          :selected-torero="selectedToreros"
+          <FestejoToreros :torerosData="dataDeposit.toreroItems"
+                          :selected-torero="selectedTipoTorero"
                           :torero-premios-data="toreroPremiosData"
                           :selected-torero-premio="selectedToreroPremio"/>
         </div>
@@ -62,14 +62,6 @@ export default {
       type: Array,
       require: true
     },
-    selectedToreros: {
-      type: Number,
-      required: true
-    },
-    torerosData: {
-      type: Array,
-      required: true
-    },
     selectedToreroPremio: {
       type: Number,
       required: true
@@ -96,6 +88,7 @@ export default {
   data() {
     const dataDeposit = usedataDepositStore()
     const selectedGanaderia = CommonUtils.selectedGanaderia
+    const selectedTipoTorero = CommonUtils.selectedTipoTorero
     const initialData = {
       festejos: {
         nombre_festejo: '',
@@ -129,6 +122,7 @@ export default {
     return {
       dataDeposit,
       selectedGanaderia,
+      selectedTipoTorero,
       initialData,
       schema
     }
