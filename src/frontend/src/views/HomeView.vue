@@ -45,6 +45,13 @@
           </div>
         </div>
       </TabPanel>
+      <TabPanel header="Ganaderías">
+        <div class="row">
+          <div class="col-md-12">
+            <GanaderiasTable/>
+          </div>
+        </div>
+      </TabPanel>
     </TabView>
   </div>
 
@@ -60,6 +67,7 @@ import TabView from 'primevue/tabview';
 import TabPanel from 'primevue/tabpanel';
 import OldDbTable from "@/components/OldDbTable.vue";
 import NewDbTable from "@/components/NewDbTable.vue";
+import GanaderiasTable from "@/components/GanaderiasTable.vue";
 import {usedataDepositStore} from "@/stores/dataDepositStore";
 
 export default {
@@ -71,7 +79,8 @@ export default {
     TabView,
     TabPanel,
     OldDbTable,
-    NewDbTable
+    NewDbTable,
+    GanaderiasTable
   },
   data() {
     const dataDeposit = usedataDepositStore()
