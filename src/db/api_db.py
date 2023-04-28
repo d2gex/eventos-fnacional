@@ -96,6 +96,7 @@ class ApiDB:
                     m.ModelProvincia,
                     m.ModelGanaderia.provincia_id == m.ModelProvincia.id,
                 )
+                .order_by(m.ModelGanaderia.id.desc())
                 .all()
             )
         return db_data, column_names

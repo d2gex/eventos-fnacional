@@ -2,7 +2,7 @@
   <fieldset class="form-group border p-3">
     <legend class="w-auto px-2">Ganaderias</legend>
     <Form
-        :initial-values="this.ganaderiaStore.initialData"
+        :initial-values="ganaderiaStore.initialData"
         :validation-schema="schema"
         v-slot={handleSubmit}
     >
@@ -21,21 +21,26 @@
                             <label :for="`ganaderiaRow[${row}].nombre_ganaderia` + '_id'">Nombre *</label>
                             <Field :id="`ganaderiaRow[${row}].nombre_ganaderia` + '_id'" type="text"
                                    :name="`ganaderiaRow[${row}].nombre_ganaderia`"
+                                   v-model="ganaderiaStore.rows[row]['nombre_ganaderia']"
                                    class="form-control"
                                    placeholder="Entra el nombre *"/>
                             <div class="field-error">
                               <ErrorMessage as="div" :name="`ganaderiaRow[${row}].nombre_ganaderia`"/>
                             </div>
                           </div>
-                          <Field type="hidden" :id="`ganaderiaRow[${row}].id` + '_id'"
-                                 :name="`ganaderiaRow[${row}].id`"/>
+                          <Field type="hidden"
+                                 :id="`ganaderiaRow[${row}].id` + '_id'"
+                                 :name="`ganaderiaRow[${row}].id`"
+                                 v-model="ganaderiaStore.rows[row]['id']"/>
                         </div>
                         <div class="col-md-6">
                           <div class="form-group">
                             <label :for="`ganaderiaRow[${row}].provincia_id` + '_id'">Provincia *</label>
                             <Field :id="`ganaderiaRow[${row}].provincia_id` + '_id'"
                                    :name="`ganaderiaRow[${row}].provincia_id`"
-                                   v-model="ganaderiaStore.selected[row]" as="select" class="form-control">
+                                   v-model="ganaderiaStore.rows[row]['provincia_id']"
+                                   as="select"
+                                   class="form-control">
                               <option v-for="option in dataDeposit.provincias" :key="option.id" :value="option.id">
                                 {{ option.provincia }}
                               </option>
@@ -77,7 +82,7 @@ import {Field, Form, FieldArray, ErrorMessage} from 'vee-validate';
 import {object as y_object, string as y_string, array as y_array} from "yup";
 import {markRaw} from "vue";
 import {customErrorMessages, CommonUtils} from "@/assets/common";
-import {useGanaderiaStore} from "@/stores/ganaderiaFormStore";
+import {useGanaderiaStore, ganaderiaRowFields} from "@/stores/ganaderiaFormStore";
 import {usedataDepositStore} from "@/stores/dataDepositStore";
 
 export default {
@@ -110,12 +115,12 @@ export default {
       {
         addGanaderiaRow(funcPush, addedFields) {
           if (addedFields.length < CommonUtils.maxNumInstances) {
-            funcPush(this.ganaderiaStore.ganaderiaRowFields)
+            funcPush({...ganaderiaRowFields})
           }
         },
         removeGanaderiaRow(funcRemove, addedFields) {
           if (addedFields.length > 1) {
-            const fieldKey = addedFields[0]
+            const fieldKey = addedFields[addedFields.length - 1].key
             funcRemove(fieldKey)
           }
         },
@@ -124,7 +129,7 @@ export default {
             remove(fields[i])
           }
           this.ganaderiaStore.resetGanaderiaRowFields()
-          push(this.ganaderiaStore.ganaderiaRowFields)
+          push({...ganaderiaRowFields})
         },
         async onSubmit(values, funcPush, funcRemove, rowFields) {
           console.log(JSON.stringify(values, null, 2));

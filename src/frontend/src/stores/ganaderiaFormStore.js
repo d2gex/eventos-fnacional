@@ -1,7 +1,7 @@
 import {defineStore} from 'pinia'
 import {CommonUtils} from "@/assets/common";
 
-const ganaderiaRowFields = {
+export const ganaderiaRowFields = {
     id: null,
     nombre_ganaderia: '',
     provincia_id: CommonUtils.selectedProvincia
@@ -9,16 +9,15 @@ const ganaderiaRowFields = {
 
 export const useGanaderiaStore = defineStore('ganaderiaStore', {
     state: () => ({
-        selected: Array(CommonUtils.maxNumInstances).fill(CommonUtils.selectedProvincia),
-        ganaderiaRowFields: ganaderiaRowFields,
+        rows: new Array(CommonUtils.maxNumInstances).fill(0).map(() => ({...ganaderiaRowFields})),
         initialData: {
-            ganaderiaRow: [ganaderiaRowFields]
+            ganaderiaRow: [{...ganaderiaRowFields}]
         }
     }),
     actions: {
         resetGanaderiaRowFields() {
-            this.ganaderiaRowFields = ganaderiaRowFields
-            this.initialData.ganaderiaRow = ganaderiaRowFields
+            this.rows = new Array(CommonUtils.maxNumInstances).fill(0).map(() => ({...ganaderiaRowFields}))
+            this.initialData.ganaderiaRow = {...ganaderiaRowFields}
         }
     }
 })
