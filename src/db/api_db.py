@@ -120,7 +120,11 @@ class ApiDB:
         try:
             for ganaderia_details in data["ganaderiaRow"]:
                 with utils_db.session_scope() as s_db:
-                    s_db.add(models.ModelGanaderia(**ganaderia_details))
+                    if ganaderia_details["id"] is None:  # insert
+                        del ganaderia_details["id"]
+                        s_db.add(models.ModelGanaderia(**ganaderia_details))
+                    else:  # update
+                        s_db.merge(models.ModelGanaderia(**ganaderia_details))
         except IntegrityError:
             result = ganaderia_details
         else:

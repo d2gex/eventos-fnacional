@@ -71,7 +71,8 @@ export default {
   methods: {
     async copyRow() {
       this.ganaderiaStore.ganaderiaRowFields['nombre_ganaderia'] = this.selectedRow.nombre_ganaderia
-      this.ganaderiaStore.ganaderiaRowFields['provincia_id'] = CommonUtils.selectedProvincia
+      this.ganaderiaStore.ganaderiaRowFields['provincia_id'] = this.selectedRow.provincia_id
+      this.ganaderiaStore.ganaderiaRowFields['id'] = this.selectedRow.id
       await this.$vueAlert.alert("La ganadería '" + this.selectedRow.nombre_ganaderia + "' ha sido copiada" , 'success')
     }
   },

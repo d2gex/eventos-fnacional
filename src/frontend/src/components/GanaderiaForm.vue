@@ -4,67 +4,70 @@
     <Form
         :initial-values="this.ganaderiaStore.initialData"
         :validation-schema="schema"
-        v-slot = {handleSubmit}
+        v-slot={handleSubmit}
     >
       <form @submit.prevent>
-      <FieldArray name="ganaderiaRow" v-slot="{ fields, push, remove }">
-        <div class="row border border-primary">
-          <div class="col-lg-12" v-for="(field, row) in fields" :key="field.key">
-            <div class="card mt-2 mx-auto p-2 bg-light">
-              <div class="card-body bg-light">
-                <div class="container">
-                  <div class="controls">
-                    <h3 class="text-center">Ganadería {{ row + 1 }}</h3>
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="form-group">
-                          <label :for="`ganaderiaRow[${row}].nombre_ganaderia` + '_id'">Nombre *</label>
-                          <Field :id="`ganaderiaRow[${row}].nombre_ganaderia` + '_id'" type="text"
-                                 :name="`ganaderiaRow[${row}].nombre_ganaderia`"
-                                 class="form-control"
-                                 placeholder="Entra el nombre *"/>
-                          <div class="field-error">
-                            <ErrorMessage as="div" :name="`ganaderiaRow[${row}].nombre_ganaderia`"/>
+        <FieldArray name="ganaderiaRow" v-slot="{ fields, push, remove }">
+          <div class="row border border-primary">
+            <div class="col-lg-12" v-for="(field, row) in fields" :key="field.key">
+              <div class="card mt-2 mx-auto p-2 bg-light">
+                <div class="card-body bg-light">
+                  <div class="container">
+                    <div class="controls">
+                      <h3 class="text-center">Ganadería {{ row + 1 }}</h3>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label :for="`ganaderiaRow[${row}].nombre_ganaderia` + '_id'">Nombre *</label>
+                            <Field :id="`ganaderiaRow[${row}].nombre_ganaderia` + '_id'" type="text"
+                                   :name="`ganaderiaRow[${row}].nombre_ganaderia`"
+                                   class="form-control"
+                                   placeholder="Entra el nombre *"/>
+                            <div class="field-error">
+                              <ErrorMessage as="div" :name="`ganaderiaRow[${row}].nombre_ganaderia`"/>
+                            </div>
                           </div>
-
+                          <Field type="hidden" :id="`ganaderiaRow[${row}].id` + '_id'"
+                                 :name="`ganaderiaRow[${row}].id`"/>
                         </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label :for="`ganaderiaRow[${row}].provincia_id` + '_id'">Provincia *</label>
-                          <Field :id="`ganaderiaRow[${row}].provincia_id` + '_id'"
-                                 :name="`ganaderiaRow[${row}].provincia_id`"
-                                 v-model="ganaderiaStore.selected[row]" as="select" class="form-control">
-                            <option v-for="option in dataDeposit.provincias" :key="option.id" :value="option.id">
-                              {{ option.provincia }}
-                            </option>
-                          </Field>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label :for="`ganaderiaRow[${row}].provincia_id` + '_id'">Provincia *</label>
+                            <Field :id="`ganaderiaRow[${row}].provincia_id` + '_id'"
+                                   :name="`ganaderiaRow[${row}].provincia_id`"
+                                   v-model="ganaderiaStore.selected[row]" as="select" class="form-control">
+                              <option v-for="option in dataDeposit.provincias" :key="option.id" :value="option.id">
+                                {{ option.provincia }}
+                              </option>
+                            </Field>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+              <!-- /.8 -->
             </div>
-            <!-- /.8 -->
+            <!-- /.row-->
           </div>
-          <!-- /.row-->
-        </div>
-        <div class="row ">
-          <div class="col-lg-12 mx-auto my-3 border border-danger text-center">
-            <button type="button"
-                    @click="addGanaderiaRow(push, fields)"
-                    class="btn btn-success">Añadir +
-            </button>
-            <button type="button" @click="removeGanaderiaRow(remove, fields) "
-                    class="btn btn-danger mx-2">
-              Borrar -
-            </button>
-            <button @click="handleSubmit((values) => {onSubmit(values, push, remove, fields)})" class="btn btn-secondary">Guardar</button>
+          <div class="row ">
+            <div class="col-lg-12 mx-auto my-3 border border-danger text-center">
+              <button type="button"
+                      @click="addGanaderiaRow(push, fields)"
+                      class="btn btn-success">Añadir +
+              </button>
+              <button type="button" @click="removeGanaderiaRow(remove, fields) "
+                      class="btn btn-danger mx-2">
+                Borrar -
+              </button>
+              <button @click="handleSubmit((values) => {onSubmit(values, push, remove, fields)})"
+                      class="btn btn-secondary">Guardar
+              </button>
+            </div>
           </div>
-        </div>
-      </FieldArray>
-        </form>
+        </FieldArray>
+      </form>
     </Form>
   </fieldset>
 </template>
@@ -120,6 +123,7 @@ export default {
           for (let i = fields.length - 1; i >= 0; i--) {
             remove(fields[i])
           }
+          this.ganaderiaStore.resetGanaderiaRowFields()
           push(this.ganaderiaStore.ganaderiaRowFields)
         },
         async onSubmit(values, funcPush, funcRemove, rowFields) {
