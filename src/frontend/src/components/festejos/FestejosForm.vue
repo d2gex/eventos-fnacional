@@ -44,9 +44,9 @@
 <script>
 import {Form} from 'vee-validate';
 import {CommonUtils, customErrorMessages} from "@/assets/common";
-import FestejoDetalles from "@/components/FestejoDetalles.vue";
-import FestejoToreros from "@/components/FestejoToreros.vue";
-import FestejoGanaderias from "@/components/FestejoGanaderias.vue";
+import FestejoDetalles from "@/components/festejos/FestejoDetalles.vue";
+import FestejoToreros from "@/components/festejos/FestejoToreros.vue";
+import FestejoGanaderias from "@/components/festejos/FestejoGanaderias.vue";
 import {array as y_array, object as y_object, string as y_string} from "yup";
 import {markRaw} from "vue";
 import {usedataDepositStore} from "@/stores/dataDepositStore";

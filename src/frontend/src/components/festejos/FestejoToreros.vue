@@ -48,7 +48,7 @@
 
 <script>
 import SearchDropdownBox from "@/components/SearchDropdownBox.vue";
-import PremiosTorero from "@/components/FestejoToreroPremios.vue";
+import PremiosTorero from "@/components/festejos/FestejoToreroPremios.vue";
 
 export default {
   name: "FestejoToreros",
