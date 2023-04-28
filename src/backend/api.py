@@ -37,7 +37,9 @@ def get_poblaciones():
 
 @api.route("/get_ganaderias", methods=["GET"])
 def get_ganaderias():
-    return jsonify(api_db.ApiDB.get_table(models.ModelGanaderia))
+    db_data, keys = api_db.ApiDB.getGanaderias()
+    to_datable = db_to_datatable.GanaderiasToDataTable(keys, db_data)
+    return jsonify(to_datable())
 
 
 @api.route("/get_toreros", methods=["GET"])
@@ -56,7 +58,7 @@ def get_old_db_all_records():
 @api.route("/get_db_all_records", methods=["GET"])
 def get_db_all_records():
     db_result = api_db.ApiDB.get_all_festejos()
-    to_datatable = db_to_datatable.DbToDataTable()
+    to_datatable = db_to_datatable.FestejosToDataTable()
     table = to_datatable.run(db_result)
     return jsonify(table)
 

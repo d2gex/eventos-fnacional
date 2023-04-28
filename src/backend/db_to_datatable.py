@@ -1,8 +1,8 @@
-from typing import List, Dict
+from typing import List, Dict, Tuple
 from collections import defaultdict
 
 
-class DbToDataTable:
+class FestejosToDataTable:
     def get_rows_by_festejo(self, data: List[Dict]) -> Dict[int, List]:
         festejos = defaultdict(list)
         for item in data:
@@ -89,3 +89,17 @@ class DbToDataTable:
         result = self.discern_premios_by_torero_and_festejo(result)
         table = self.build_festejos_table(result)
         return table
+
+
+class DbToDataTable:
+    def __init__(self, keys: List[str], data: List[Tuple]):
+        self.keys = keys
+        self.data = data
+
+    def __call__(self, *args, **kwargs):
+        return [dict([(k, v) for k, v in zip(self.keys, row)]) for row in self.data]
+
+
+class GanaderiasToDataTable(DbToDataTable):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)

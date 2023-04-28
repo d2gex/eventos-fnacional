@@ -1,4 +1,4 @@
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Tuple, Any, Optional
 from src.db import models
 from src.db import utils as utils_db
 from sqlalchemy import and_
@@ -78,6 +78,27 @@ class ApiDB:
                 .all()
             )
         return db_data
+
+    @classmethod
+    def getGanaderias(cls) -> Tuple[List[Tuple], List[str]]:
+        m = models
+        columns = [
+            m.ModelGanaderia.id,
+            m.ModelGanaderia.nombre_ganaderia,
+            m.ModelGanaderia.provincia_id,
+            m.ModelProvincia.provincia,
+        ]
+        column_names = [c.key for c in columns]
+        with utils_db.session_scope() as db_session:
+            db_data = (
+                db_session.query(*columns)
+                .join(
+                    m.ModelProvincia,
+                    m.ModelGanaderia.provincia_id == m.ModelProvincia.id,
+                )
+                .all()
+            )
+        return db_data, column_names
 
     @classmethod
     def save_torero_details(cls, data: Dict) -> Optional[Dict]:
