@@ -44,7 +44,7 @@ import {useGanaderiaStore} from "@/stores/ganaderiaFormStore";
 import {usedataDepositStore} from "@/stores/dataDepositStore";
 
 export default {
-  name: "NewDbTable",
+  name: "GanaderiasTable",
   components: {
     DataTable,
     Column,
