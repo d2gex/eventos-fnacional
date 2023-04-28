@@ -56,6 +56,13 @@
             </div>
           </div>
         </TabPanel>
+        <TabPanel header="Toreros">
+          <div class="row">
+            <div class="col-md-12">
+              <TorerosTable/>
+            </div>
+          </div>
+        </TabPanel>
       </TabView>
     </div>
   </div>
@@ -71,6 +78,7 @@ import TabPanel from 'primevue/tabpanel';
 import OldDbTable from "@/components/dataTables/OldDbTable.vue";
 import NewDbTable from "@/components/dataTables/NewDbTable.vue";
 import GanaderiasTable from "@/components/dataTables/GanaderiasTable.vue";
+import TorerosTable from "@/components/dataTables/TorerosTable.vue";
 import {usedataDepositStore} from "@/stores/dataDepositStore";
 import ProgressSpinner from 'primevue/progressspinner';
 
@@ -85,6 +93,7 @@ export default {
     OldDbTable,
     NewDbTable,
     GanaderiasTable,
+    TorerosTable,
     ProgressSpinner
   },
   data() {

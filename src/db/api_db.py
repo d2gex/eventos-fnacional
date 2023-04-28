@@ -20,6 +20,9 @@ class ApiDB:
         columns = [
             m.ModelTorero.id,
             m.ModelTorero.nombre_profesional,
+            m.ModelTorero.nombre,
+            m.ModelTorero.apellidos,
+            m.ModelTorero.apodo,
             m.ModelTorero.tipo_torero_id,
             m.ModelTipoTorero.tipo_torero,
         ]
