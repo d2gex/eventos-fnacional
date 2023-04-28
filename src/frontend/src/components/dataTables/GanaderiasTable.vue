@@ -22,10 +22,10 @@
             </span>
         </div>
       </template>
-      <Column field="id" header="ID"></Column>
+      <Column field="id" header="Ganaderia ID"></Column>
       <Column field="nombre_ganaderia" sortable header="Ganaderia"></Column>
-      <Column field="provincia_id" sortable header="Provincia_ID"></Column>
       <Column field="provincia" sortable header="Provincia"></Column>
+      <Column field="provincia_id" sortable header="Provincia ID"></Column>
     </DataTable>
     <Toast/>
   </div>
