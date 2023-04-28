@@ -133,8 +133,8 @@ export default {
             await this.$vueAlert.alert(data.message, "Error en la operación", 'error')
           } else {
             await this.dataDeposit.fetchAndStoreGanaderias()
-            await this.$vueAlert.alert("Las nuevas ganaderias han sido guardadas", "Operación satisfactoria", 'success')
             this.resetForm(funcPush, funcRemove, rowFields)
+            await this.$vueAlert.alert("Las nuevas ganaderias han sido guardadas", "Operación satisfactoria", 'success')
           }
           console.log(JSON.stringify(data, null, 2));
         }

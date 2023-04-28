@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <DataTable :value="products.value"
+    <DataTable :value="this.dataDeposit.ganaderiaItems"
                paginator
                :rows="50"
                :rowsPerPageOptions="[50, 100, 500]"
@@ -38,10 +38,10 @@ import Toast from "primevue/toast";
 import Button from "primevue/button";
 import {FilterMatchMode} from "primevue/api";
 import {useToast} from 'primevue/usetoast';
-import {CommonUtils} from "@/assets/common";
 import InputText from "primevue/inputtext";
 import {markRaw} from "vue";
 import {useGanaderiaStore} from "@/stores/ganaderiaFormStore";
+import {usedataDepositStore} from "@/stores/dataDepositStore";
 
 export default {
   name: "NewDbTable",
@@ -53,16 +53,16 @@ export default {
     InputText
   },
   data() {
+    const dataDeposit = usedataDepositStore()
     const ganaderiaStore = useGanaderiaStore()
-    const products = {};
     const toast = markRaw(useToast());
     const selectedRow = {};
     const filters = {
       global: {value: null, matchMode: FilterMatchMode.CONTAINS}
     };
     return {
+      dataDeposit,
       ganaderiaStore,
-      products,
       toast,
       selectedRow,
       filters
@@ -75,10 +75,6 @@ export default {
       this.ganaderiaStore.ganaderiaRowFields['id'] = this.selectedRow.id
       await this.$vueAlert.alert("La ganadería '" + this.selectedRow.nombre_ganaderia + "' ha sido copiada" , 'success')
     }
-  },
-  async mounted() {
-    const response = await CommonUtils.getDataFromTable(CommonUtils.apiServerUrl + '/get_ganaderias')
-    this.products.value = response.data
-  },
+  }
 }
 </script>
