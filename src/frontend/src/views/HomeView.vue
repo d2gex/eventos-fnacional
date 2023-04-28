@@ -1,61 +1,66 @@
 <template>
-  <div class="row">
-    <TabView>
-      <TabPanel header="Toreros Y Ganaderías">
-        <div class="row">
-          <div class="col-md-8">
-            <ToreroForm/>
-          </div>
-          <div class="col-md-4">
-            <GanaderiaForm/>
-          </div>
-        </div>
-      </TabPanel>
-      <TabPanel header="Festejos">
-        <div class="row">
-          <div class="col-md-12">
-            <FestejosForm
-                :selected-festejo="selectedFestejo"
-                :tipo-festejos="tipoFestejos"
-                :selected-toreros="selectedTorero"
-                :toreros-data="toreroItems"
-                :selected-torero-premio="selectedToreroPremio"
-                :torero-premios-data="premioToreroItems"
-                :selected-poblacion="selectedPoblacion"
-                :poblaciones="poblaciones"
-            />
-          </div>
-        </div>
-      </TabPanel>
-    </TabView>
+  <div v-if="fetchingData" class="container h-100">
+    <div class="d-flex justify-content-md-center align-items-center vh-100">
+      <ProgressSpinner/>
+    </div>
   </div>
-  <div class="row">
-    <TabView>
-      <TabPanel header="Datos Originales">
-        <div class="row">
-          <div class="col-md-12">
-            <OldDbTable/>
+  <div v-else class="container">
+    <div class="row">
+      <TabView>
+        <TabPanel header="Toreros Y Ganaderías">
+          <div class="row">
+            <div class="col-md-8">
+              <ToreroForm/>
+            </div>
+            <div class="col-md-4">
+              <GanaderiaForm/>
+            </div>
           </div>
-        </div>
-      </TabPanel>
-      <TabPanel header="Nueva Base de Datos">
-        <div class="row">
-          <div class="col-md-12">
-            <NewDbTable/>
+        </TabPanel>
+        <TabPanel header="Festejos">
+          <div class="row">
+            <div class="col-md-12">
+              <FestejosForm
+                  :selected-festejo="selectedFestejo"
+                  :tipo-festejos="tipoFestejos"
+                  :selected-toreros="selectedTorero"
+                  :toreros-data="toreroItems"
+                  :selected-torero-premio="selectedToreroPremio"
+                  :torero-premios-data="premioToreroItems"
+                  :selected-poblacion="selectedPoblacion"
+                  :poblaciones="poblaciones"
+              />
+            </div>
           </div>
-        </div>
-      </TabPanel>
-      <TabPanel header="Ganaderías">
-        <div class="row">
-          <div class="col-md-12">
-            <GanaderiasTable/>
+        </TabPanel>
+      </TabView>
+    </div>
+    <div class="row">
+      <TabView>
+        <TabPanel header="Datos Originales">
+          <div class="row">
+            <div class="col-md-12">
+              <OldDbTable/>
+            </div>
           </div>
-        </div>
-      </TabPanel>
-    </TabView>
+        </TabPanel>
+        <TabPanel header="Nueva Base de Datos">
+          <div class="row">
+            <div class="col-md-12">
+              <NewDbTable/>
+            </div>
+          </div>
+        </TabPanel>
+        <TabPanel header="Ganaderías">
+          <div class="row">
+            <div class="col-md-12">
+              <GanaderiasTable/>
+            </div>
+          </div>
+        </TabPanel>
+      </TabView>
+    </div>
   </div>
-
-
 </template>
 
 <script>
@@ -69,6 +74,7 @@ import OldDbTable from "@/components/dataTables/OldDbTable.vue";
 import NewDbTable from "@/components/dataTables/NewDbTable.vue";
 import GanaderiasTable from "@/components/dataTables/GanaderiasTable.vue";
 import {usedataDepositStore} from "@/stores/dataDepositStore";
+import ProgressSpinner from 'primevue/progressspinner';
 
 export default {
   name: 'HomeView',
@@ -80,7 +86,8 @@ export default {
     TabPanel,
     OldDbTable,
     NewDbTable,
-    GanaderiasTable
+    GanaderiasTable,
+    ProgressSpinner
   },
   data() {
     const dataDeposit = usedataDepositStore()
@@ -92,6 +99,7 @@ export default {
     const premioToreroItems = [];
     const selectedPoblacion = 0;
     const poblaciones = [];
+    const fetchingData = false
 
     return {
       dataDeposit,
@@ -102,13 +110,14 @@ export default {
       selectedToreroPremio,
       premioToreroItems,
       selectedPoblacion,
-      poblaciones
+      poblaciones,
+      fetchingData
     }
   },
   async created() {
-
+    this.fetchingData = true
+    // Get Provincias details
     await this.dataDeposit.fetchAndStoreProvincias()
-
     // Get details for tipo toreros
     await this.dataDeposit.fetchAndTipoToreros()
 
@@ -136,6 +145,7 @@ export default {
 
     // get data from old db
     await this.dataDeposit.fetchAndStoreOldDbData()
+    this.fetchingData = false
   }
 }
 </script>
