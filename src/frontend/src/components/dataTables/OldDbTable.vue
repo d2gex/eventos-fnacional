@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <DataTable :value="products.value"
+    <DataTable :value="dataDeposit.oldDbData"
                paginator
                :rows="50"
                :rowsPerPageOptions="[50, 100, 500]"
@@ -57,9 +57,9 @@ import Toast from "primevue/toast";
 import Button from "primevue/button";
 import {FilterMatchMode} from "primevue/api";
 import {useToast} from 'primevue/usetoast';
-import {CommonUtils} from "@/assets/common";
 import InputText from "primevue/inputtext";
 import {markRaw} from "vue";
+import {usedataDepositStore} from "@/stores/dataDepositStore";
 
 export default {
   name: "OldDbTable",
@@ -71,7 +71,7 @@ export default {
     InputText
   },
   data() {
-    const products = {};
+    const dataDeposit = usedataDepositStore()
     const expandedRows = [];
     const toast = markRaw(useToast());
     const selectedRow = {};
@@ -79,7 +79,7 @@ export default {
       global: {value: null, matchMode: FilterMatchMode.CONTAINS}
     };
     return {
-      products,
+      dataDeposit,
       expandedRows,
       toast,
       selectedRow,
@@ -99,10 +99,6 @@ export default {
     collapseAll() {
       this.expandedRows.value = null;
     }
-  },
-  async mounted() {
-    const response = await CommonUtils.getDataFromTable(CommonUtils.apiServerUrl + '/get_old_db_all_records')
-    this.products.value = response.data
-  },
+  }
 }
 </script>

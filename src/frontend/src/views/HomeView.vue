@@ -133,6 +133,9 @@ export default {
 
     // get data from new db
     await this.dataDeposit.fetchAndStoreNewDbData()
+
+    // get data from old db
+    await this.dataDeposit.fetchAndStoreOldDbData()
   }
 }
 </script>
