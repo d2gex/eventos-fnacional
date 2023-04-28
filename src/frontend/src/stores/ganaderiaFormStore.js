@@ -3,7 +3,7 @@ import {CommonUtils} from "@/assets/common";
 
 const ganaderiaRowFields = {
     nombre_ganaderia: '',
-    provincia_id: ''
+    provincia_id: CommonUtils.selectedProvincia
 }
 
 export const useGanaderiaStore = defineStore('ganaderiaStore', {
