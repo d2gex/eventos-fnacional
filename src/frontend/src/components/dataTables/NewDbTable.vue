@@ -15,7 +15,7 @@
                tableStyle="min-width: 60rem">
       <template #header>
         <div class="flex justify-content-start">
-          <Button label="Copiar Fila" icon="pi pi-copy" severity="success" @click="copyRow"
+          <Button label="Copiar Fila" icon="pi pi-copy" severity="success"
                   :disabled="!Object.keys(selectedRow).length"/>
         </div>
         <div class="flex justify-content-end">
