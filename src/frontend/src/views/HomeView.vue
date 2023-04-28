@@ -65,9 +65,9 @@ import GanaderiaForm from '@/components/GanaderiaForm.vue'
 import FestejosForm from "@/components/FestejosForm.vue";
 import TabView from 'primevue/tabview';
 import TabPanel from 'primevue/tabpanel';
-import OldDbTable from "@/components/OldDbTable.vue";
-import NewDbTable from "@/components/NewDbTable.vue";
-import GanaderiasTable from "@/components/GanaderiasTable.vue";
+import OldDbTable from "@/components/dataTables/OldDbTable.vue";
+import NewDbTable from "@/components/dataTables/NewDbTable.vue";
+import GanaderiasTable from "@/components/dataTables/GanaderiasTable.vue";
 import {usedataDepositStore} from "@/stores/dataDepositStore";
 
 export default {
