@@ -103,3 +103,8 @@ class DbToDataTable:
 class GanaderiasToDataTable(DbToDataTable):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+
+class TorerosToDataTable(DbToDataTable):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)

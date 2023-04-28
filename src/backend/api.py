@@ -44,8 +44,9 @@ def get_ganaderias():
 
 @api.route("/get_toreros", methods=["GET"])
 def get_toreros():
-    db_data = api_db.ApiDB.get_toreros()
-    return jsonify(db_data)
+    db_data, keys = api_db.ApiDB.get_toreros()
+    to_datable = db_to_datatable.TorerosToDataTable(keys, db_data)
+    return jsonify(to_datable())
 
 
 @api.route("/get_old_db_all_records", methods=["GET"])

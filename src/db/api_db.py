@@ -15,13 +15,26 @@ class ApiDB:
         return data
 
     @classmethod
-    def get_toreros(cls) -> List[Dict]:
-        with utils_db.session_scope() as dbs:
-            db_data = dbs.query(
-                models.ModelTorero.nombre_profesional, models.ModelTorero.id
-            ).all()
-            data = [{"nombre_profesional": row[0], "id": row[1]} for row in db_data]
-        return data
+    def get_toreros(cls) -> Tuple[List[Tuple], List[str]]:
+        m = models
+        columns = [
+            m.ModelTorero.id,
+            m.ModelTorero.nombre_profesional,
+            m.ModelTorero.tipo_torero_id,
+            m.ModelTipoTorero.tipo_torero,
+        ]
+        column_names = [c.key for c in columns]
+        with utils_db.session_scope() as db_session:
+            db_data = (
+                db_session.query(*columns)
+                .join(
+                    m.ModelTorero,
+                    m.ModelTipoTorero.id == m.ModelTorero.tipo_torero_id,
+                )
+                .order_by(m.ModelTorero.id.desc())
+                .all()
+            )
+        return db_data, column_names
 
     @classmethod
     def get_all_festejos(cls):
