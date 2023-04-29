@@ -2,10 +2,10 @@
   <div class="row ">
     <div class="col-md-12" v-for="(_, row) in numRows" :key="row">
       <div class="card mt-2 mx-auto p-2 bg-light">
+        <h4 class="text-center">Torero y Premios {{ row + 1 }}</h4>
         <div class="card-body bg-light">
           <div class="container">
             <div class="controls">
-              <h3 class="text-center">Torero y Premios {{ row  + 1}}</h3>
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
