@@ -1,6 +1,5 @@
 <template>
   <fieldset class="form-group border p-3">
-    <legend class="w-auto px-2">Ganaderias</legend>
     <Form
         :initial-values="ganaderiaStore.initialData"
         :validation-schema="schema"
@@ -23,7 +22,8 @@
                                    :name="`ganaderiaRow[${row}].id`"
                                    v-model="ganaderiaStore.rows[row].id"/>
 
-                            <label :for="`ganaderiaRow[${row}].nombre_ganaderia` + '_id'">Nombre <span class="field_required">*</span></label>
+                            <label :for="`ganaderiaRow[${row}].nombre_ganaderia` + '_id'">Nombre <span
+                                class="field_required">*</span></label>
                             <Field :id="`ganaderiaRow[${row}].nombre_ganaderia` + '_id'" type="text"
                                    :name="`ganaderiaRow[${row}].nombre_ganaderia`"
                                    v-model="ganaderiaStore.rows[row].nombre_ganaderia"
@@ -37,12 +37,13 @@
                         </div>
                         <div class="col-md-6">
                           <div class="form-group">
-                            <label :for="`ganaderiaRow[${row}].provincia_id` + '_id'">Provincia <span class="field_required">*</span></label>
+                            <label :for="`ganaderiaRow[${row}].provincia_id` + '_id'">Provincia <span
+                                class="field_required">*</span></label>
                             <Field :id="`ganaderiaRow[${row}].provincia_id` + '_id'"
                                    :name="`ganaderiaRow[${row}].provincia_id`"
                                    v-model="ganaderiaStore.rows[row].provincia_id"
                                    as="select"
-                                    class="form-select">
+                                   class="form-select">
                               <option v-for="option in dataDeposit.provincias" :key="option.id" :value="option.id">
                                 {{ option.provincia }}
                               </option>

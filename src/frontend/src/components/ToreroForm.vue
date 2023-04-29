@@ -1,6 +1,5 @@
 <template>
   <fieldset class="form-group border p-3">
-    <legend class="w-auto px-2">Toreros</legend>
     <Form
         :initial-values="toreroStore.initialData"
         :validation-schema="schema"
@@ -13,72 +12,75 @@
               <div class="card mt-2 mx-auto p-2 bg-light">
                 <div class="card-body bg-light">
                   <div class="container">
-                      <div class="controls">
-                        <h3 class="text-center">Torero {{ row + 1 }}</h3>
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="form-group">
-                              <Field type="hidden"
-                                     :id="`toreroRow[${row}].id` + '_id'"
-                                     :name="`toreroRow[${row}].id`"
-                                     v-model="toreroStore.rows[row].id"/>
+                    <div class="controls">
+                      <h3 class="text-center">Torero {{ row + 1 }}</h3>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <Field type="hidden"
+                                   :id="`toreroRow[${row}].id` + '_id'"
+                                   :name="`toreroRow[${row}].id`"
+                                   v-model="toreroStore.rows[row].id"/>
 
-                              <label :for="`toreroRow[${row}].nombre` + '_id'">Nombre <span class="field_required">*</span></label>
-                              <Field :id="`toreroRow[${row}].nombre` + '_id'" type="text"
-                                     :name="`toreroRow[${row}].nombre`"
-                                     v-model="toreroStore.rows[row].nombre"
-                                     class="form-control"
-                                     placeholder="Entra el nombre *"/>
-                              <div class="field-error">
-                                <ErrorMessage as="div" :name="`toreroRow[${row}].nombre`"/>
-                              </div>
+                            <label :for="`toreroRow[${row}].nombre` + '_id'">Nombre <span
+                                class="field_required">*</span></label>
+                            <Field :id="`toreroRow[${row}].nombre` + '_id'" type="text"
+                                   :name="`toreroRow[${row}].nombre`"
+                                   v-model="toreroStore.rows[row].nombre"
+                                   class="form-control"
+                                   placeholder="Entra el nombre *"/>
+                            <div class="field-error">
+                              <ErrorMessage as="div" :name="`toreroRow[${row}].nombre`"/>
+                            </div>
 
-                            </div>
-                          </div>
-                          <div class="col-md-6">
-                            <div class="form-group">
-                              <label :for="`toreroRow[${row}].apellidos` + '_id'">Apellidos <span class="field_required">*</span></label>
-                              <Field :id="`toreroRow[${row}].apellidos` + '_id'" type="text"
-                                     :name="`toreroRow[${row}].apellidos`"
-                                     v-model="toreroStore.rows[row].apellidos"
-                                     class="form-control"
-                                     placeholder="Entra los apellidos *"/>
-                              <div class="field-error">
-                                <ErrorMessage :name="`toreroRow[${row}].apellidos`"/>
-                              </div>
-                            </div>
                           </div>
                         </div>
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="form-group">
-                              <label :for="`toreroRow[${row}].apodo` + '_id'">Apodo </label>
-                              <Field :id="`toreroRow[${row}].apodo` + '_id'" type="text"
-                                     :name="`toreroRow[${row}].apodo`"
-                                     v-model="toreroStore.rows[row].apodo"
-                                     class="form-control"
-                                     placeholder="Entra el apodo"/>
-                              <div class="field-error">
-                                <ErrorMessage :name="`toreroRow[${row}].apodo`"/>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-6">
-                            <div class="form-group">
-                              <label :for="`toreroRow[${row}].tipo_torero_id` + '_id'">Tipo de Torero <span class="field_required">*</span></label>
-                              <Field :id="`toreroRow[${row}].tipo_torero_id` + '_id'"
-                                     :name="`toreroRow[${row}].tipo_torero_id`"
-                                     v-model="toreroStore.rows[row].tipo_torero_id"
-                                     as="select"
-                                      class="form-select">
-                                <option v-for="option in dataDeposit.tipoToreros" :key="option.id" :value="option.id">
-                                  {{ option.tipo_torero }}
-                                </option>
-                              </Field>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label :for="`toreroRow[${row}].apellidos` + '_id'">Apellidos <span
+                                class="field_required">*</span></label>
+                            <Field :id="`toreroRow[${row}].apellidos` + '_id'" type="text"
+                                   :name="`toreroRow[${row}].apellidos`"
+                                   v-model="toreroStore.rows[row].apellidos"
+                                   class="form-control"
+                                   placeholder="Entra los apellidos *"/>
+                            <div class="field-error">
+                              <ErrorMessage :name="`toreroRow[${row}].apellidos`"/>
                             </div>
                           </div>
                         </div>
                       </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label :for="`toreroRow[${row}].apodo` + '_id'">Apodo </label>
+                            <Field :id="`toreroRow[${row}].apodo` + '_id'" type="text"
+                                   :name="`toreroRow[${row}].apodo`"
+                                   v-model="toreroStore.rows[row].apodo"
+                                   class="form-control"
+                                   placeholder="Entra el apodo"/>
+                            <div class="field-error">
+                              <ErrorMessage :name="`toreroRow[${row}].apodo`"/>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label :for="`toreroRow[${row}].tipo_torero_id` + '_id'">Tipo de Torero <span
+                                class="field_required">*</span></label>
+                            <Field :id="`toreroRow[${row}].tipo_torero_id` + '_id'"
+                                   :name="`toreroRow[${row}].tipo_torero_id`"
+                                   v-model="toreroStore.rows[row].tipo_torero_id"
+                                   as="select"
+                                   class="form-select">
+                              <option v-for="option in dataDeposit.tipoToreros" :key="option.id" :value="option.id">
+                                {{ option.tipo_torero }}
+                              </option>
+                            </Field>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

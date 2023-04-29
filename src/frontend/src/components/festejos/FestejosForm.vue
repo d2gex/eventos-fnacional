@@ -1,44 +1,41 @@
 <template>
-  <fieldset class="form-group border p-3">
-    <legend class="w-auto px-2">Festejos</legend>
-    <Form
-        @submit="onSubmit"
-        :initial-values="initialData"
-        :validation-schema="schema"
-    >
-      <div class="row ">
-        <div class="col-md-6">
-          <div class="row">
-            <FestejoDetalles nombre-festejo="festejos.nombre_festejo"
-                             celebracion="festejos.fecha"
-                             poblacion="festejos.poblacion_id"
-                             provincia="festejos.provincia_id"
-                             tipo-festejo="festejos.tipo_festejo_id"
-                             :selected-festejo="selectedFestejo"
-                             :tipo-festejos="tipoFestejos"
-                             :selected-poblacion="selectedPoblacion"
-                             :poblaciones="poblaciones"
-            />
-          </div>
-          <div class="row">
-            <FestejoGanaderias :items="dataDeposit.ganaderiaItems" :selected="selectedGanaderia"/>
-          </div>
+  <Form
+      @submit="onSubmit"
+      :initial-values="initialData"
+      :validation-schema="schema"
+  >
+    <div class="row ">
+      <div class="col-md-6">
+        <div class="row">
+          <FestejoDetalles nombre-festejo="festejos.nombre_festejo"
+                           celebracion="festejos.fecha"
+                           poblacion="festejos.poblacion_id"
+                           provincia="festejos.provincia_id"
+                           tipo-festejo="festejos.tipo_festejo_id"
+                           :selected-festejo="selectedFestejo"
+                           :tipo-festejos="tipoFestejos"
+                           :selected-poblacion="selectedPoblacion"
+                           :poblaciones="poblaciones"
+          />
+        </div>
+        <div class="row">
+          <FestejoGanaderias :items="dataDeposit.ganaderiaItems" :selected="selectedGanaderia"/>
+        </div>
 
-        </div>
-        <div class="col-md-6">
-          <FestejoToreros :torerosData="dataDeposit.toreroItems"
-                          :selected-torero="selectedTipoTorero"
-                          :torero-premios-data="toreroPremiosData"
-                          :selected-torero-premio="selectedToreroPremio"/>
-        </div>
       </div>
-      <div class="row ">
-        <div class="col-lg-8 mx-auto my-3  text-center">
-          <button type="submit" class="btn btn-primary">Guardar Festejo</button>
-        </div>
+      <div class="col-md-6">
+        <FestejoToreros :torerosData="dataDeposit.toreroItems"
+                        :selected-torero="selectedTipoTorero"
+                        :torero-premios-data="toreroPremiosData"
+                        :selected-torero-premio="selectedToreroPremio"/>
       </div>
-    </Form>
-  </fieldset>
+    </div>
+    <div class="row ">
+      <div class="col-lg-8 mx-auto my-3  text-center">
+        <button type="submit" class="btn btn-primary">Guardar Festejo</button>
+      </div>
+    </div>
+  </Form>
 </template>
 
 <script>
