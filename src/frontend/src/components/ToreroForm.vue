@@ -70,7 +70,7 @@
                                      :name="`toreroRow[${row}].tipo_torero_id`"
                                      v-model="toreroStore.rows[row].tipo_torero_id"
                                      as="select"
-                                     class="form-control">
+                                      class="form-select">
                                 <option v-for="option in dataDeposit.tipoToreros" :key="option.id" :value="option.id">
                                   {{ option.tipo_torero }}
                                 </option>

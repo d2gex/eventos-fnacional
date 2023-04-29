@@ -17,8 +17,11 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="poblacion">Población *</label>
-                <Field :id="poblacion + '_id'" :name='poblacion'
-                       v-model="selectBox.selectedPoblacion" as="select" class="form-control">
+                <Field :id="poblacion + '_id'"
+                       :name='poblacion'
+                       v-model="selectBox.selectedPoblacion"
+                       as="select"
+                        class="form-select">
                   <option v-for="option in selectBox.poblaciones" :key="option.id" :value="option.id">
                     {{ option.ciudad }}
                   </option>
@@ -30,8 +33,11 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="provincia">Provincia *</label>
-                <Field :id="provincia + '_id'" :name='provincia'
-                       v-model="selectedProvincia" as="select" class="form-control">
+                <Field :id="provincia + '_id'"
+                       :name='provincia'
+                       v-model="selectedProvincia"
+                       as="select"
+                       class="form-select">
                   <option v-for="option in dataDeposit.provincias" :key="option.id" :value="option.id">
                     {{ option.provincia }}
                   </option>
@@ -41,8 +47,11 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label :for="tipoFestejo">Tipo de Festejo *</label>
-                <Field :id="tipoFestejo + '_id'" :name="tipoFestejo"
-                       v-model="selectBox.selectedFestejo" as="select" class="form-control">
+                <Field :id="tipoFestejo + '_id'"
+                       :name="tipoFestejo"
+                       v-model="selectBox.selectedFestejo"
+                       as="select"
+                        class="form-select">
                   <option v-for="option in selectBox.tipoFestejos" :key="option.id" :value="option.id">
                     {{ option.tipo_festejo }}
                   </option>

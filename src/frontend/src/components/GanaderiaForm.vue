@@ -42,7 +42,7 @@
                                    :name="`ganaderiaRow[${row}].provincia_id`"
                                    v-model="ganaderiaStore.rows[row].provincia_id"
                                    as="select"
-                                   class="form-control">
+                                    class="form-select">
                               <option v-for="option in dataDeposit.provincias" :key="option.id" :value="option.id">
                                 {{ option.provincia }}
                               </option>

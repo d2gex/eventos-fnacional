@@ -3,8 +3,11 @@
     <div class="col-md-4" v-for="(_, row) in numRows" :key="toreroNumRow.toString() + '_' + row">
       <div class="form-group">
         <label :for="`${fieldName}[${row}]_id`">Premio</label>
-        <Field :id="`${fieldName}[${row}]_id`" :name="`${fieldName}[${row}]`"
-               v-model="tipoPremioSelected[row]" as="select" class="form-control">
+        <Field :id="`${fieldName}[${row}]_id`"
+               :name="`${fieldName}[${row}]`"
+               v-model="tipoPremioSelected[row]"
+               as="select"
+               class="form-select">
           <option v-for="option in tipoPremios" :key="option.id" :value="option.id">
             {{ option.tipo_premio }}
           </option>
