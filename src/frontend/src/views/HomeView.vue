@@ -152,25 +152,28 @@ export default {
 }
 </script>
 <style>
+.p-tabview .p-tabview-panels {
+  border: 2px #3B82F6 solid;
+
+}
+.p-tabview .p-tabview-nav {
+  background-color: #999999;
+  padding-top: 3px;
+  border: None;
+}
 .p-tabview .p-tabview-nav li.p-tabview-header .p-tabview-nav-link {
   border-top-left-radius: 30%;
   border-top-right-radius: 30%;
   border-bottom: None;
   border-color: #6c757d;
-  border-width: 2px;
-}
-.p-tabview-panels {
-  border: 2px #3B82F6 solid;
-
+  border-width: 3px;
 }
 .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
   border-top-left-radius: 30%;
   border-top-right-radius: 30%;
   border-color: #3B82F6;
-  border-width: 2px;
+  border-width: 3px;
 }
-.p-tabview-nav {
-  padding-top: 3px;
-}
+
 </style>
 
