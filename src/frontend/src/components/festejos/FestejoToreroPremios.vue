@@ -14,7 +14,7 @@
   </div>
   <div class="row">
     <div class="col-md-12">
-      <div class="form-group">
+      <div class="form-group mt-4">
         <button type="button"
                 @click="addPremioRow()"
                 class="btn btn-success">+

@@ -97,7 +97,7 @@
                 Borrar -
               </button>
               <button @click="handleSubmit((values) => {onSubmit(values, push, remove, fields)})"
-                      class="btn btn-secondary">Guardar
+                      class="btn btn-primary">Guardar
               </button>
             </div>
           </div>
