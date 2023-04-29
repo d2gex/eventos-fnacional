@@ -18,27 +18,29 @@
                       <div class="row">
                         <div class="col-md-12">
                           <div class="form-group">
+                            <Field type="hidden"
+                                   :id="`ganaderiaRow[${row}].id` + '_id'"
+                                   :name="`ganaderiaRow[${row}].id`"
+                                   v-model="ganaderiaStore.rows[row].id"/>
+
                             <label :for="`ganaderiaRow[${row}].nombre_ganaderia` + '_id'">Nombre *</label>
                             <Field :id="`ganaderiaRow[${row}].nombre_ganaderia` + '_id'" type="text"
                                    :name="`ganaderiaRow[${row}].nombre_ganaderia`"
-                                   v-model="ganaderiaStore.rows[row]['nombre_ganaderia']"
+                                   v-model="ganaderiaStore.rows[row].nombre_ganaderia"
                                    class="form-control"
                                    placeholder="Entra el nombre *"/>
                             <div class="field-error">
                               <ErrorMessage as="div" :name="`ganaderiaRow[${row}].nombre_ganaderia`"/>
                             </div>
                           </div>
-                          <Field type="hidden"
-                                 :id="`ganaderiaRow[${row}].id` + '_id'"
-                                 :name="`ganaderiaRow[${row}].id`"
-                                 v-model="ganaderiaStore.rows[row]['id']"/>
+
                         </div>
                         <div class="col-md-6">
                           <div class="form-group">
                             <label :for="`ganaderiaRow[${row}].provincia_id` + '_id'">Provincia *</label>
                             <Field :id="`ganaderiaRow[${row}].provincia_id` + '_id'"
                                    :name="`ganaderiaRow[${row}].provincia_id`"
-                                   v-model="ganaderiaStore.rows[row]['provincia_id']"
+                                   v-model="ganaderiaStore.rows[row].provincia_id"
                                    as="select"
                                    class="form-control">
                               <option v-for="option in dataDeposit.provincias" :key="option.id" :value="option.id">

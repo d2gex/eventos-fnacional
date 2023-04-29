@@ -14,7 +14,7 @@ export const useToreroStore = defineStore('toreroStore', {
     state: () => ({
         rows: new Array(CommonUtils.maxNumInstances).fill(0).map(() => ({...toreroRowFields})),
         initialData: {
-            ganaderiaRow: [{...toreroRowFields}]
+            toreroRow: [{...toreroRowFields}]
         }
     }),
     actions: {
