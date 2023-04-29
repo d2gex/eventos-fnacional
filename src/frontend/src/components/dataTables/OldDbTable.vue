@@ -50,7 +50,6 @@
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Toast from "primevue/toast";
-import Button from "primevue/button";
 import {FilterMatchMode} from "primevue/api";
 import {useToast} from 'primevue/usetoast';
 import InputText from "primevue/inputtext";
@@ -63,7 +62,6 @@ export default {
     DataTable,
     Column,
     Toast,
-    Button,
     InputText
   },
   data() {
