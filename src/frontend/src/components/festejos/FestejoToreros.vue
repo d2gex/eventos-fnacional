@@ -9,7 +9,7 @@
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label :for="`toreroName_${row}`">Torero *</label>
+                    <label :for="`toreroName_${row}`">Torero <span class="field_required">*</span></label>
                     <SearchDropdownBox
                         :selectedItem="selectedTorero"
                         :items="torerosData"

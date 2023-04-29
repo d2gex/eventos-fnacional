@@ -23,7 +23,7 @@
                                    :name="`ganaderiaRow[${row}].id`"
                                    v-model="ganaderiaStore.rows[row].id"/>
 
-                            <label :for="`ganaderiaRow[${row}].nombre_ganaderia` + '_id'">Nombre *</label>
+                            <label :for="`ganaderiaRow[${row}].nombre_ganaderia` + '_id'">Nombre <span class="field_required">*</span></label>
                             <Field :id="`ganaderiaRow[${row}].nombre_ganaderia` + '_id'" type="text"
                                    :name="`ganaderiaRow[${row}].nombre_ganaderia`"
                                    v-model="ganaderiaStore.rows[row].nombre_ganaderia"
@@ -37,7 +37,7 @@
                         </div>
                         <div class="col-md-6">
                           <div class="form-group">
-                            <label :for="`ganaderiaRow[${row}].provincia_id` + '_id'">Provincia *</label>
+                            <label :for="`ganaderiaRow[${row}].provincia_id` + '_id'">Provincia <span class="field_required">*</span></label>
                             <Field :id="`ganaderiaRow[${row}].provincia_id` + '_id'"
                                    :name="`ganaderiaRow[${row}].provincia_id`"
                                    v-model="ganaderiaStore.rows[row].provincia_id"

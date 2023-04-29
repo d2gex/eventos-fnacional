@@ -1,9 +1,14 @@
 .field-error {
-  width: 100%;
-  margin-top: 0.25rem;
-  font-size: 0.875em;
-  color: #dc3545;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 0.875em;
+    color: #dc3545;
 }
+
 body {
-  background-color: #999999;
+    background-color: #999999;
+}
+
+.field_required {
+    color: #dc3545;
 }

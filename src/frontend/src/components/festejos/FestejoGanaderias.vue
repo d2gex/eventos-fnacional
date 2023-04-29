@@ -6,7 +6,7 @@
         <div class="row">
           <div class="col-md-12" v-for="(_, row) in numRows" :key="row">
             <div class="form-group">
-              <label :for="`ganaderiaName_${row}`">Ganaderia *</label>
+              <label :for="`ganaderiaName_${row}`">Ganaderia <span class="field_required">*</span></label>
               <SearchDropdownBox
                   :selectedItem="selected"
                   :items="ganaderiasData"

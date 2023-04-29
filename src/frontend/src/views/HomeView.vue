@@ -156,11 +156,13 @@ export default {
   border: 2px #3B82F6 solid;
 
 }
+
 .p-tabview .p-tabview-nav {
   background-color: #999999;
   padding-top: 3px;
   border: None;
 }
+
 .p-tabview .p-tabview-nav li.p-tabview-header .p-tabview-nav-link {
   border-top-left-radius: 30%;
   border-top-right-radius: 30%;
@@ -168,6 +170,7 @@ export default {
   border-color: #6c757d;
   border-width: 3px;
 }
+
 .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
   border-top-left-radius: 30%;
   border-top-right-radius: 30%;

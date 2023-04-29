@@ -23,7 +23,7 @@
                                      :name="`toreroRow[${row}].id`"
                                      v-model="toreroStore.rows[row].id"/>
 
-                              <label :for="`toreroRow[${row}].nombre` + '_id'">Nombre *</label>
+                              <label :for="`toreroRow[${row}].nombre` + '_id'">Nombre <span class="field_required">*</span></label>
                               <Field :id="`toreroRow[${row}].nombre` + '_id'" type="text"
                                      :name="`toreroRow[${row}].nombre`"
                                      v-model="toreroStore.rows[row].nombre"
@@ -37,7 +37,7 @@
                           </div>
                           <div class="col-md-6">
                             <div class="form-group">
-                              <label :for="`toreroRow[${row}].apellidos` + '_id'">Apellidos *</label>
+                              <label :for="`toreroRow[${row}].apellidos` + '_id'">Apellidos <span class="field_required">*</span></label>
                               <Field :id="`toreroRow[${row}].apellidos` + '_id'" type="text"
                                      :name="`toreroRow[${row}].apellidos`"
                                      v-model="toreroStore.rows[row].apellidos"
@@ -65,7 +65,7 @@
                           </div>
                           <div class="col-md-6">
                             <div class="form-group">
-                              <label :for="`toreroRow[${row}].tipo_torero_id` + '_id'">Tipo de Torero *</label>
+                              <label :for="`toreroRow[${row}].tipo_torero_id` + '_id'">Tipo de Torero <span class="field_required">*</span></label>
                               <Field :id="`toreroRow[${row}].tipo_torero_id` + '_id'"
                                      :name="`toreroRow[${row}].tipo_torero_id`"
                                      v-model="toreroStore.rows[row].tipo_torero_id"

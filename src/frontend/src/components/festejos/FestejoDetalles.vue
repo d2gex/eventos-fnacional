@@ -9,14 +9,14 @@
             <div class="col-md-6">
               <div class="form-group">
 
-                <label for="nombreFestejo">Nombre *</label>
+                <label for="nombreFestejo">Nombre <span class="field_required">*</span></label>
                 <InputForm type="text" :id="nombreFestejo + '_id'" :name='nombreFestejo'
                            placeholder="Entra el festejo *"/>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="poblacion">Población *</label>
+                <label for="poblacion">Población <span class="field_required">*</span></label>
                 <Field :id="poblacion + '_id'"
                        :name='poblacion'
                        v-model="selectBox.selectedPoblacion"
@@ -32,7 +32,7 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label for="provincia">Provincia *</label>
+                <label for="provincia">Provincia <span class="field_required">*</span></label>
                 <Field :id="provincia + '_id'"
                        :name='provincia'
                        v-model="selectedProvincia"
@@ -46,7 +46,7 @@
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label :for="tipoFestejo">Tipo de Festejo *</label>
+                <label :for="tipoFestejo">Tipo de Festejo <span class="field_required">*</span></label>
                 <Field :id="tipoFestejo + '_id'"
                        :name="tipoFestejo"
                        v-model="selectBox.selectedFestejo"
@@ -62,7 +62,7 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label :for="celebracion + '_id'">Fecha del Festejo *</label>
+                <label :for="celebracion + '_id'">Fecha del Festejo <span class="field_required">*</span></label>
                 <VueDatePicker
                     :id="celebracion + '_id'"
                     model-type="dd/MM/yyyy"
