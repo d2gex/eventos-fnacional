@@ -6,7 +6,7 @@
         :initial-values="initialData"
         :validation-schema="schema"
     >
-      <div class="row border border-primary">
+      <div class="row ">
         <div class="col-md-6">
           <div class="row">
             <FestejoDetalles nombre-festejo="festejos.nombre_festejo"
@@ -33,7 +33,7 @@
         </div>
       </div>
       <div class="row ">
-        <div class="col-lg-8 mx-auto my-3 border border-danger text-center">
+        <div class="col-lg-8 mx-auto my-3  text-center">
           <button type="submit" class="btn btn-primary">Guardar Festejo</button>
         </div>
       </div>

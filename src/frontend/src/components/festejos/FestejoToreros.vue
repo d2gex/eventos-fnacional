@@ -1,5 +1,5 @@
 <template>
-  <div class="row border border-primary">
+  <div class="row ">
     <div class="col-md-12" v-for="(_, row) in numRows" :key="row">
       <div class="card mt-2 mx-auto p-2 bg-light">
         <div class="card-body bg-light">
@@ -34,7 +34,7 @@
     <!-- /.row-->
   </div>
   <div class="row ">
-    <div class="col-lg-8 mx-auto my-3 border border-danger text-center">
+    <div class="col-lg-8 mx-auto my-3  text-center">
       <button type="button"
               @click="addToreroPremioRow"
               class="btn btn-success">Añadir Torero +

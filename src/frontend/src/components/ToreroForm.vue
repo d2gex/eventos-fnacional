@@ -8,7 +8,7 @@
     >
       <form @submit.prevent>
         <FieldArray name="toreroRow" v-slot="{ fields, push, remove }">
-          <div class="row border border-primary">
+          <div class="row ">
             <div class="col-lg-6 float-left" v-for="(field, row) in fields" :key="field.key">
               <div class="card mt-2 mx-auto p-2 bg-light">
                 <div class="card-body bg-light">
@@ -87,7 +87,7 @@
             <!-- /.row-->
           </div>
           <div class="row ">
-            <div class="col-lg-12 mx-auto my-3 border border-danger text-center">
+            <div class="col-lg-12 mx-auto my-3  text-center">
               <button type="button"
                       @click="addToreroRow(push, fields)"
                       class="btn btn-success">Añadir +
