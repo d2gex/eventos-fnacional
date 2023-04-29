@@ -70,9 +70,9 @@ export default {
   },
   methods: {
     async copyRow() {
-      this.ganaderiaStore.rows[0]['nombre_ganaderia'] = this.selectedRow.nombre_ganaderia
-      this.ganaderiaStore.rows[0]['provincia_id'] = this.selectedRow.provincia_id
-      this.ganaderiaStore.rows[0]['id'] = this.selectedRow.id
+      this.ganaderiaStore.rows[0].id = this.selectedRow.id
+      this.ganaderiaStore.rows[0].nombre_ganaderia = this.selectedRow.nombre_ganaderia
+      this.ganaderiaStore.rows[0].provincia_id = this.selectedRow.provincia_id
       await this.$vueAlert.alert("La ganadería '" + this.selectedRow.nombre_ganaderia + "' ha sido copiada", 'success')
     }
   }

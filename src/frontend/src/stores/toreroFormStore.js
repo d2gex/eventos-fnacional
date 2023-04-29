@@ -3,10 +3,10 @@ import {CommonUtils} from "@/assets/common";
 
 export const toreroRowFields = {
     id: null,
-    nombre_profesional: '',
     nombre: '',
     apellidos: '',
     apodo: '',
+    nombre_profesional: '',
     tipo_torero_id: CommonUtils.selectedTipoTorero
 }
 

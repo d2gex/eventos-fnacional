@@ -121,11 +121,15 @@ class ApiDB:
     def save_torero_details(cls, data: Dict) -> Optional[Dict]:
         try:
             for torero_details in data["toreroRow"]:
-                torero_details[
-                    "nombre_profesional"
-                ] = f"{torero_details['nombre']} {torero_details['apellidos']} {torero_details['apodo']}".strip()
                 with utils_db.session_scope() as s_db:
-                    s_db.add(models.ModelTorero(**torero_details))
+                    torero_details[
+                        "nombre_profesional"
+                    ] = f"{torero_details['nombre']} {torero_details['apellidos']} {torero_details['apodo']}".strip()
+                    if torero_details["id"] is None:  # insert
+                        del torero_details["id"]
+                        s_db.add(models.ModelTorero(**torero_details))
+                    else:  # update
+                        s_db.merge(models.ModelTorero(**torero_details))
         except IntegrityError:
             result = torero_details
         else:

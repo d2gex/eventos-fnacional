@@ -73,9 +73,12 @@ export default {
   },
   methods: {
     async copyRow() {
-      this.toreroStore.rows[0]['nombre_profesional'] = this.selectedRow.nombre_profesional
-      this.toreroStore.rows[0]['tipo_torero_id'] = this.selectedRow.tipo_torero_id
-      this.toreroStore.rows[0]['id'] = this.selectedRow.id
+      this.toreroStore.rows[0].id = this.selectedRow.id
+      this.toreroStore.rows[0].nombre = this.selectedRow.nombre
+      this.toreroStore.rows[0].apellidos = this.selectedRow.apellidos
+      this.toreroStore.rows[0].apodo = this.selectedRow.apodo
+      this.toreroStore.rows[0].nombre_profesional = this.selectedRow.nombre_profesional
+      this.toreroStore.rows[0].tipo_torero_id = this.selectedRow.tipo_torero_id
       await this.$vueAlert.alert("El torero '" + this.selectedRow.nombre_profesional + "' ha sido copiado", 'success')
     }
   }
