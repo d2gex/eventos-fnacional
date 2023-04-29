@@ -39,8 +39,8 @@ export default {
       type: Array,
       required: true
     },
-    selectedItem: {
-      type: Number,
+    inputValue: {
+      type: Object,
       required: true
     },
     placeHolder: {
@@ -67,7 +67,7 @@ export default {
   methods: {
     updateItems(newItems) {
       this.dataItems = newItems
-      this.value = this.dataItems[this.selectedItem]
+      this.value = this.inputValue
     }
   },
   watch: {

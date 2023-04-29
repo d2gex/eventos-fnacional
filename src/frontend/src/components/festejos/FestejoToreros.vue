@@ -11,8 +11,8 @@
                   <div class="form-group">
                     <label :for="`toreroName_${row}`">Torero <span class="field_required">*</span></label>
                     <SearchDropdownBox
-                        :selectedItem="selectedTorero"
-                        :items="torerosData"
+                        :items="dataDeposit.toreroItems"
+                        :input-value="festejoStore.toreros.rows[row].torero"
                         :field-name="`toreroRow[${row}].toreroName`"
                         place-holder="Selecciona un torero"
                         option-label="nombre_profesional"/>
@@ -49,18 +49,13 @@
 <script>
 import SearchDropdownBox from "@/components/SearchDropdownBox.vue";
 import PremiosTorero from "@/components/festejos/FestejoToreroPremios.vue";
+import {CommonUtils} from "@/assets/common";
+import {useFestejoStore} from "@/stores/festejoStore";
+import {usedataDepositStore} from "@/stores/dataDepositStore";
 
 export default {
   name: "FestejoToreros",
   props: {
-    selectedTorero: {
-      type: Number,
-      required: true
-    },
-    torerosData: {
-      type: Array,
-      required: true
-    },
     selectedToreroPremio: {
       type: Number,
       required: true
@@ -75,26 +70,19 @@ export default {
     PremiosTorero,
   },
   data() {
-    const maxRows = 6;
+    const dataDeposit = usedataDepositStore()
+    const festejoStore = useFestejoStore()
     const numRows = 1;
-    const toreroRowFields = {
-      toreroName: '',
-      toreroPremios: Array
-    };
-    const initialData = {
-      toreroRow: [toreroRowFields]
-    };
     return {
-      maxRows,
+      dataDeposit,
+      festejoStore,
       numRows,
-      toreroRowFields,
-      initialData
     }
   },
   methods:
       {
         addToreroPremioRow() {
-          if (this.numRows < this.maxRows) {
+          if (this.numRows < CommonUtils.maxNumInstances) {
             this.numRows++
           }
         },
