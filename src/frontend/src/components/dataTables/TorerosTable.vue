@@ -12,11 +12,13 @@
                tableStyle="min-width: 60rem">
       <template #header>
         <div class="flex justify-content-start">
-          <Button label="Copiar Fila" icon="pi pi-copy" severity="success" @click="copyRow"
-                  :disabled="!Object.keys(selectedRow).length"/>
-        </div>
-        <div class="flex justify-content-end">
-            <span class="p-input-icon-right">
+          <Button label="Copiar Fila"
+                  icon="pi pi-copy"
+                  severity="success"
+                  :disabled="!Object.keys(selectedRow).length"
+                  @click="copyRow"
+                  class="mr-5"/>
+          <span class="p-input-icon-right">
                 <i class="pi pi-search"/>
                 <InputText v-model="filters['global'].value" placeholder="Busca la clave"/>
             </span>
