@@ -14,10 +14,6 @@
                @rowCollapse="onRowCollapse"
                tableStyle="min-width: 60rem">
       <template #header>
-          <div class="flex justify-content-start">
-            <Button text icon="pi pi-plus" label="Expand All" @click="expandAll"/>
-            <Button text icon="pi pi-minus" label="Collapse All" @click="collapseAll"/>
-          </div>
           <div class="flex justify-content-end">
             <span class="p-input-icon-right">
                 <i class="pi pi-search"/>
