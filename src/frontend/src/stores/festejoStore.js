@@ -1,6 +1,5 @@
 import {defineStore} from 'pinia'
 import {CommonUtils} from "@/assets/common";
-import {shallowReactive} from "vue";
 
 export const toreroFestejoRowFields = {
     id: null,

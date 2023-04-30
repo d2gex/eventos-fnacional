@@ -77,11 +77,11 @@ export default {
       // Update an instance of this component when fetching the  api data for the first time
       this.updateItems(newItems)
     },
-    'storeData.data': function (newData, oldData) {
+    'storeData.data': function (newData) {
       // Ensure useField's value is up to date with storeDAta.data to avoid validation problems
       this.value = newData
     },
-    'inputObject.data': function (newData, oldData) {
+    'inputObject.data': function (newData) {
       // Ensure that storeData.data is aware of external changes done on inputObject.data
       this.storeData.data = newData
     }
