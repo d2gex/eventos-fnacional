@@ -12,6 +12,7 @@ const CommonUtils = {
     selectedProvincia: 45,
     selectedGanaderia: 0,
     selectedTipoTorero: 1,
+    selectedToreroPremio: 0,
     maxNumInstances: 6,
     capitalizeWords: function (str) {
         return str

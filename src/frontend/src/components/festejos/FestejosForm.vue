@@ -25,9 +25,7 @@
       </div>
       <div class="col-md-6">
         <FestejoToreros
-            :reset-form-flag="resetFormFlag"
-            :torero-premios-data="toreroPremiosData"
-            :selected-torero-premio="selectedToreroPremio"/>
+            :reset-form-flag="resetFormFlag"/>
       </div>
     </div>
     <div class="row ">
@@ -57,14 +55,6 @@ export default {
     tipoFestejos: {
       type: Array,
       require: true
-    },
-    selectedToreroPremio: {
-      type: Number,
-      required: true
-    },
-    toreroPremiosData: {
-      type: Array,
-      required: true
     },
     selectedPoblacion: {
       type: Number,

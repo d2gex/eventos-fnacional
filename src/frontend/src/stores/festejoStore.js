@@ -1,6 +1,7 @@
 import {defineStore} from 'pinia'
 import {CommonUtils} from "@/assets/common";
 
+
 export const toreroFestejoRowFields = {
     id: null,
     data: null,
@@ -14,16 +15,13 @@ export const useFestejoStore = defineStore('festejoStore', {
     state: () => ({
         toreros: {
             rows: new Array(CommonUtils.maxNumInstances).fill(0).map(() => ({...toreroFestejoRowFields})),
-        },
-        ganaderias: {
+        }, ganaderias: {
             rows: new Array(CommonUtils.maxNumInstances).fill(0).map(() => ({...ganaderiaRowFields})),
         }
-    }),
-    actions: {
+    }), actions: {
         resetToreros() {
             this.toreros.rows = new Array(CommonUtils.maxNumInstances).fill(0).map(() => ({...toreroFestejoRowFields}))
-        },
-        resetGanaderias() {
+        }, resetGanaderias() {
             this.ganaderias.rows = new Array(CommonUtils.maxNumInstances).fill(0).map(() => ({...ganaderiaRowFields}))
         }
     }

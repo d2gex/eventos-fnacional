@@ -23,8 +23,6 @@
               <FestejosForm
                   :selected-festejo="selectedFestejo"
                   :tipo-festejos="tipoFestejos"
-                  :selected-torero-premio="selectedToreroPremio"
-                  :torero-premios-data="premioToreroItems"
                   :selected-poblacion="selectedPoblacion"
                   :poblaciones="poblaciones"
               />
@@ -100,8 +98,6 @@ export default {
     const dataDeposit = usedataDepositStore()
     const selectedFestejo = 1;
     const tipoFestejos = [];
-    const selectedToreroPremio = 0;
-    const premioToreroItems = [];
     const selectedPoblacion = 0;
     const poblaciones = [];
     const fetchingData = false
@@ -110,8 +106,6 @@ export default {
       dataDeposit,
       selectedFestejo,
       tipoFestejos,
-      selectedToreroPremio,
-      premioToreroItems,
       selectedPoblacion,
       poblaciones,
       fetchingData
@@ -135,8 +129,7 @@ export default {
     await this.dataDeposit.fetchAndStoreGanaderias()
 
     // Get details for premios
-    response = await CommonUtils.getDataFromTable(CommonUtils.apiServerUrl + '/get_tipo_premios')
-    this.premioToreroItems = response.data
+    await this.dataDeposit.fetchAndStoreTipoPremios()
 
     // Get details for poblaciones
     response = await CommonUtils.getDataFromTable(CommonUtils.apiServerUrl + '/get_poblaciones')

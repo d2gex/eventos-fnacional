@@ -22,7 +22,7 @@
                   <PremiosTorero :torero-num-row="row"
                                  :field-name="`toreroRow[${row}].toreroPremios`"
                                  :selected-torero-premio="selectedToreroPremio"
-                                 :torero-premios-data="toreroPremiosData"/>
+                                 :torero-premios-data="dataDeposit.premioToreroItems.data"/>
                 </div>
               </div>
             </div>
@@ -56,14 +56,6 @@ import {usedataDepositStore} from "@/stores/dataDepositStore";
 export default {
   name: "FestejoToreros",
   props: {
-    selectedToreroPremio: {
-      type: Number,
-      required: true
-    },
-    toreroPremiosData: {
-      type: Array,
-      required: true
-    },
     resetFormFlag: {
       type: Boolean,
     }
@@ -75,10 +67,12 @@ export default {
   data() {
     const dataDeposit = usedataDepositStore()
     const festejoStore = useFestejoStore()
+    const selectedToreroPremio = CommonUtils.selectedToreroPremio
     const numRows = 1;
     return {
       dataDeposit,
       festejoStore,
+      selectedToreroPremio,
       numRows,
     }
   },
