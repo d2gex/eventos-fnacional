@@ -1,7 +1,7 @@
 <template>
 
   <div class="card mt-2 mx-auto p-2 bg-light">
-     <h4 class="text-center">Detalles del Festejo</h4>
+    <h4 class="text-center">Detalles del Festejo</h4>
     <div class="card-body bg-light">
       <div class="container">
         <div class="controls">
@@ -21,7 +21,7 @@
                        :name='poblacion'
                        v-model="selectBox.selectedPoblacion"
                        as="select"
-                        class="form-select">
+                       class="form-select">
                   <option v-for="option in selectBox.poblaciones" :key="option.id" :value="option.id">
                     {{ option.ciudad }}
                   </option>
@@ -51,7 +51,7 @@
                        :name="tipoFestejo"
                        v-model="selectBox.selectedFestejo"
                        as="select"
-                        class="form-select">
+                       class="form-select">
                   <option v-for="option in selectBox.tipoFestejos" :key="option.id" :value="option.id">
                     {{ option.tipo_festejo }}
                   </option>

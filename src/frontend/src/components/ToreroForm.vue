@@ -73,7 +73,8 @@
                                    v-model="toreroStore.rows[row].tipo_torero_id"
                                    as="select"
                                    class="form-select">
-                              <option v-for="option in dataDeposit.tipoToreros.data" :key="option.id" :value="option.id">
+                              <option v-for="option in dataDeposit.tipoToreros.data" :key="option.id"
+                                      :value="option.id">
                                 {{ option.tipo_torero }}
                               </option>
                             </Field>

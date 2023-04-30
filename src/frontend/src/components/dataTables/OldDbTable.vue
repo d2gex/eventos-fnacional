@@ -14,12 +14,12 @@
                @rowCollapse="onRowCollapse"
                tableStyle="min-width: 60rem">
       <template #header>
-          <div class="flex justify-content-end">
+        <div class="flex justify-content-end">
             <span class="p-input-icon-right">
                 <i class="pi pi-search"/>
                 <InputText v-model="filters['global'].value" placeholder="Busca la clave"/>
             </span>
-          </div>
+        </div>
       </template>
       <Column expander style="width: 5rem"/>
       <Column field="id" header="ID"></Column>
@@ -28,19 +28,19 @@
       <Column field="Tipo" sortable header="Tipo"></Column>
       <Column field="Ganaderia" header="Ganaderia"></Column>
       <Column field="Toreros" header="Toreros"></Column>
-            <template #expansion="slotProps">
-              <div class="p-3">
-                <h5>Mas información {{ slotProps.data.Tipo }}</h5>
-                <DataTable :value="[slotProps.data]">
-                  <Column field="Dia Semana" header="Dia Semana"></Column>
-                  <Column field="Notas" header="Notas"></Column>
-                  <Column field="Fotos" header="Fotos"></Column>
-                  <Column field="Cartel" header="Cartel"></Column>
-                  <Column field="Fecha Real" header="Fecha Real"></Column>
-                  <Column field="Fuente" header="Fuente"></Column>
-                </DataTable>
-              </div>
-            </template>
+      <template #expansion="slotProps">
+        <div class="p-3">
+          <h5>Mas información {{ slotProps.data.Tipo }}</h5>
+          <DataTable :value="[slotProps.data]">
+            <Column field="Dia Semana" header="Dia Semana"></Column>
+            <Column field="Notas" header="Notas"></Column>
+            <Column field="Fotos" header="Fotos"></Column>
+            <Column field="Cartel" header="Cartel"></Column>
+            <Column field="Fecha Real" header="Fecha Real"></Column>
+            <Column field="Fuente" header="Fuente"></Column>
+          </DataTable>
+        </div>
+      </template>
     </DataTable>
     <Toast/>
   </div>

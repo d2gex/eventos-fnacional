@@ -153,8 +153,9 @@ export default {
 </script>
 <style>
 .p-component, .p-component * {
-    /* box-sizing: border-box; */
+  /* box-sizing: border-box; */
 }
+
 .p-tabview .p-tabview-panels {
   border: 2px #3B82F6 solid;
 

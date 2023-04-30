@@ -13,7 +13,7 @@ import "./assets/common.js"
 import VueSimpleAlert from "vue3-simple-alert";
 import PrimeVue from 'primevue/config'
 import ToastService from 'primevue/toastservice';
-import { createPinia } from 'pinia'
+import {createPinia} from 'pinia'
 import {createApp} from 'vue'
 import App from './App.vue'
 import router from './router'

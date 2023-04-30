@@ -12,14 +12,15 @@ body {
 .field_required {
     color: #dc3545;
 }
+
 ::-webkit-input-placeholder {
-   font-size: 12px;
+    font-size: 12px;
 }
 
 :-moz-placeholder { /* Firefox 18- */
-      font-size: 12px;
+    font-size: 12px;
 }
 
-::-moz-placeholder {  /* Firefox 19+ */
-      font-size: 12px;
+::-moz-placeholder { /* Firefox 19+ */
+    font-size: 12px;
 }

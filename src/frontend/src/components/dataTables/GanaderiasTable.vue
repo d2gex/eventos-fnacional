@@ -11,7 +11,7 @@
                dataKey="id"
                tableStyle="min-width: 60rem">
       <template #header>
-         <div class="flex justify-content-start">
+        <div class="flex justify-content-start">
           <Button label="Copiar Fila"
                   icon="pi pi-copy"
                   severity="success"
