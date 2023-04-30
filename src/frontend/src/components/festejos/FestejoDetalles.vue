@@ -38,7 +38,7 @@
                        v-model="selectedProvincia"
                        as="select"
                        class="form-select">
-                  <option v-for="option in dataDeposit.provincias" :key="option.id" :value="option.id">
+                  <option v-for="option in dataDeposit.provincias.data" :key="option.id" :value="option.id">
                     {{ option.provincia }}
                   </option>
                 </Field>

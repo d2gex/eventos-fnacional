@@ -12,7 +12,7 @@
                     <label :for="`toreroName_${row}`">Torero <span class="field_required">*</span></label>
                     <SearchDropdownBox
                         :input-object="festejoStore.toreros.rows[row]"
-                        :items="dataDeposit.toreroItems"
+                        :items="dataDeposit.toreroItems.data"
                         :field-name="`toreroRow[${row}].toreroName`"
                         place-holder="Selecciona un torero"
                         option-label="nombre_profesional"/>

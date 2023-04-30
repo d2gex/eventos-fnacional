@@ -9,7 +9,7 @@
               <label :for="`ganaderiaName_${row}`">Ganaderia <span class="field_required">*</span></label>
               <SearchDropdownBox
                   :input-object="festejoStore.ganaderias.rows[row]"
-                  :items="dataDeposit.ganaderiaItems"
+                  :items="dataDeposit.ganaderiaItems.data"
                   :field-name="`ganaderiaRow[${row}].ganaderiaName`"
                   place-holder="Selecciona una ganaderia"
                   option-label="nombre_ganaderia"/>

@@ -1,27 +1,28 @@
 import {defineStore} from 'pinia'
 import {CommonUtils} from "@/assets/common";
+import {shallowReactive} from "vue";
 
 
 export const usedataDepositStore = defineStore('dataDepositStore', {
     state: () => ({
-        provincias: [],
-        tipoToreros: [],
+        provincias: shallowReactive({data: []}),
+        tipoToreros: shallowReactive({data: []}),
         tipoFestejos: [],
-        toreroItems: [],
-        ganaderiaItems: [],
+        toreroItems: shallowReactive({data: []}),
+        ganaderiaItems: shallowReactive({data: []}),
         premioToreroItems: [],
         poblaciones: [],
-        newDbData: [],
-        oldDbData: []
+        newDbData: shallowReactive({data: []}),
+        oldDbData: shallowReactive({data: []}),
     }),
     actions: {
         async fetchAndStoreProvincias() {
             const response = await CommonUtils.getDataFromTable(CommonUtils.apiServerUrl + '/get_provincias')
-            this.provincias = response.data
+            this.provincias.data = response.data
         },
         async fetchAndTipoToreros() {
             const response = await CommonUtils.getDataFromTable(CommonUtils.apiServerUrl + '/get_tipo_toreros')
-            this.tipoToreros = response.data
+            this.tipoToreros.data = response.data
         },
         async getTipoFestejos() {
             const response = await CommonUtils.getDataFromTable(CommonUtils.apiServerUrl + '/get_tipo_festejos')
@@ -29,11 +30,11 @@ export const usedataDepositStore = defineStore('dataDepositStore', {
         },
         async fetchAndStoreToreros() {
             const response = await CommonUtils.getDataFromTable(CommonUtils.apiServerUrl + '/get_toreros')
-            this.toreroItems = response.data
+            this.toreroItems.data = response.data
         },
         async fetchAndStoreGanaderias() {
             const response = await CommonUtils.getDataFromTable(CommonUtils.apiServerUrl + '/get_ganaderias')
-            this.ganaderiaItems = response.data
+            this.ganaderiaItems.data = response.data
         },
         async getTipoPremios() {
             const response = await CommonUtils.getDataFromTable(CommonUtils.apiServerUrl + '/get_tipo_premios')
@@ -45,11 +46,11 @@ export const usedataDepositStore = defineStore('dataDepositStore', {
         },
         async fetchAndStoreNewDbData() {
             const response = await CommonUtils.getDataFromTable(CommonUtils.apiServerUrl + '/get_db_all_records')
-            this.newDbData = response.data
+            this.newDbData.data = response.data
         },
         async fetchAndStoreOldDbData() {
             const response = await CommonUtils.getDataFromTable(CommonUtils.apiServerUrl + '/get_old_db_all_records')
-            this.oldDbData = response.data
+            this.oldDbData.data = response.data
         }
     }
 })
