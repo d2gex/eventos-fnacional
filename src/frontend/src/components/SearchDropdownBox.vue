@@ -1,6 +1,6 @@
 <template>
   <Dropdown
-      v-model="value"
+      v-model="storeData.data"
       :options="dataItems"
       :placeholder="placeHolder"
       :option-label="optionLabel"
@@ -35,12 +35,12 @@ export default {
       type: String,
       required: true
     },
-    items: {
-      type: Array,
+    inputObject: {
+      type: Object,
       required: true
     },
-    inputValue: {
-      type: Object,
+    items: {
+      type: Array,
       required: true
     },
     placeHolder: {
@@ -58,16 +58,18 @@ export default {
   data() {
     const dataItems = []
     const {value, errorMessage} = useField(this.fieldName);
+    const storeData = this.inputObject;
+
     return {
       dataItems,
       value,
-      errorMessage
+      errorMessage,
+      storeData
     }
   },
   methods: {
     updateItems(newItems) {
       this.dataItems = newItems
-      this.value = this.inputValue
     }
   },
   watch: {
@@ -75,6 +77,14 @@ export default {
       // Update an instance of this component when fetching the  api data for the first time
       this.updateItems(newItems)
     },
+    'storeData.data': function (newData, oldData) {
+      // Ensure useField's value is up to date with storeDAta.data to avoid validation problems
+      this.value = newData
+    },
+    'inputObject.data': function (newData, oldData) {
+      // Ensure that storeData.data is aware of external changes done on inputObject.data
+      this.storeData.data = newData
+    }
   },
   mounted() {
     // Update cloned copies of this component once the api data has been fetched.

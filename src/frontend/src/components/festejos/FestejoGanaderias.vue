@@ -8,8 +8,8 @@
             <div class="form-group">
               <label :for="`ganaderiaName_${row}`">Ganaderia <span class="field_required">*</span></label>
               <SearchDropdownBox
+                  :input-object="festejoStore.ganaderias.rows[row]"
                   :items="dataDeposit.ganaderiaItems"
-                  :input-value="festejoSstore.ganaderias.rows[row]"
                   :field-name="`ganaderiaRow[${row}].ganaderiaName`"
                   place-holder="Selecciona una ganaderia"
                   option-label="nombre_ganaderia"/>
@@ -46,14 +46,19 @@ export default {
   components: {
     SearchDropdownBox
   },
+  props: {
+    resetFormFlag: {
+      type: Boolean,
+    }
+  },
   data() {
     const dataDeposit = usedataDepositStore()
-    const festejoSstore = useFestejoStore()
+    const festejoStore = useFestejoStore()
     const numRows = 1;
 
     return {
       dataDeposit,
-      festejoSstore,
+      festejoStore,
       numRows
     }
   },
@@ -68,7 +73,18 @@ export default {
           if (this.numRows > 1) {
             this.numRows--
           }
+        },
+        resetForm() {
+          this.numRows = 1
+          this.festejoStore.resetGanaderias()
         }
+      },
+  watch: {
+    resetFormFlag(newValue) {
+      if (newValue === true) {
+        this.resetForm()
       }
+    }
+  }
 }
 </script>

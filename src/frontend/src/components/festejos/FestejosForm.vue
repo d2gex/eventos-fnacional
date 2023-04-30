@@ -19,12 +19,13 @@
           />
         </div>
         <div class="row">
-          <FestejoGanaderias/>
+          <FestejoGanaderias :reset-form-flag="resetFormFlag"/>
         </div>
 
       </div>
       <div class="col-md-6">
         <FestejoToreros
+            :reset-form-flag="resetFormFlag"
             :selected-torero="selectedTipoTorero"
             :torero-premios-data="toreroPremiosData"
             :selected-torero-premio="selectedToreroPremio"/>
@@ -92,7 +93,7 @@ export default {
         tipo_festejo_id: '',
       }
     };
-
+    const resetFormFlag = false
     const schema = markRaw(y_object().shape({
       festejos: y_object().shape({
         nombre_festejo: y_string().required(customErrorMessages.required_with_name("El nombre")).min(2, customErrorMessages.min_2),
@@ -116,16 +117,24 @@ export default {
     return {
       selectedTipoTorero,
       initialData,
+      resetFormFlag,
       schema
     }
   },
   methods:
       {
+        resetForm() {
+          this.resetFormFlag = true
+        },
         async onSubmit(values) {
           console.log(JSON.stringify(values, null, 2));
           const {data} = await CommonUtils.sendDataToBackend(values, '/save_festejos')
           if (data.status === 0) {
             await this.$vueAlert.alert(data.message)
+          } else {
+            this.resetForm()
+            await this.$vueAlert.alert("El nuevo festejo ha sido guardado", "Operación satisfactoria", 'success')
+            this.resetFormFlag = false
           }
           console.log(JSON.stringify(data, null, 2));
         }

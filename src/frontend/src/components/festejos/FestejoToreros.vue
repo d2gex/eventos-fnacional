@@ -11,8 +11,8 @@
                   <div class="form-group">
                     <label :for="`toreroName_${row}`">Torero <span class="field_required">*</span></label>
                     <SearchDropdownBox
+                        :input-object="festejoStore.toreros.rows[row]"
                         :items="dataDeposit.toreroItems"
-                        :input-value="festejoStore.toreros.rows[row].torero"
                         :field-name="`toreroRow[${row}].toreroName`"
                         place-holder="Selecciona un torero"
                         option-label="nombre_profesional"/>
@@ -63,6 +63,9 @@ export default {
     toreroPremiosData: {
       type: Array,
       required: true
+    },
+    resetFormFlag: {
+      type: Boolean,
     }
   },
   components: {
@@ -91,6 +94,17 @@ export default {
             this.numRows--
           }
         },
+        resetForm() {
+          this.numRows = 1
+          this.festejoStore.resetToreros()
+        }
+      },
+  watch: {
+    resetFormFlag(newValue) {
+      if (newValue === true) {
+        this.resetForm()
       }
+    }
+  }
 }
 </script>
