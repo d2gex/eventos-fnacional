@@ -26,7 +26,6 @@
       <div class="col-md-6">
         <FestejoToreros
             :reset-form-flag="resetFormFlag"
-            :selected-torero="selectedTipoTorero"
             :torero-premios-data="toreroPremiosData"
             :selected-torero-premio="selectedToreroPremio"/>
       </div>
@@ -83,7 +82,6 @@ export default {
     FestejoGanaderias
   },
   data() {
-    const selectedTipoTorero = CommonUtils.selectedTipoTorero
     const initialData = {
       festejos: {
         nombre_festejo: '',
@@ -115,7 +113,6 @@ export default {
           .strict(),
     }));
     return {
-      selectedTipoTorero,
       initialData,
       resetFormFlag,
       schema
