@@ -5,7 +5,8 @@ import {CommonUtils} from "@/assets/common";
 export const toreroFestejoRowFields = {
     id: null,
     data: null,
-    premios: [CommonUtils.selectedToreroPremio]
+    premios: [CommonUtils.selectedToreroPremio],
+    estados: [CommonUtils.selectedToreroEstado],
 }
 export const ganaderiaRowFields = {
     data: undefined
