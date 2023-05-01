@@ -12,7 +12,7 @@ const CommonUtils = {
     selectedProvincia: 45,
     selectedGanaderia: 0,
     selectedTipoTorero: 1,
-    selectedToreroPremio: 0,
+    selectedToreroPremio: 1,
     maxNumInstances: 6,
     capitalizeWords: function (str) {
         return str
@@ -36,6 +36,9 @@ const CommonUtils = {
         } catch (error) {
             console.error(error);
         }
+    },
+    deepCloneObject(obj) {
+        return JSON.parse(JSON.stringify(obj))
     }
 
 }

@@ -191,7 +191,7 @@ class ApiDB:
         toreros_premios_data = []
         for row in data:
             torero_details = row["toreroName"]
-            torero_premios = row["toreroPremios"]
+            torero_premios = row["premios"]
             for premio_instance in torero_premios:
                 toreros_premios_data.append(
                     {

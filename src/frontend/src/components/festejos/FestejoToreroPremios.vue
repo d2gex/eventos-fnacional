@@ -5,10 +5,10 @@
         <label :for="`${fieldName}[${row}]_id`">Premio <span class="field_required">*</span></label>
         <Field :id="`${fieldName}[${row}]_id`"
                :name="`${fieldName}[${row}]`"
-               v-model="tipoPremioSelected[row]"
+               v-model="festejoStore.toreros.rows[toreroNumRow].premios[row]"
                as="select"
                class="form-select">
-          <option v-for="option in tipoPremios" :key="option.id" :value="option.id">
+          <option v-for="option in dataDeposit.premioToreroItems.data" :key="option.id" :value="option.id">
             {{ option.tipo_premio }}
           </option>
         </Field>
@@ -32,6 +32,9 @@
 
 <script>
 import {Field} from "vee-validate";
+import {CommonUtils} from "@/assets/common";
+import {useFestejoStore} from "@/stores/festejoStore";
+import {usedataDepositStore} from "@/stores/dataDepositStore";
 
 export default {
   name: "FestejoToreroPremios",
@@ -44,59 +47,48 @@ export default {
       type: String,
       required: true
     },
-    selectedToreroPremio: {
-      type: Number,
-      required: true
-    },
-    toreroPremiosData: {
-      type: Array,
-      required: true
+    resetFormFlag: {
+      type: Boolean,
     }
   },
   components: {
     Field
   },
   data() {
-    const maxRows = 6;
+    const dataDeposit = usedataDepositStore()
+    const festejoStore = useFestejoStore()
     const numRows = 1;
-    const tipoPremios = []
-    const tipoPremioSelected = []
     return {
-      maxRows,
+      dataDeposit,
+      festejoStore,
       numRows,
-      tipoPremios,
-      tipoPremioSelected,
     }
   },
   methods:
       {
         addPremioRow() {
-          if (this.numRows < this.maxRows) {
+          if (this.numRows < CommonUtils.maxNumInstances) {
             this.numRows++
+            this.festejoStore.toreros.rows[this.toreroNumRow].premios.push(CommonUtils.selectedToreroPremio)
           }
         },
         removePremioRow() {
           if (this.numRows > 1) {
             this.numRows--
+            this.festejoStore.toreros.rows[this.toreroNumRow].premios.pop()
+
           }
         },
-        updatetoreroPremiosData(newTipoPremio) {
-          this.tipoPremios = newTipoPremio
-          this.tipoPremioSelected = Array(this.maxRows).fill(this.tipoPremios[this.selectedToreroPremio].id)
+        resetForm() {
+          this.numRows = 1
         }
       },
   watch: {
-    toreroPremiosData(newTipoPremio) {
-      // Update an instance of this component when fetching the  api data for the first time
-      this.updatetoreroPremiosData(newTipoPremio)
+    resetFormFlag(newValue) {
+      if (newValue === true) {
+        this.resetForm()
+      }
     }
-  },
-  mounted() {
-    // Update cloned copies of this component once the api data has been fetched.
-    if (this.toreroPremiosData.length) {
-      this.updatetoreroPremiosData(this.toreroPremiosData)
-    }
-
   }
 }
 </script>

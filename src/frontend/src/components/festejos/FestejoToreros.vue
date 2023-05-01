@@ -20,9 +20,8 @@
                 </div>
                 <div class="col-md-6">
                   <PremiosTorero :torero-num-row="row"
-                                 :field-name="`toreroRow[${row}].toreroPremios`"
-                                 :selected-torero-premio="selectedToreroPremio"
-                                 :torero-premios-data="dataDeposit.premioToreroItems.data"/>
+                                 :field-name="`toreroRow[${row}].premios`"
+                                 :reset-form-flag="resetFormFlag"/>
                 </div>
               </div>
             </div>
@@ -67,12 +66,10 @@ export default {
   data() {
     const dataDeposit = usedataDepositStore()
     const festejoStore = useFestejoStore()
-    const selectedToreroPremio = CommonUtils.selectedToreroPremio
     const numRows = 1;
     return {
       dataDeposit,
       festejoStore,
-      selectedToreroPremio,
       numRows,
     }
   },
@@ -89,8 +86,8 @@ export default {
           }
         },
         resetForm() {
-          this.numRows = 1
           this.festejoStore.resetToreros()
+          this.numRows = 1
         }
       },
   watch: {
