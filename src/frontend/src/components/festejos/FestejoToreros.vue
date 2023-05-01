@@ -19,10 +19,13 @@
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <PremiosTorero :torero-num-row="row"
-                                 :field-name="`toreroRow[${row}].premios`"
-                                 :reset-form-flag="resetFormFlag"/>
+                  here the extra data
                 </div>
+              </div>
+              <div class="row">
+                <PremiosTorero :torero-num-row="row"
+                               :field-name="`toreroRow[${row}].premios`"
+                               :reset-form-flag="resetFormFlag"/>
               </div>
             </div>
           </div>
