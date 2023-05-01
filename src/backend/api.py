@@ -25,6 +25,11 @@ def get_provincias():
     return jsonify(api_db.ApiDB.get_table(models.ModelProvincia))
 
 
+@api.route("/get_tipo_estados", methods=["GET"])
+def get_tipo_estados():
+    return jsonify(api_db.ApiDB.get_table(models.ModelTipoEstado))
+
+
 @api.route("/get_tipo_premios", methods=["GET"])
 def get_tipo_premios():
     return jsonify(api_db.ApiDB.get_table(models.ModelTipoPremio))
@@ -74,7 +79,7 @@ def save_torero_details():
         data = {
             "status": 0,
             "message": f"Torero '{db_result['nombre_profesional']}' ya existe en la base de datos "
-            f"o ha sido provisto por duplicado",
+                       f"o ha sido provisto por duplicado",
         }
     return jsonify(data)
 
@@ -89,7 +94,7 @@ def save_ganaderia_details():
         data = {
             "status": 0,
             "message": f"Ganadería '{db_result['nombre_ganaderia']}' ya existe en la base de datos "
-            f"o ha sido provisto por duplicado",
+                       f"o ha sido provisto por duplicado",
         }
     return jsonify(data)
 
