@@ -39,6 +39,16 @@ class ModelTipoPremio(ModelBase):
     )
 
 
+class ModelTipoEstado(ModelBase):
+    __tablename__ = "tipo_estado"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    tipo_estado = Column(String, nullable=False, unique=True)
+    torero_estado_festejo = relationship(
+        "ModelToreroEstadoFestejo", back_populates="tipo_estado"
+    )
+
+
 class ModelPoblacion(ModelBase):
     __tablename__ = "poblacion"
 
@@ -151,3 +161,19 @@ class ModelToreroPremioFestejo(ModelBase):  # M:M, Association object Pattern
 
     # relationship with child
     tipo_premio = relationship(ModelTipoPremio)
+
+
+class ModelToreroEstadoFestejo(ModelBase):  # M:M, Association object Pattern
+    __tablename__ = "torero_estado_festejo"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    # primary keys from parent
+    torero_id = Column(Integer, ForeignKey("torero_festejo.torero_id"), nullable=False)
+    festejo_id = Column(
+        Integer, ForeignKey("torero_festejo.festejo_id"), nullable=False
+    )
+    # primary keys from child
+    tipo_estado_id = Column(Integer, ForeignKey("tipo_estado.id"), nullable=False)
+
+    # relationship with child
+    tipo_estado = relationship(ModelTipoEstado)

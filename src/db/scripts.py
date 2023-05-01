@@ -12,12 +12,14 @@ class SqlLitDBSetup:
         self,
         tipo_toreros: List[str],
         tipo_premios: List[str],
+        tipo_estados: List[str],
         provincias_path: Path,
         poblaciones_path: Path,
         old_db: pd.DataFrame,
     ):
         self.tipo_toreros = tipo_toreros
         self.tipo_premios = tipo_premios
+        self.tipo_estados = tipo_estados
         self.provincias_path = provincias_path
         self.poblaciones_path = poblaciones_path
         self.old_db = old_db
@@ -33,6 +35,11 @@ class SqlLitDBSetup:
 
     def init_tipo_premios_table(self) -> None:
         db_data = [models.ModelTipoPremio(tipo_premio=x) for x in self.tipo_premios]
+        with utils_db.session_scope() as dbs:
+            dbs.add_all(db_data)
+
+    def init_tipo_estado_table(self) -> None:
+        db_data = [models.ModelTipoEstado(tipo_estado=x) for x in self.tipo_estados]
         with utils_db.session_scope() as dbs:
             dbs.add_all(db_data)
 
@@ -74,6 +81,8 @@ class SqlLitDBSetup:
         self.init_tipo_torero_table()
         print("-----------> Adding initial tipo premios")
         self.init_tipo_premios_table()
+        print("-----------> Adding initial tipo estados")
+        self.init_tipo_estado_table()
         print("-----------> Adding provincias")
         self.init_provincia_table()
         print("-----------> Adding poblaciones")
@@ -122,6 +131,7 @@ def create_init_db():
         sql_db_setup = SqlLitDBSetup(
             tipo_toreros=["Torero", "Rejoneador"],
             tipo_premios=["N", "O", "OO", "OOR"],
+            tipo_estados=["Nada", "Herido", "1 aviso", "2 avisos", "3 avisos"],
             provincias_path=config.DATA_PATH / "provincias_es.csv",
             poblaciones_path=config.DATA_PATH / "poblaciones_toledo.csv",
             old_db=old_db_df,
