@@ -11,6 +11,7 @@ export const usedataDepositStore = defineStore('dataDepositStore', {
         toreroItems: shallowReactive({data: []}),
         ganaderiaItems: shallowReactive({data: []}),
         premioToreroItems: shallowReactive({data: []}),
+        estadoToreroItems: shallowReactive({data: []}),
         poblaciones: [],
         newDbData: shallowReactive({data: []}),
         oldDbData: shallowReactive({data: []}),
@@ -39,6 +40,10 @@ export const usedataDepositStore = defineStore('dataDepositStore', {
         async fetchAndStoreTipoPremios() {
             const response = await CommonUtils.getDataFromTable(CommonUtils.apiServerUrl + '/get_tipo_premios')
             this.premioToreroItems.data = response.data
+        },
+        async fetchAndStoreTipoEstados() {
+            const response = await CommonUtils.getDataFromTable(CommonUtils.apiServerUrl + '/get_tipo_estados')
+            this.estadoToreroItems.data = response.data
         },
         async getPoblaciones() {
             const response = await CommonUtils.getDataFromTable(CommonUtils.apiServerUrl + '/get_poblaciones')

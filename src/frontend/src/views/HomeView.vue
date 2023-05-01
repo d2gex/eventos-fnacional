@@ -131,6 +131,9 @@ export default {
     // Get details for premios
     await this.dataDeposit.fetchAndStoreTipoPremios()
 
+    // Get details for estasdos
+    await this.dataDeposit.fetchAndStoreTipoEstados()
+
     // Get details for poblaciones
     response = await CommonUtils.getDataFromTable(CommonUtils.apiServerUrl + '/get_poblaciones')
     this.poblaciones = response.data
