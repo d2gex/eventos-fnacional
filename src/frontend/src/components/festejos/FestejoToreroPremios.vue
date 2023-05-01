@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-md-4" v-for="(_, row) in numRows" :key="toreroNumRow.toString() + '_' + row">
       <div class="form-group">
-        <label :for="`${fieldName}[${row}]_id`">Premio <span class="field_required">*</span></label>
+        <label :for="`${fieldName}[${row}]_id`">Premio Faena {{row + 1}}<span class="field_required">*</span></label>
         <Field :id="`${fieldName}[${row}]_id`"
                :name="`${fieldName}[${row}]`"
                v-model="festejoStore.toreros.rows[toreroNumRow].premios[row]"
