@@ -6,7 +6,7 @@ export const toreroFestejoRowFields = {
     id: null,
     data: null,
     premios: [CommonUtils.selectedToreroPremio],
-    estados: [CommonUtils.selectedToreroEstado],
+    estados: [null],
 }
 export const ganaderiaRowFields = {
     data: undefined

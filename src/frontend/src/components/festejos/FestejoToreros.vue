@@ -27,6 +27,17 @@
                                :field-name="`toreroRow[${row}].premios`"
                                :reset-form-flag="resetFormFlag"/>
               </div>
+              <div class="row">
+                <FestejoToreroEstados
+                    :items="dataDeposit.estadoToreroItems.data"
+                    :torero-num-row="row"
+                    :field-name="`toreroRow[${row}].estados`"
+                    :reset-form-flag="resetFormFlag "
+                    :input-object="festejoStore.toreros.rows[row]"
+                    place-holder="Selecciona un estado"
+                    option-label="tipo_estado"/>
+              </div>
+
             </div>
           </div>
         </div>
@@ -51,6 +62,7 @@
 <script>
 import SearchDropdownBox from "@/components/SearchDropdownBox.vue";
 import PremiosTorero from "@/components/festejos/FestejoToreroPremios.vue";
+import FestejoToreroEstados from "@/components/festejos/FestejoToreroEstados.vue";
 import {CommonUtils} from "@/assets/common";
 import {useFestejoStore} from "@/stores/festejoStore";
 import {usedataDepositStore} from "@/stores/dataDepositStore";
@@ -65,6 +77,7 @@ export default {
   components: {
     SearchDropdownBox,
     PremiosTorero,
+    FestejoToreroEstados
   },
   data() {
     const dataDeposit = usedataDepositStore()
