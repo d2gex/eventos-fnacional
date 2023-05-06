@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div class="row mt-4">
     <div class="col-md-4" v-for="(_, row) in numRows" :key="toreroNumRow.toString() + '_' + row">
       <div class="form-group">
         <label :for="`${fieldName}[${row}]_id`">Estado Faena {{ row + 1 }}<span class="field_required">*</span></label>
@@ -7,7 +7,6 @@
                      :options="items"
                      :maxSelectedLabels="2"
                      :option-label="optionLabel"
-                     :placeholder="placeHolder"
                      class="form-control"/>
         <small class="p-error" id="dd-error">{{ errorMessage || '&nbsp;' }}</small>
       </div>
@@ -15,14 +14,12 @@
   </div>
   <div class="row">
     <div class="col-md-12">
-      <div class="form-group mt-4">
         <button type="button"
                 @click="addPremioRow()"
                 class="btn btn-success">+
         </button>
         <button type="button" @click="removePremioRow() " class="btn btn-danger mx-2">-
         </button>
-      </div>
     </div>
   </div>
 
@@ -70,7 +67,7 @@ export default {
   data() {
     const numRows = 1
     const {value, errorMessage} = useField(this.fieldName);
-    const storeData = this.inputObject;
+    const storeData = {}
     return {
       numRows,
       value,
@@ -82,7 +79,7 @@ export default {
     addPremioRow() {
       if (this.numRows < CommonUtils.maxNumInstances) {
         this.numRows++
-        this.storeData.estados.push(CommonUtils.selectedToreroEstado)
+        this.storeData.estados.push([this.items[CommonUtils.selectedToreroEstado]])
       }
     },
     removePremioRow() {
@@ -94,6 +91,12 @@ export default {
     },
     resetForm() {
       this.numRows = 1
+    },
+    initSelectedEstadoForRowZero(estados, row) {
+      if (estados[row] === null) {
+        return [[this.items[CommonUtils.selectedToreroEstado]]]
+      }
+      return estados
     }
   },
   watch: {
@@ -101,6 +104,10 @@ export default {
     'inputObject.estados': function (newEstados) {
       // Ensure that storeData is up to date with inputObject and does not lose its reference
       this.storeData = this.inputObject
+      if (this.storeData.estados.length === 1) {
+        this.storeData.estados = this.initSelectedEstadoForRowZero(this.storeData.estados, 0)
+      }
+
     },
     'storeData.estados': function (newEstados) {
       // Ensure useField's value is up to date with storeDAta.data to avoid validation problems
@@ -111,6 +118,20 @@ export default {
         this.resetForm()
       }
     }
+  },
+  beforeMount() {
+    this.storeData = this.inputObject;
+    if (this.storeData.estados.length === 1) {
+      this.storeData.estados = this.initSelectedEstadoForRowZero(this.storeData.estados, 0)
+    }
   }
 }
 </script>
+<style>
+.p-multiselect .p-multiselect-label {
+  padding: 0;
+}
+.p-multiselect .p-multiselect-trigger {
+  width: 0;
+}
+</style>

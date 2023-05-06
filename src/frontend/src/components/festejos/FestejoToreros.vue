@@ -7,7 +7,7 @@
           <div class="container">
             <div class="controls">
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                   <div class="form-group">
                     <label :for="`toreroName_${row}`">Torero <span class="field_required">*</span></label>
                     <SearchDropdownBox
@@ -17,9 +17,6 @@
                         place-holder="Selecciona un torero"
                         option-label="nombre_profesional"/>
                   </div>
-                </div>
-                <div class="col-md-6">
-                  here the extra data
                 </div>
               </div>
               <div class="row">
