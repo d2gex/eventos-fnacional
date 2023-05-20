@@ -109,9 +109,11 @@ export default {
       }
 
     },
-    'storeData.estados': function (newEstados) {
-      // Ensure useField's value is up to date with storeDAta.data to avoid validation problems
-      this.value = newEstados
+    'storeData.estados': {
+      deep: true,
+      handler (newEstados) {
+        this.value = newEstados
+      }
     },
     resetFormFlag(newValue) {
       if (newValue === true) {
