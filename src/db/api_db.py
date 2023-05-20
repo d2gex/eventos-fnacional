@@ -207,6 +207,31 @@ class ApiDB:
         db_session.add_all(db_data)
 
     @classmethod
+    def save_torero_estados_by_festejos(
+        cls, data: List[Dict], festejo_id: int, db_session: Any
+    ):
+        toreros_estados_data = []
+        for row in data:  # Array of toreros
+            torero_details = row["toreroName"]
+            torero_estados = row["estados"]
+            for (
+                multiple_estados
+            ) in torero_estados:  # Array of multiple estados (Heridos, 1 aviso, etc..)
+                for estado in multiple_estados:  # Each individual estado
+                    toreros_estados_data.append(
+                        {
+                            "festejo_id": festejo_id,
+                            "torero_id": torero_details["id"],
+                            "tipo_estado_id": estado["id"],
+                        }
+                    )
+        db_data = [
+            models.ModelToreroEstadoFestejo(**estados_row)
+            for estados_row in toreros_estados_data
+        ]
+        db_session.add_all(db_data)
+
+    @classmethod
     def save_festejos(cls, data: Dict) -> Optional[str]:
         data["festejos"].pop("provincia_id")
         try:
@@ -215,6 +240,7 @@ class ApiDB:
                 cls.save_ganaderia_festejos(data["ganaderiaRow"], festejo_id, s_db)
                 cls.save_torero_festejos(data["toreroRow"], festejo_id, s_db)
                 cls.save_torero_premios_by_festejos(data["toreroRow"], festejo_id, s_db)
+                cls.save_torero_estados_by_festejos(data["toreroRow"], festejo_id, s_db)
         except IntegrityError as ex:
             if "torero_festejo" in str(ex):
                 error = "toreros"
