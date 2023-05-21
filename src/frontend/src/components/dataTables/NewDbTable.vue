@@ -38,6 +38,7 @@
           <h5>Mas información {{ slotProps.data.Tipo }}</h5>
           <DataTable :value="[slotProps.data]">
             <Column field="premios" header="Premios"></Column>
+            <Column field="estados" header="Estados"></Column>
             <Column field="notas" header="Notas"></Column>
           </DataTable>
         </div>

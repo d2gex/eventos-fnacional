@@ -11,26 +11,33 @@ class FestejosToDataTable:
 
     def segregate_festejo_by_variables(self, data: Dict[int, List]) -> Dict:
         festejos = {}
-        g_offset, to_offset, pr_offset = 4, 6, 8
+        g_offset, to_offset, pr_or_es_offset = 4, 6, 9
         nom_offset, fe_offset, no_offset, po_offset = 1, 2, 3, 5
         for festejo_id, festejo_rows in data.items():
             ganaderias = set()
             toreros = set()
-            torero_premios = {}
+            torero_pr_or_es = {}
             nombre = ""
             fecha = ""
             notas = ""
             poblacion = ""
             festejos[festejo_id] = {}
+            ganaderia = None
             for row in festejo_rows:
                 ganaderias.add(row[g_offset])
 
                 if (
                     row[to_offset] not in toreros
                 ):  # first time we encounter this torero?
-                    torero_premios[row[to_offset]] = []
+                    torero_pr_or_es[row[to_offset]] = []
+                    ganaderia = row[g_offset]
 
-                torero_premios[row[to_offset]].append((row[g_offset], row[pr_offset]))
+                # We are only interested in the premio or estado combination per torero and per one single ganaderia
+                if ganaderia == row[g_offset]:
+                    torero_pr_or_es[row[to_offset]].append(
+                        (row[g_offset], row[pr_or_es_offset])
+                    )
+
                 toreros.add(row[to_offset])
                 nombre = row[nom_offset]
                 fecha = row[fe_offset]
@@ -44,51 +51,62 @@ class FestejosToDataTable:
                 "notas": notas,
                 "ganaderias": ganaderias,  # unique ganaderias per festejo
                 "toreros": toreros,  # unique toreros per festejo
-                "toreros_premios": torero_premios,  # {'torero_id': [(G,P), ...]}; G=Ganaderia, P=Premio
+                "toreros_pr_or_es": torero_pr_or_es,  # {'torero_id': [(G,P), ...]}; G=Ganaderia, P=Premio
             }
         return festejos
 
-    def discern_premios_by_torero_and_festejo(self, data: Dict) -> Dict:
-        g_offset, pr_offset = 0, 1
+    def discern_premios_or_estados_by_torero_and_festejo(self, data: Dict) -> Dict:
+        g_offset, pr_or_es_offset = 0, 1
         for festejo_id, festejo_rows in data.items():
-            for torero_id, premio_ganaderia in festejo_rows["toreros_premios"].items():
-                ganaderia = premio_ganaderia[0][g_offset]
-                premios = []
-                for row in premio_ganaderia:
-                    if (
-                        row[g_offset] == ganaderia
-                    ):  # Get only the premios for one ganaderia, rest is duplicated
-                        premios.append(row[pr_offset])
-                festejo_rows["toreros_premios"][torero_id] = premios
+            for torero_id, pr_or_es_list in festejo_rows["toreros_pr_or_es"].items():
+                # Get only the premios for one ganaderia, rest of ganaderias' premios are duplicated
+                premios_or_estados = []
+                for row in pr_or_es_list:
+                    premios_or_estados.append(row[pr_or_es_offset])
+                festejo_rows["toreros_pr_or_es"][torero_id] = premios_or_estados
         return data
 
-    def build_festejos_table(self, data: Dict) -> List[Dict]:
-        table = []
+    def build_festejo(self, data: Dict, pr_or_es_key: bool) -> List[Dict]:
+        festejo = []
+        if pr_or_es_key:
+            field = "premios"
+        else:
+            field = "estados"
         for festejo_id, festejo_rows in data.items():
-            table.append(
+            festejo.append(
                 {
                     "id": festejo_id,
                     "nombre": festejo_rows["nombre_festejo"].title(),
                     "poblacion": festejo_rows["poblacion"].title(),
                     "fecha": festejo_rows["fecha_festejo"].strftime("%d-%m-%Y"),
                     "toreros": ", ".join([x.title() for x in festejo_rows["toreros"]]),
+                    "notas": festejo_rows["notas"],
                     "ganaderias": ", ".join(
                         [x.title() for x in festejo_rows["ganaderias"]]
                     ),
-                    "premios": ", ".join(
-                        str(item) for _, item in festejo_rows["toreros_premios"].items()
+                    field: ", ".join(
+                        str(item)
+                        for _, item in festejo_rows["toreros_pr_or_es"].items()
                     ),
-                    "notas": festejo_rows["notas"],
                 }
             )
-        return table
+        return festejo
 
-    def run(self, data: List[Dict]) -> List[Dict]:
+    def build_table_festejo(self, data: List[Dict], pr_or_es_key: bool) -> List[Dict]:
         result = self.get_rows_by_festejo(data)
         result = self.segregate_festejo_by_variables(result)
-        result = self.discern_premios_by_torero_and_festejo(result)
-        table = self.build_festejos_table(result)
+        result = self.discern_premios_or_estados_by_torero_and_festejo(result)
+        table = self.build_festejo(result, pr_or_es_key)
         return table
+
+    def run(self, data_with_premios: List[Dict], data_with_estados: List[Dict]):
+        festejos = self.build_table_festejo(data_with_premios, pr_or_es_key=True)
+        festejos_estados = self.build_table_festejo(
+            data_with_estados, pr_or_es_key=False
+        )
+        for index in range(len(festejos)):
+            festejos[index]["estados"] = festejos_estados[index]["estados"]
+        return festejos
 
 
 class DbToDataTable:

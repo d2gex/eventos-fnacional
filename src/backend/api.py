@@ -63,9 +63,10 @@ def get_old_db_all_records():
 
 @api.route("/get_db_all_records", methods=["GET"])
 def get_db_all_records():
-    db_result = api_db.ApiDB.get_all_festejos()
+    db_premios_result = api_db.ApiDB.get_all_festejos(premios_or_estados=True)
+    db_estados_result = api_db.ApiDB.get_all_festejos(premios_or_estados=False)
     to_datatable = db_to_datatable.FestejosToDataTable()
-    table = to_datatable.run(db_result)
+    table = to_datatable.run(db_premios_result, db_estados_result)
     return jsonify(table)
 
 

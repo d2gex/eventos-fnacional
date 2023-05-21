@@ -40,23 +40,34 @@ class ApiDB:
         return db_data, column_names
 
     @classmethod
-    def get_all_festejos(cls):
+    def get_all_festejos(cls, premios_or_estados: bool):
         m = models
+        columns = [
+            m.ModelFestejo.id,
+            m.ModelFestejo.nombre_festejo,
+            m.ModelFestejo.fecha,
+            m.ModelFestejo.notas,
+            m.ModelGanaderia.nombre_ganaderia,
+            m.ModelPoblacion.ciudad,
+            m.ModelTorero.nombre_profesional,
+            m.ModelTipoTorero.tipo_torero,
+        ]
+        columns.extend(
+            [
+                m.ModelTipoPremio.id,
+                m.ModelTipoPremio.tipo_premio,
+            ]
+            if premios_or_estados
+            else [
+                m.ModelTipoEstado.id,
+                m.ModelTipoEstado.tipo_estado,
+            ]
+        )
+
         with utils_db.session_scope() as db_session:
-            db_data = (
-                db_session.query(
-                    m.ModelFestejo.id,
-                    m.ModelFestejo.nombre_festejo,
-                    m.ModelFestejo.fecha,
-                    m.ModelFestejo.notas,
-                    m.ModelGanaderia.nombre_ganaderia,
-                    m.ModelPoblacion.ciudad,
-                    m.ModelTorero.nombre_profesional,
-                    m.ModelTipoTorero.tipo_torero,
-                    m.ModelTipoPremio.tipo_premio,
-                )
-                # Get Ganaderias associated to festejos
-                .join(
+            query = (
+                db_session.query(*columns)
+                .join(  # Get Ganaderias associated to festejos
                     m.ModelGanaderiaFestejo,
                     m.ModelFestejo.id == m.ModelGanaderiaFestejo.festejo_id,
                 )
@@ -67,8 +78,7 @@ class ApiDB:
                 .join(
                     m.ModelPoblacion, m.ModelFestejo.poblacion_id == m.ModelPoblacion.id
                 )
-                # Festejos with Toreros
-                .join(
+                .join(  # Festejos with Toreros
                     m.ModelToreroFestejo,
                     m.ModelFestejo.id == m.ModelToreroFestejo.festejo_id,
                 )
@@ -77,8 +87,10 @@ class ApiDB:
                     m.ModelTipoTorero,
                     m.ModelTorero.tipo_torero_id == m.ModelTipoTorero.id,
                 )
-                # Festejos y Toreros with Premios
-                .join(
+            )
+
+            if premios_or_estados:  # Festejos y Toreros with premios
+                query = query.join(
                     m.ModelToreroPremioFestejo,
                     and_(
                         m.ModelToreroFestejo.festejo_id
@@ -86,13 +98,25 @@ class ApiDB:
                         m.ModelToreroFestejo.torero_id
                         == m.ModelToreroPremioFestejo.torero_id,
                     ),
-                )
-                .join(
+                ).join(
                     m.ModelTipoPremio,
                     m.ModelToreroPremioFestejo.tipo_premio_id == m.ModelTipoPremio.id,
                 )
-                .all()
-            )
+            else:  # Festejos y Toreros with Estados
+                query = query.join(
+                    m.ModelToreroEstadoFestejo,
+                    and_(
+                        m.ModelToreroFestejo.festejo_id
+                        == m.ModelToreroEstadoFestejo.festejo_id,
+                        m.ModelToreroFestejo.torero_id
+                        == m.ModelToreroEstadoFestejo.torero_id,
+                    ),
+                ).join(
+                    m.ModelTipoEstado,
+                    m.ModelToreroEstadoFestejo.tipo_estado_id == m.ModelTipoEstado.id,
+                )
+
+        db_data = query.order_by(m.ModelTorero.id).order_by(m.ModelGanaderia.id).all()
         return db_data
 
     @classmethod
