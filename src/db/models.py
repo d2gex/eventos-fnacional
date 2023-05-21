@@ -158,6 +158,7 @@ class ModelToreroPremioFestejo(ModelBase):  # M:M, Association object Pattern
     )
     # primary keys from child
     tipo_premio_id = Column(Integer, ForeignKey("tipo_premio.id"), nullable=False)
+    faena = Column(Integer, nullable=False)
 
     # relationship with child
     tipo_premio = relationship(ModelTipoPremio)
@@ -174,6 +175,7 @@ class ModelToreroEstadoFestejo(ModelBase):  # M:M, Association object Pattern
     )
     # primary keys from child
     tipo_estado_id = Column(Integer, ForeignKey("tipo_estado.id"), nullable=False)
+    faena = Column(Integer, nullable=False)
 
     # relationship with child
     tipo_estado = relationship(ModelTipoEstado)

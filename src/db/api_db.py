@@ -216,12 +216,13 @@ class ApiDB:
         for row in data:
             torero_details = row["toreroName"]
             torero_premios = row["premios"]
-            for premio_instance in torero_premios:
+            for index, premio_instance in enumerate(torero_premios):
                 toreros_premios_data.append(
                     {
                         "festejo_id": festejo_id,
                         "torero_id": torero_details["id"],
                         "tipo_premio_id": premio_instance,
+                        "faena": index,
                     }
                 )
         db_data = [
@@ -238,15 +239,16 @@ class ApiDB:
         for row in data:  # Array of toreros
             torero_details = row["toreroName"]
             torero_estados = row["estados"]
-            for (
-                multiple_estados
-            ) in torero_estados:  # Array of multiple estados (Heridos, 1 aviso, etc..)
+            for index, multiple_estados in enumerate(
+                torero_estados
+            ):  # Array of multiple estados (Heridos, 1 aviso, etc..)
                 for estado in multiple_estados:  # Each individual estado
                     toreros_estados_data.append(
                         {
                             "festejo_id": festejo_id,
                             "torero_id": torero_details["id"],
                             "tipo_estado_id": estado["id"],
+                            "faena": index,
                         }
                     )
         db_data = [
