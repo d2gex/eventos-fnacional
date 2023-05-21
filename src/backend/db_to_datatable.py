@@ -56,7 +56,7 @@ class FestejosToDataTable:
         return festejos
 
     def group_pr_or_es_by_faena(self, festejos: Dict):
-        """Create a list of grouped premios or estados per torero. The length of grouped premios will always be a
+        """Create a list of grouped premios or estados per torero and faena. The length of grouped premios will always be a
         list of length 1. Estados could have groups of multiple items
         """
         g_offset, pr_or_es_offset, faena_offset = 0, 1, 2
@@ -79,7 +79,7 @@ class FestejosToDataTable:
                 ]
         return festejos
 
-    def discern_premios_or_estados_by_torero_and_festejo(self, data: Dict) -> Dict:
+    def build_list_of_pr_or_es_indicators_by_torero(self, data: Dict) -> Dict:
         g_offset, pr_or_es_offset = 0, 1
         for festejo_id, festejo_rows in data.items():
             for torero_id, pr_or_es_lists in festejo_rows["toreros_pr_or_es"].items():
@@ -97,7 +97,7 @@ class FestejosToDataTable:
                 festejo_rows["toreros_pr_or_es"][torero_id] = premios_or_estados
         return data
 
-    def build_festejo(self, data: Dict, pr_or_es_key: bool) -> List[Dict]:
+    def build_festejo_by_pr_or_es(self, data: Dict, pr_or_es_key: bool) -> List[Dict]:
         festejo = []
         if pr_or_es_key:
             field = "premios"
@@ -127,8 +127,8 @@ class FestejosToDataTable:
         result = self.get_rows_by_festejo(data)
         result = self.segregate_festejo_by_variables(result)
         result = self.group_pr_or_es_by_faena(result)
-        result = self.discern_premios_or_estados_by_torero_and_festejo(result)
-        table = self.build_festejo(result, pr_or_es_key)
+        result = self.build_list_of_pr_or_es_indicators_by_torero(result)
+        table = self.build_festejo_by_pr_or_es(result, pr_or_es_key)
         return table
 
     def run(self, data_with_premios: List[Dict], data_with_estados: List[Dict]):
