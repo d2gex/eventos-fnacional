@@ -103,6 +103,20 @@ def save_ganaderia_details():
 @api.route("/save_festejos", methods=["POST"])
 def save_festejos():
     client_data = request.get_json()
+
+    # Are the nuber of faenas for premios and estados across all toreros?
+    for torero_details in client_data["toreroRow"]:
+        if len(torero_details["premios"]) != len(torero_details["estados"]):
+            return jsonify(
+                {
+                    "status": 0,
+                    "message": f"'{torero_details['toreroName']['nombre']}' "
+                    f"'{torero_details['toreroName']['apellidos']}' no tiene el mismo número de faenas "
+                    f"para premios({len(torero_details['premios'])}) y "
+                    f"estados({len(torero_details['estados'])})",
+                }
+            )
+
     error_details = api_db.ApiDB.save_festejos(client_data)
     if not error_details:
         return jsonify(data={"status": 1})
