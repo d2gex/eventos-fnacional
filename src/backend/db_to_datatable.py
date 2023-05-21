@@ -11,7 +11,7 @@ class FestejosToDataTable:
 
     def segregate_festejo_by_variables(self, data: Dict[int, List]) -> Dict:
         festejos = {}
-        g_offset, to_offset, pr_or_es_offset = 4, 6, 9
+        g_offset, to_offset, pr_or_es_offset, faena_offset = 4, 6, 9, 10
         nom_offset, fe_offset, no_offset, po_offset = 1, 2, 3, 5
         for festejo_id, festejo_rows in data.items():
             ganaderias = set()
@@ -35,7 +35,7 @@ class FestejosToDataTable:
                 # We are only interested in the premio or estado combination per torero and per one single ganaderia
                 if ganaderia == row[g_offset]:
                     torero_pr_or_es[row[to_offset]].append(
-                        (row[g_offset], row[pr_or_es_offset])
+                        (row[g_offset], row[pr_or_es_offset], row[faena_offset])
                     )
 
                 toreros.add(row[to_offset])
@@ -51,18 +51,49 @@ class FestejosToDataTable:
                 "notas": notas,
                 "ganaderias": ganaderias,  # unique ganaderias per festejo
                 "toreros": toreros,  # unique toreros per festejo
-                "toreros_pr_or_es": torero_pr_or_es,  # {'torero_id': [(G,P), ...]}; G=Ganaderia, P=Premio
+                "toreros_pr_or_es": torero_pr_or_es,  # {'torero_id': [(G,P,F), ...]}; G=Ganaderia, P=Premio, F=Faena
             }
+        return festejos
+
+    def group_pr_or_es_by_faena(self, festejos: Dict):
+        """Create a list of grouped premios or estados per torero. The length of grouped premios will always be a
+        list of length 1. Estados could have groups of multiple items
+        """
+        g_offset, pr_or_es_offset, faena_offset = 0, 1, 2
+        for festejo_id, festejo_row in festejos.items():
+            # Get list of tuples [(G, P, F)...] as a dictionary of lists by F { F: [(G, P)...]
+            for torero_id, torero_row in festejo_row["toreros_pr_or_es"].items():
+                faenas = {}
+                for list_item in torero_row:
+                    faena_id = list_item[faena_offset]
+                    if (
+                        faena_id not in faenas.keys()
+                    ):  # first time of record? create a list
+                        faenas[faena_id] = []
+                    faenas[faena_id].append(
+                        (list_item[g_offset], list_item[pr_or_es_offset])
+                    )
+                # Flatten the dictionary of lists into a list of lists of tuples [[(G, P), ...], [(G, P), ...]]
+                festejo_row["toreros_pr_or_es"][torero_id] = [
+                    g_pr_or_es_list for _, g_pr_or_es_list in faenas.items()
+                ]
         return festejos
 
     def discern_premios_or_estados_by_torero_and_festejo(self, data: Dict) -> Dict:
         g_offset, pr_or_es_offset = 0, 1
         for festejo_id, festejo_rows in data.items():
-            for torero_id, pr_or_es_list in festejo_rows["toreros_pr_or_es"].items():
-                # Get only the premios for one ganaderia, rest of ganaderias' premios are duplicated
+            for torero_id, pr_or_es_lists in festejo_rows["toreros_pr_or_es"].items():
                 premios_or_estados = []
-                for row in pr_or_es_list:
-                    premios_or_estados.append(row[pr_or_es_offset])
+                for list_item in pr_or_es_lists:
+                    grouped_items = []
+                    for tuple_item in list_item:
+                        grouped_items.append(tuple_item[pr_or_es_offset])
+
+                    premios_or_estados.append(
+                        tuple(grouped_items)
+                        if len(grouped_items) > 1
+                        else grouped_items.pop()
+                    )
                 festejo_rows["toreros_pr_or_es"][torero_id] = premios_or_estados
         return data
 
@@ -95,6 +126,7 @@ class FestejosToDataTable:
     def build_table_festejo(self, data: List[Dict], pr_or_es_key: bool) -> List[Dict]:
         result = self.get_rows_by_festejo(data)
         result = self.segregate_festejo_by_variables(result)
+        result = self.group_pr_or_es_by_faena(result)
         result = self.discern_premios_or_estados_by_torero_and_festejo(result)
         table = self.build_festejo(result, pr_or_es_key)
         return table

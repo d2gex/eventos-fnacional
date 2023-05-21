@@ -56,11 +56,13 @@ class ApiDB:
             [
                 m.ModelTipoPremio.id,
                 m.ModelTipoPremio.tipo_premio,
+                m.ModelToreroPremioFestejo.faena,
             ]
             if premios_or_estados
             else [
                 m.ModelTipoEstado.id,
                 m.ModelTipoEstado.tipo_estado,
+                m.ModelToreroEstadoFestejo.faena,
             ]
         )
 
