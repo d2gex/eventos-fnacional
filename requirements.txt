@@ -3,3 +3,4 @@ Flask_Cors==3.0.10
 pandas==1.5.3
 simplejson==3.19.1
 SQLAlchemy==2.0.7
+python-dotenv==1.0.0
