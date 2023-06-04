@@ -10,3 +10,8 @@ def create_app(config_class=config.Config):
 
     app.register_blueprint(api)
     return app
+
+
+if __name__ == '__main__':
+    app = create_app(config.Config)
+    app.run(host='0.0.0.0', debug=False)
