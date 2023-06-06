@@ -27,7 +27,7 @@ class FestejosToDataTable:
                 ganaderias.add(row[g_offset])
 
                 if (
-                    row[to_offset] not in toreros
+                        row[to_offset] not in toreros
                 ):  # first time we encounter this torero?
                     torero_pr_or_es[row[to_offset]] = []
                     ganaderia = row[g_offset]
@@ -67,7 +67,7 @@ class FestejosToDataTable:
                 for list_item in torero_row:
                     faena_id = list_item[faena_offset]
                     if (
-                        faena_id not in faenas.keys()
+                            faena_id not in faenas.keys()
                     ):  # first time of record? create a list
                         faenas[faena_id] = []
                     faenas[faena_id].append(
