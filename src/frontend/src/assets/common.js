@@ -8,7 +8,7 @@ const customErrorMessages = {
 }
 
 const CommonUtils = {
-    apiServerUrl: "http://127.0.0.1:5000/api",
+    apiServerUrl: process.env.VUE_APP_ROOT_API,
     selectedProvincia: 45,
     selectedGanaderia: 0,
     selectedTipoTorero: 1,
